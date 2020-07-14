@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talentfinder.R;
 
+// Fragment allowing user to access their current discussions
 public class MessagesFragment extends Fragment {
+
+    public static final String TAG = "MessagesFragment";
 
     public MessagesFragment() {
         // Required empty public constructor

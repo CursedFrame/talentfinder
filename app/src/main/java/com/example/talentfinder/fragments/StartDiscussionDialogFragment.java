@@ -7,21 +7,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.talentfinder.R;
 
-// Fragment for allowing user to create a project and upload to Parse server
-public class CreateFragment extends Fragment {
+public class StartDiscussionDialogFragment extends DialogFragment {
 
-    public static final String TAG = "CreateFragment";
-
-    public CreateFragment() {
+    public StartDiscussionDialogFragment() {
         // Required empty public constructor
     }
 
-    public static CreateFragment newInstance() {
-        CreateFragment fragment = new CreateFragment();
+    public static StartDiscussionDialogFragment newInstance() {
+        StartDiscussionDialogFragment fragment = new StartDiscussionDialogFragment();
 //        Bundle args = new Bundle();
 //        fragment.setArguments(args);
         return fragment;
@@ -31,7 +28,7 @@ public class CreateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create, container, false);
+        return inflater.inflate(R.layout.fragment_start_discussion_dialog, container, false);
     }
 
     @Override

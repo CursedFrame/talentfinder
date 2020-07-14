@@ -11,17 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talentfinder.R;
 
-// Fragment for allowing user to create a project and upload to Parse server
-public class CreateFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    public static final String TAG = "CreateFragment";
-
-    public CreateFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static CreateFragment newInstance() {
-        CreateFragment fragment = new CreateFragment();
+    public static ProfileFragment newInstance() {
+        ProfileFragment fragment = new ProfileFragment();
 //        Bundle args = new Bundle();
 //        fragment.setArguments(args);
         return fragment;
@@ -31,7 +28,7 @@ public class CreateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override

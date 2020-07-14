@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talentfinder.R;
 
+// Fragment allowing the user to search for users or projects
 public class SearchFragment extends Fragment {
+
+    public static final String TAG = "SearchFragment";
 
     public SearchFragment() {
         // Required empty public constructor

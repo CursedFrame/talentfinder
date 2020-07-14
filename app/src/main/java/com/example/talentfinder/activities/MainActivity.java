@@ -1,6 +1,7 @@
 package com.example.talentfinder.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView.findViewById(R.id.bottomNavigationMain);
+        bottomNavigationView = findViewById(R.id.bottomNavigationMain);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()){
                     case R.id.action_home_main:
-                        fragment = new HomeFeedFragment();
+                        Log.i(TAG, "Moving to home feed fragment");
+                        fragment = HomeFeedFragment.newInstance();
                         break;
                     case R.id.action_search_main:
                         fragment = new SearchFragment();
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
+                fragmentManager.beginTransaction().replace(R.id.clContainer, fragment).commit();
                 return true;
             }
         });
