@@ -46,13 +46,16 @@ public class MainActivity extends AppCompatActivity {
                         fragment = HomeFeedFragment.newInstance();
                         break;
                     case R.id.action_search_main:
-                        fragment = new SearchFragment();
+                        Log.i(TAG, "Moving to search fragment");
+                        fragment = SearchFragment.newInstance();
                         break;
                     case R.id.action_create_main:
-                        fragment = new CreateFragment();
+                        Log.i(TAG, "Moving to create fragment");
+                        fragment = CreateFragment.newInstance();
                         break;
                     case R.id.action_messages_main:
-                        fragment = new MessagesFragment();
+                        Log.i(TAG, "Moving to messages fragment");
+                        fragment = MessagesFragment.newInstance();
                         break;
                     default:
                         break;
@@ -62,5 +65,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.action_home_main);
+    }
+
+    @Override
+    public void onBackPressed(){
+        if (fragmentManager.getBackStackEntryCount() > 0){
+            Log.i(TAG, "Popping backstack");
+            fragmentManager.popBackStackImmediate();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }

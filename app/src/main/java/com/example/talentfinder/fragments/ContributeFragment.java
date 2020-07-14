@@ -11,16 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talentfinder.R;
 
-public class ProjectFragment extends Fragment {
+public class ContributeFragment extends Fragment {
 
-    public static final String TAG = "ProjectFragment";
-
-    public ProjectFragment() {
+    public ContributeFragment() {
         // Required empty public constructor
     }
 
-    public static ProjectFragment newInstance() {
-        ProjectFragment fragment = new ProjectFragment();
+    public static ContributeFragment newInstance() {
+        ContributeFragment fragment = new ContributeFragment();
 //        Bundle args = new Bundle();
 //        fragment.setArguments(args);
         return fragment;
@@ -30,7 +28,7 @@ public class ProjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        return inflater.inflate(R.layout.fragment_contribute, container, false);
     }
 
     @Override

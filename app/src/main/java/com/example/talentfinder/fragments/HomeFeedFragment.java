@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.talentfinder.HomeFeedProjectsAdapter;
+import com.example.talentfinder.adapters.HomeFeedProjectsAdapter;
 import com.example.talentfinder.R;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
@@ -60,7 +60,7 @@ public class HomeFeedFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvHomeFeed);
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
-        projectsAdapter = new HomeFeedProjectsAdapter(getContext(), projects);
+        projectsAdapter = new HomeFeedProjectsAdapter(getContext(), projects, getFragmentManager());
         recyclerView.setAdapter(projectsAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
