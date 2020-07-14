@@ -17,6 +17,8 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String TAG = "LoginActivity";
+
     List<String> strings;
     List<Project> projects;
     TextView test;
