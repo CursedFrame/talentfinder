@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
+import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Project;
 
 import java.util.List;
@@ -50,35 +53,52 @@ public class HomeFeedProjectsAdapter extends RecyclerView.Adapter<HomeFeedProjec
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
+
+        TextView tvTitle, tvFinderName;
+        ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvFinderName = itemView.findViewById(R.id.tvFinderName);
+            ivFinderProfilePicture = itemView.findViewById(R.id.ivFinderProfilePicture);
+            ivOptionalContext = itemView.findViewById(R.id.ivOptionalContext);
             clFinderProfileContainer = itemView.findViewById(R.id.clFinderProfileContainer);
+        }
 
-            // On project click, take user to that project's detail view
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ProjectFragment projectFragment = ProjectFragment.newInstance();
-                    fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.clContainer, projectFragment).commit();
-                }
-            });
+        public void bind(final Project project){
+            tvTitle.setText(project.getTitle());
+            tvFinderName.setText(project.getUser().getUsername());
+
+            Glide.with(context)
+                    .load(project.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .circleCrop()
+                    .into(ivFinderProfilePicture);
+
+            if (project.getImage() != null) {
+                Glide.with(context)
+                        .load(project.getImage().getUrl())
+                        .into(ivOptionalContext);
+            }
 
             // On profile click, take user to the project creator's user profile page
             clFinderProfileContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProfileFragment profileFragment = ProfileFragment.newInstance();
+                    ProfileFragment profileFragment = ProfileFragment.newInstance(project.getUser());
                     fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.clContainer, profileFragment).commit();
                 }
             });
-        }
 
-        public void bind(Project project){
-            tvTitle.setText(project.getTitle());
+            // On project click, take user to that project's detail view
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProjectFragment projectFragment = ProjectFragment.newInstance(project);
+                    fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.clContainer, projectFragment).commit();
+                }
+            });
         }
     }
 }

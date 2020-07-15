@@ -11,29 +11,39 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.talentfinder.R;
+import com.example.talentfinder.databinding.ActivityMainBinding;
 import com.example.talentfinder.fragments.CreateFragment;
 import com.example.talentfinder.fragments.HomeFeedFragment;
 import com.example.talentfinder.fragments.MessagesFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
 
-    private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationMain);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        try {
+            ParseUser.logIn("dave", "dave");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
+
+        activityMainBinding.bottomNavigationMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Menu menu = bottomNavigationView.getMenu();
+                Menu menu = activityMainBinding.bottomNavigationMain.getMenu();
 //                menu.findItem(R.id.action_home_main);
 //                menu.findItem(R.id.action_search_main);
 //                menu.findItem(R.id.action_create_main);
@@ -65,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_home_main);
+        activityMainBinding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
     }
 
     @Override

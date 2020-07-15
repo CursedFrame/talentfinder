@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.talentfinder.models.Contribution;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
-import com.example.talentfinder.models.Profile;
 import com.example.talentfinder.models.Project;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -17,7 +16,6 @@ public class ParseApplication extends Application {
 
         // Register your parse models
         ParseObject.registerSubclass(Project.class);
-        ParseObject.registerSubclass(Profile.class);
         ParseObject.registerSubclass(Contribution.class);
         ParseObject.registerSubclass(Discussion.class);
         ParseObject.registerSubclass(Message.class);

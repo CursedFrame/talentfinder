@@ -14,6 +14,7 @@ public class Project extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_CONTRIBUTION_COUNT = "contributionCount";
     public static final String KEY_TAGS = "tags";
+    public static final String KEY_DESCRIPTION = "description";
 
 
     // GET/SET User
@@ -59,5 +60,14 @@ public class Project extends ParseObject {
 
     public void setTags(List<String> tags) {
         put(KEY_TAGS, tags);
+    }
+
+    // GET/SET Description
+    public String getDescription(){
+        return getString(KEY_DESCRIPTION);
+    }
+
+    public void setDescription(String description){
+        put(KEY_DESCRIPTION, description);
     }
 }

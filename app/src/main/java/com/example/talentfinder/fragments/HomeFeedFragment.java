@@ -10,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.talentfinder.adapters.HomeFeedProjectsAdapter;
-import com.example.talentfinder.R;
+import com.example.talentfinder.databinding.FragmentHomeFeedBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
 import com.parse.FindCallback;
@@ -28,10 +27,10 @@ public class HomeFeedFragment extends Fragment {
 
     public static final String TAG = "HomeFeedFragment";
 
-    RecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
-    HomeFeedProjectsAdapter projectsAdapter;
-    List<Project> projects;
+    private LinearLayoutManager linearLayoutManager;
+    private HomeFeedProjectsAdapter projectsAdapter;
+    private List<Project> projects;
+    private FragmentHomeFeedBinding binding;
 
     public HomeFeedFragment() {
         // Required empty public constructor
@@ -48,8 +47,10 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_feed, container, false);
+        binding = FragmentHomeFeedBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        return view;
     }
 
     @Override
@@ -57,14 +58,19 @@ public class HomeFeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Recycler view and adapter creation
-        recyclerView = view.findViewById(R.id.rvHomeFeed);
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
         projectsAdapter = new HomeFeedProjectsAdapter(getContext(), projects, getFragmentManager());
-        recyclerView.setAdapter(projectsAdapter);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        binding.rvHomeFeed.setAdapter(projectsAdapter);
+        binding.rvHomeFeed.setLayoutManager(linearLayoutManager);
 
         queryProjects();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     public void queryProjects(){
@@ -72,6 +78,7 @@ public class HomeFeedFragment extends Fragment {
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         query.setLimit(GlobalConstants.PROJECT_LIMIT);
         query.addDescendingOrder(Project.KEY_CREATED_AT);
+        query.include(Project.KEY_USER);
         query.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> objects, ParseException e) {

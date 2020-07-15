@@ -22,10 +22,14 @@
         android:id="@+id/bottomNavigationMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:visibility="visible"
-        app:itemTextColor="#270000"
+        app:itemRippleColor="#6C0606"
+        app:itemTextColor="#DC0303"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_navigation_main" />
 </androidx.constraintlayout.widget.ConstraintLayout>
