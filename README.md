@@ -43,6 +43,7 @@ TalentFinder is an application designed to match project managers (Finders) and 
 * Finder user can post new project
 * Creator user can post media files to database for Finder user project to recieve
 * Users can see feed of available projects
+* User can use tags to filter projects/users
 
 
 
@@ -50,7 +51,6 @@ TalentFinder is an application designed to match project managers (Finders) and 
 
 * User can view other user's profiles and view projects they are a part of
 * User can follow certain projects (video games, animation, etc.)
-* User can use tags to filter projects/users
 * Finder user can post project updates
 * Users can see notifications on project updates (auditioners send audio, projecter managers send updates)
 * Finder user can see feed of users
