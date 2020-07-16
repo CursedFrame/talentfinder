@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    private ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        activityMainBinding.bottomNavigationMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        binding.bottomNavigationMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Menu menu = activityMainBinding.bottomNavigationMain.getMenu();
+                Menu menu = binding.bottomNavigationMain.getMenu();
 //                menu.findItem(R.id.action_home_main);
 //                menu.findItem(R.id.action_search_main);
 //                menu.findItem(R.id.action_create_main);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        activityMainBinding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
+        binding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
     }
 
     @Override

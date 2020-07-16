@@ -11,8 +11,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.FragmentContributeBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Contribution;
@@ -34,6 +37,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -45,6 +50,7 @@ public class ContributeFragment extends Fragment {
     private Project project;
     private FragmentContributeBinding binding;
     private File photoFile;
+    private File videoFile;
     public String photoFileName = "photo.jpg";
 
     public ContributeFragment() {
@@ -85,12 +91,15 @@ public class ContributeFragment extends Fragment {
                     Toast.makeText(getContext(), "One or more fields are empty.", Toast.LENGTH_LONG).show();
                     return;
                 }
-                else if (photoFile == null || binding.ivContributePicture.getDrawable() == null){
-                    Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
+                else if (photoFile == null && videoFile == null){
+                    Toast.makeText(getContext(), "There is no image or video!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else {
+                else if (videoFile == null){
                     saveContribution(userDescription, skillsDescription, currentUser, photoFile);
+                }
+                else {
+                    saveContribution(userDescription, skillsDescription, currentUser, videoFile);
                 }
             }
         });
@@ -105,7 +114,27 @@ public class ContributeFragment extends Fragment {
         binding.btnAttachMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPickPhoto();
+                PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnAttachMedia);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_contribution_file_choice, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.action_photo:
+                                onPickPhoto();
+                                break;
+                            case R.id.action_video:
+                                onPickVideo();
+                                break;
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
             }
         });
     }
@@ -146,7 +175,19 @@ public class ContributeFragment extends Fragment {
         }
     }
 
-    public Bitmap loadFromUri(Uri photoUri) {
+    // Trigger gallery selection for a video
+    public void onPickVideo() {
+        // Create intent for picking a video from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Bring up gallery to select a video
+            startActivityForResult(intent, GlobalConstants.PICK_VIDEO_CODE);
+        }
+    }
+
+    public Bitmap loadImageFromUri(Uri photoUri) {
         Bitmap image = null;
         try {
             if(Build.VERSION.SDK_INT > 27){
@@ -196,12 +237,12 @@ public class ContributeFragment extends Fragment {
             Uri photoUri = data.getData();
 
             // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = loadFromUri(photoUri);
+            Bitmap selectedImage = loadImageFromUri(photoUri);
 
             // Load the selected image into a preview
             binding.ivContributePicture.setImageBitmap(selectedImage);
 
-            // Convert image from bitmap to JPG file
+            // Convert image from bitmap to JPG file and apply to photoFile File
             try {
                 photoFile = bitmapToFile(selectedImage);
             } catch (IOException e) {
@@ -216,8 +257,19 @@ public class ContributeFragment extends Fragment {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+        if ((data != null) && requestCode == GlobalConstants.PICK_VIDEO_CODE) {
+            Uri videoUri = data.getData();
+
+            createTempVideo(videoUri);
+
+            // Load the video located at videoUri into vvContributeVideo
+            binding.vvContributeVideo.setVideoPath(getContext().getCacheDir() + "/video.mp4");
+            binding.vvContributeVideo.start();
+            videoFile = new File(getContext().getCacheDir() + "/video.mp4");
+        }
     }
 
+    // Takes a bitmap and converts it into a File. Used for converting to ParseFile
     public File bitmapToFile(Bitmap bitmap) throws IOException {
         File file = new File(getContext().getCacheDir(), "photo.jpg");
         file.createNewFile();
@@ -232,5 +284,23 @@ public class ContributeFragment extends Fragment {
         fileOutputStream.close();
 
         return file;
+    }
+
+    public void createTempVideo(Uri videoUri){
+        try {
+            File directory = new File(String.valueOf(getContext().getCacheDir()));
+
+            InputStream inputStream = getContext().getContentResolver().openInputStream(videoUri);
+            OutputStream outputStream = new FileOutputStream(new File(directory, "video.mp4"));
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = inputStream.read(bytes)) > 0){
+                outputStream.write(bytes, 0, length);
+            }
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
