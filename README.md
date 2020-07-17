@@ -136,19 +136,103 @@ TalentFinder is an application designed to match project managers (Finders) and 
 # **END UNTIL UNIT 9**
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
+### Login
 
-### [BONUS] Interactive Prototype
+![Screenshot](TalentFinder/screenshots/Login.png)
+
+### Register
+
+![Screenshot](TalentFinder/screenshots/Register.png)
+
+### Home Feed
+
+![Screenshot](TalentFinder/screenshots/HomeFeed.png)
+
+### Profile
+
+![Screenshot](TalentFinder/screenshots/Profile.png)
+
+### Project
+
+![Screenshot](TalentFinder/screenshots/Project.png)
+
+### Create
+
+![Screenshot](TalentFinder/screenshots/CreateProject.png)
+
+### Contribute
+
+![Screenshot](TalentFinder/screenshots/Contribute.png)
+
+### Direct Messages
+
+![Screenshot](TalentFinder/screenshots/DirectMessages.png)
+
+### Start Discussion
+
+![Screenshot](TalentFinder/screenshots/StartDiscussion.png)
+
+### Discussion
+
+![Screenshot](TalentFinder/screenshots/Discussion.png)
+
+### Search
+
+![Screenshot](TalentFinder/screenshots/Search.png)
 
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
-[Add table of models]
+
+#### Project
+
+| Variable Name | Type | Description |
+| -------- | -------- | -------- |
+| user | Pointer<User> | project author |
+| title | String | project title |
+| image | File | optional context image file |
+| contributionCount | Number | number of project contributions |
+| tags | List<String> | tags specified by project creator |
+| description | String | project description |
+
+#### Contribution
+
+| Variable Name | Type | Description |
+| -------- | -------- | -------- |
+| media | File | media attached for contribution (.mp4, .jpg, .wav, etc) |
+| userDescription | String | description of user |
+| skillsDescription | String | description of user skills |
+| user | Pointer<User> | contribution author |
+| project | Pointer<Project> | project that contribution is made for |
+
+#### Discussion
+
+| Variable Name | Type | Description |
+| -------- | -------- | -------- |
+| user | Pointer<User> | user who starts conversation |
+| recipient | Pointer<User> | recipient user |
+| messages | Relation | messages from both parties |
+
+#### Message
+
+| Variable Name | Type | Description |
+| -------- | -------- | -------- |
+| user | Pointer<User> | user sending message |
+| messageContent | String | message content |
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+* (GET) Query projects most recent
+* (GET) Query projects by user
+* (GET) Query discussions
+* (GET) Query profiles by search
+* (GET) Query projects by search
+* (GET) Get profile linked to project
+* (POST) Follow a project
+* (POST) Create project
+* (POST) Create contribution for project
+* (POST) Create discussion
+* (POST) Create message for discussion
+
 >>>>>>> c6b5aa720606332fa751920860f65467fe7602d3
