@@ -20,9 +20,12 @@
 
     <ImageView
         android:id="@+id/ivOptionalContext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivOptionalContext" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/tvDescribeProject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,17 +66,42 @@
         app:layout_constraintTop_toBottomOf="@+id/btnImport" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTags"
         android:layout_width="409dp"
-        android:layout_height="165dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="565dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCreate"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescribeProject"
+        app:layout_constraintStart_toStartOf="@+id/tvTags"
+        app:layout_constraintTop_toBottomOf="@+id/etAddTag" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TextView"
+        android:text="Tags:"
+        app:layout_constraintBottom_toBottomOf="@+id/etAddTag"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDescribeProject" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etAddTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Add tag..."
+        android:inputType="textPersonName"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/tvTags"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescribeProject" />
 </androidx.constraintlayout.widget.ConstraintLayout>
