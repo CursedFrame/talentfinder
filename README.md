@@ -139,47 +139,47 @@ TalentFinder is an application designed to match project managers (Finders) and 
 
 ### Login
 
-![Screenshot](TalentFinder/screenshots/Login.png)
+![Screenshot](screenshots/Login.png)
 
 ### Register
 
-![Screenshot](TalentFinder/screenshots/Register.png)
+![Screenshot](screenshots/Register.png)
 
 ### Home Feed
 
-![Screenshot](TalentFinder/screenshots/HomeFeed.png)
+![Screenshot](screenshots/HomeFeed.png)
 
 ### Profile
 
-![Screenshot](TalentFinder/screenshots/Profile.png)
+![Screenshot](screenshots/Profile.png)
 
 ### Project
 
-![Screenshot](TalentFinder/screenshots/Project.png)
+![Screenshot](screenshots/Project.png)
 
 ### Create
 
-![Screenshot](TalentFinder/screenshots/CreateProject.png)
+![Screenshot](screenshots/CreateProject.png)
 
 ### Contribute
 
-![Screenshot](TalentFinder/screenshots/Contribute.png)
+![Screenshot](screenshots/Contribute.png)
 
 ### Direct Messages
 
-![Screenshot](TalentFinder/screenshots/DirectMessages.png)
+![Screenshot](screenshots/DirectMessages.png)
 
 ### Start Discussion
 
-![Screenshot](TalentFinder/screenshots/StartDiscussion.png)
+![Screenshot](screenshots/StartDiscussion.png)
 
 ### Discussion
 
-![Screenshot](TalentFinder/screenshots/Discussion.png)
+![Screenshot](screenshots/Discussion.png)
 
 ### Search
 
-![Screenshot](TalentFinder/screenshots/Search.png)
+![Screenshot](screenshots/Search.png)
 
 ## Schema 
 
