@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.talentfinder.adapters.HomeFeedProjectsAdapter;
+import com.example.talentfinder.adapters.ProjectsAdapter;
 import com.example.talentfinder.databinding.FragmentHomeFeedBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
@@ -28,9 +29,10 @@ public class HomeFeedFragment extends Fragment {
     public static final String TAG = "HomeFeedFragment";
 
     private LinearLayoutManager linearLayoutManager;
-    private HomeFeedProjectsAdapter projectsAdapter;
+    private ProjectsAdapter projectsAdapter;
     private List<Project> projects;
     private FragmentHomeFeedBinding binding;
+    private DividerItemDecoration dividerItemDecoration;
 
     public HomeFeedFragment() {
         // Required empty public constructor
@@ -57,12 +59,18 @@ public class HomeFeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         // Recycler view and adapter creation
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
-        projectsAdapter = new HomeFeedProjectsAdapter(getContext(), projects, getFragmentManager());
+        projectsAdapter = new ProjectsAdapter(getContext(), projects, getFragmentManager());
         binding.rvHomeFeed.setAdapter(projectsAdapter);
         binding.rvHomeFeed.setLayoutManager(linearLayoutManager);
+
+        // Add divider for RecyclerView
+        dividerItemDecoration = new DividerItemDecoration(binding.rvHomeFeed.getContext(), linearLayoutManager.getOrientation());
+        binding.rvHomeFeed.addItemDecoration(dividerItemDecoration);
 
         queryProjects();
     }

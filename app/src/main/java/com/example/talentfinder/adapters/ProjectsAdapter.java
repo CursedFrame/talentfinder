@@ -21,13 +21,13 @@ import com.example.talentfinder.models.Project;
 
 import java.util.List;
 
-public class HomeFeedProjectsAdapter extends RecyclerView.Adapter<HomeFeedProjectsAdapter.ViewHolder> {
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
 
     Context context;
     List<Project> projects;
     FragmentManager fragmentManager;
 
-    public HomeFeedProjectsAdapter(Context context, List<Project> projects, FragmentManager fragmentManager){
+    public ProjectsAdapter(Context context, List<Project> projects, FragmentManager fragmentManager){
         this.context = context;
         this.projects = projects;
         this.fragmentManager = fragmentManager;

@@ -75,7 +75,7 @@ public class ProjectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(project.getUser());
-                fragmentManager.beginTransaction().addToBackStack(startDiscussionDialogFragment.getTag()).replace(R.id.clContainer, startDiscussionDialogFragment).commit();
+                startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
             }
         });
 

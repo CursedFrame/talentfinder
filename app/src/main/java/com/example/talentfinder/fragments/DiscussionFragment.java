@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.talentfinder.R;
+import com.example.talentfinder.models.Discussion;
 
 public class DiscussionFragment extends Fragment {
 
@@ -17,10 +18,11 @@ public class DiscussionFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DiscussionFragment newInstance() {
+    public static DiscussionFragment newInstance(Discussion discussion) {
         DiscussionFragment fragment = new DiscussionFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putParcelable("discussion", discussion);
+        fragment.setArguments(args);
         return fragment;
     }
 

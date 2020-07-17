@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
@@ -18,6 +19,7 @@ public class ProfileFragment extends Fragment {
 
     private ParseUser user;
     private FragmentProfileBinding binding;
+    private FragmentManager fragmentManager;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -43,6 +45,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        fragmentManager = getFragmentManager();
+
         Bundle bundle = getArguments();
         user = bundle.getParcelable("user");
 
@@ -55,6 +60,17 @@ public class ProfileFragment extends Fragment {
                 .load(user.getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
                 .circleCrop()
                 .into(binding.ivProfilePicture);
+
+        // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
+        binding.btnStartDiscussion.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
+                startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+            }
+        });
     }
 
     @Override
