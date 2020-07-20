@@ -14,7 +14,7 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.ActivityMainBinding;
 import com.example.talentfinder.fragments.CreateFragment;
 import com.example.talentfinder.fragments.HomeFeedFragment;
-import com.example.talentfinder.fragments.MessagesFragment;
+import com.example.talentfinder.fragments.DirectMessagesFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseException;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         try {
-            ParseUser.logIn("nicholas", "nicholas");
+            ParseUser.logIn("dave", "dave");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_messages_main:
                         Log.i(TAG, "Moving to messages fragment");
-                        fragment = MessagesFragment.newInstance();
+                        fragment = DirectMessagesFragment.newInstance();
                         break;
                     default:
                         break;

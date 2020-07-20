@@ -59,8 +59,6 @@ public class HomeFeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         // Recycler view and adapter creation
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();

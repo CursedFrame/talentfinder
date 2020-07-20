@@ -64,7 +64,6 @@ public class StartDiscussionDialogFragment extends DialogFragment {
         recipientUser = getArguments().getParcelable("user");
 
         binding.tvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getString(Key_ParseUser.PROFILE_NAME)));
-
         // On button send message click, create message and then discussion
         binding.btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
