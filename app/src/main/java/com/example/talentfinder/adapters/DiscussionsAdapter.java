@@ -86,17 +86,29 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                 }
             });
 
-            // Load recipient user profile image
-            Glide.with(context)
-                    .load(discussion.getRecipient().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                    .circleCrop()
-                    .into(ivDiscussionRecipientUser);
+            /* Set opposite user's image and name */
+            // If "user" field equals the current user, load the "recipient" user's profile image
+            if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                Glide.with(context)
+                        .load(discussion.getRecipient().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                        .circleCrop()
+                        .into(ivDiscussionRecipientUser);
 
-            // Set recipient user name
-            tvDiscussionRecipientUser.setText(discussion.getRecipient().getString(Key_ParseUser.PROFILE_NAME));
+                tvDiscussionRecipientUser.setText(discussion.getRecipient().getString(Key_ParseUser.PROFILE_NAME));
+            }
+
+            // Else, load the "user" user's profile image
+            else {
+                Glide.with(context)
+                        .load(discussion.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                        .circleCrop()
+                        .into(ivDiscussionRecipientUser);
+
+                tvDiscussionRecipientUser.setText(discussion.getUser().getString(Key_ParseUser.PROFILE_NAME));
+            }
 
             // Get latest message in the discussion
-            discussion.getRelation("messages").getQuery()
+            discussion.getRelation(Discussion.KEY_MESSAGES).getQuery()
                     .orderByDescending(Message.KEY_CREATED_AT)
                     .include(Message.KEY_USER)
                     .getFirstInBackground(new GetCallback<ParseObject>() {

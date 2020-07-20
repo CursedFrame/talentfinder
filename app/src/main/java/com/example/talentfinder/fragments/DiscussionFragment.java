@@ -1,18 +1,42 @@
 package com.example.talentfinder.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.talentfinder.R;
+import com.bumptech.glide.Glide;
+import com.example.talentfinder.adapters.MessagesAdapter;
+import com.example.talentfinder.databinding.FragmentDiscussionBinding;
+import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Discussion;
+import com.example.talentfinder.models.Message;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiscussionFragment extends Fragment {
+
+    public static final String TAG = "DiscussionFragment";
+
+    FragmentDiscussionBinding binding;
+    Discussion discussion;
+    List<Message> messages;
+    MessagesAdapter messagesAdapter;
+    LinearLayoutManager linearLayoutManager;
 
     public DiscussionFragment() {
         // Required empty public constructor
@@ -29,12 +53,95 @@ public class DiscussionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discussion, container, false);
+        binding = FragmentDiscussionBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        discussion = getArguments().getParcelable("discussion");
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        messages = new ArrayList<>();
+        messagesAdapter = new MessagesAdapter(getContext(), messages);
+        binding.rvMessages.setAdapter(messagesAdapter);
+        binding.rvMessages.setLayoutManager(linearLayoutManager);
+
+        if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
+            Glide.with(getContext())
+                    .load(discussion.getRecipient().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .circleCrop()
+                    .into(binding.ivOppositeUserImage);
+
+            binding.tvOppositeUserName.setText(discussion.getRecipient().getString(Key_ParseUser.PROFILE_NAME));
+        }
+        else {
+            Glide.with(getContext())
+                    .load(discussion.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .circleCrop()
+                    .into(binding.ivOppositeUserImage);
+
+            binding.tvOppositeUserName.setText(discussion.getUser().getString(Key_ParseUser.PROFILE_NAME));
+        }
+
+        // On "send" button click, create a new message, relate it to discussion, and upload to server
+        binding.btnSendNewMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Message cannot be empty
+                if (binding.etNewMessageContent.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Message cannot be empty!", Toast.LENGTH_SHORT);
+                    return;
+                }
+                final Message message = new Message();
+                message.setUser(ParseUser.getCurrentUser());
+                message.setMessageContent(binding.etNewMessageContent.getText().toString());
+                message.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Message was not saved", e);
+                            return;
+                        }
+                        discussion.getRelation("messages").add(message);
+                        discussion.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null){
+                                    Log.e(TAG, "Discussion was not saved", e);
+                                    return;
+                                }
+                                messages.add(message);
+                                messagesAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        queryMessages();
+    }
+
+    public void queryMessages(){
+        ParseQuery<ParseObject> query = discussion.getRelation(Discussion.KEY_MESSAGES).getQuery();
+        query.orderByAscending(Message.KEY_CREATED_AT);
+        query.include(Message.KEY_USER);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error loading messages", e);
+                    return;
+                }
+                for (ParseObject object : objects){
+                    messages.add((Message) object);
+                }
+                messagesAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

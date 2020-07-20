@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         try {
-            ParseUser.logIn("dave", "dave");
+            ParseUser.logIn("nicholas", "nicholas");
         } catch (ParseException e) {
             e.printStackTrace();
         }

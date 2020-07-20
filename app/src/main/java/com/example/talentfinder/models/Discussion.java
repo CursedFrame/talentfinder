@@ -8,6 +8,7 @@ import com.parse.ParseUser;
 public class Discussion extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_RECIPIENT = "recipient";
+    public static final String KEY_MESSAGES = "messages";
 
     // GET/SET User
     public ParseUser getUser(){
