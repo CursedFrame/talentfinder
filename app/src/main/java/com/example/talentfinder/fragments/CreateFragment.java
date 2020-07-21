@@ -17,8 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.talentfinder.adapters.EntryChipAdapter;
+import com.example.talentfinder.R;
+import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
@@ -40,10 +42,11 @@ public class CreateFragment extends Fragment {
     public static final String TAG = "CreateFragment";
 
     private FragmentCreateBinding binding;
+    private LinearLayoutManager linearLayoutManager;
     private File photoFile;
     private List<String> tags;
     private FragmentManager fragmentManager;
-    private EntryChipAdapter entryChipAdapter;
+    private ChipAdapter tagsAdapter;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -71,7 +74,11 @@ public class CreateFragment extends Fragment {
 
         fragmentManager = getFragmentManager();
 
+        linearLayoutManager = new LinearLayoutManager(getContext());
         tags = new ArrayList<>();
+        tagsAdapter = new ChipAdapter(getContext(), tags, GlobalConstants.CHIP_ENTRY);
+        binding.rvTags.setAdapter(tagsAdapter);
+        binding.rvTags.setLayoutManager(linearLayoutManager);
 
         binding.btnImport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +93,7 @@ public class CreateFragment extends Fragment {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
                     tags.add(binding.etAddTag.getText().toString());
                     binding.etAddTag.setText("");
+                    tagsAdapter.notifyDataSetChanged();
                     return true;
                 }
                 return false;
@@ -98,7 +106,9 @@ public class CreateFragment extends Fragment {
                 Project project = new Project();
                 project.setUser(ParseUser.getCurrentUser());
                 project.setTitle(binding.etProjectTitle.getText().toString());
-                project.setImage(new ParseFile(photoFile));
+                if (photoFile != null) {
+                    project.setImage(new ParseFile(photoFile));
+                }
                 project.setDescription(binding.tvDescribeProject.getText().toString());
                 project.setTags(tags);
                 project.setContributionCount(0);
@@ -110,7 +120,8 @@ public class CreateFragment extends Fragment {
                             return;
                         }
                         Log.i(TAG, "Contribution saved successfully");
-                        fragmentManager.popBackStackImmediate();
+                        Fragment fragment = HomeFeedFragment.newInstance();
+                        fragmentManager.beginTransaction().replace(R.id.clContainer, fragment).commit();
                     }
                 });
             }

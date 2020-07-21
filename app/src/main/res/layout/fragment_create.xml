@@ -67,11 +67,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTags"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btnCreate"
         app:layout_constraintEnd_toEndOf="@+id/tvDescribeProject"
-        app:layout_constraintStart_toStartOf="@+id/tvTags"
+        app:layout_constraintStart_toStartOf="@+id/tvDescribeProject"
         app:layout_constraintTop_toBottomOf="@+id/etAddTag" />
 
     <TextView

@@ -9,8 +9,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.talentfinder.adapters.EntryChipAdapter;
+import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.ActivityRegisterBinding;
+import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -28,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager;
     List<String> skills;
-    EntryChipAdapter skillsAdapter;
+    ChipAdapter skillsAdapter;
 
     ActivityRegisterBinding binding;
 
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Recycler view and adapter creation
         linearLayoutManager = new LinearLayoutManager(this);
         skills = new ArrayList<>();
-        skillsAdapter = new EntryChipAdapter(this, skills);
+        skillsAdapter = new ChipAdapter(this, skills, GlobalConstants.CHIP_ENTRY);
         binding.rvSkills.setAdapter(skillsAdapter);
         binding.rvSkills.setLayoutManager(linearLayoutManager);
 

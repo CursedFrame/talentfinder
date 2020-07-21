@@ -6,4 +6,5 @@ public interface Key_ParseUser {
     public static final String PROFILE_LOCATION = "location";
     public static final String PROFILE_SKILLS_EXPERIENCE = "skillsExperience";
     public static final String CURRENT_DISCUSSIONS = "currentDiscussions";
+    public static final String CURRENT_PROJECTS = "currentProjects";
 }

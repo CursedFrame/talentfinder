@@ -2,6 +2,7 @@ package com.example.talentfinder.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,23 +14,36 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.activities.LoginActivity;
+import com.example.talentfinder.adapters.ProjectPreviewAdapter;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
 import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Discussion;
+import com.example.talentfinder.models.Project;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileFragment extends Fragment {
+
+    public static final String TAG = "ProfileFragment";
 
     private ParseUser user;
     private FragmentProfileBinding binding;
     private FragmentManager fragmentManager;
+    private List<Project> projects;
+    private LinearLayoutManager linearLayoutManager;
+    private ProjectPreviewAdapter projectPreviewAdapter;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,11 +75,19 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         user = bundle.getParcelable("user");
 
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        projects = new ArrayList<>();
+        projectPreviewAdapter = new ProjectPreviewAdapter(getContext(), projects);
+        binding.rvProjects.setAdapter(projectPreviewAdapter);
+        binding.rvProjects.setLayoutManager(linearLayoutManager);
+
+        // Bind user name and location
         binding.tvProfileName.setText(user.getString(Key_ParseUser.PROFILE_NAME));
         if (user.getString(Key_ParseUser.PROFILE_LOCATION) != null){
             binding.tvProfileLocation.setText(user.getString(Key_ParseUser.PROFILE_LOCATION));
         }
 
+        // Bind user profile picture
         Glide.with(getContext())
                 .load(user.getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
                 .circleCrop()
@@ -83,70 +105,94 @@ public class ProfileFragment extends Fragment {
         binding.btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnSettings);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.action_log_out:
-                                ParseUser.logOut();
-                                goLoginActivity();
-                                break;
-                            default:
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                popupMenu.show();
+                createSettingsPopUpMenu();
             }
         });
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
         binding.btnStartDiscussion.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-                // Get discussion where "user" is the current user and "recipient" is the recipient user
+                startDiscussion();
+            }
+        });
 
-                final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
-                query.whereEqualTo("user", ParseUser.getCurrentUser());
-                query.whereEqualTo("recipient", user);
-                query.getFirstInBackground(new GetCallback<Discussion>() {
-                    @Override
-                    public void done(Discussion object, ParseException e) {
-                        // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
+        getProjects();
+    }
 
-                        if (e != null){
-                            query.whereEqualTo("recipient", ParseUser.getCurrentUser());
-                            query.whereEqualTo("user", user);
-                            query.getFirstInBackground(new GetCallback<Discussion>() {
-                                @Override
-                                public void done(Discussion object, ParseException e) {
-                                    // If discussion does not exist between two users, allow current user to create a discussion
 
-                                    if (e != null){
-                                        StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
-                                        startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
-                                        return;
-                                    }
+    private void getProjects(){
+        ParseQuery<ParseObject> query = user.getRelation(Key_ParseUser.CURRENT_PROJECTS).getQuery();
+        query.orderByAscending(Project.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error getting user projects", e);
+                    return;
+                }
 
-                                    Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            });
+                for (ParseObject object : objects){
+                    projects.add((Project) object);
+                }
+                projectPreviewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+    private void createSettingsPopUpMenu(){
+        PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnSettings);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
 
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_log_out:
+                        ParseUser.logOut();
+                        goLoginActivity();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    private void startDiscussion(){
+        // Get discussion where "user" is the current user and "recipient" is the recipient user
+        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("recipient", user);
+        query.getFirstInBackground(new GetCallback<Discussion>() {
+            @Override
+            public void done(Discussion object, ParseException e) {
+                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
+                if (e != null){
+                    query.whereEqualTo("recipient", ParseUser.getCurrentUser());
+                    query.whereEqualTo("user", user);
+                    query.getFirstInBackground(new GetCallback<Discussion>() {
+                        @Override
+                        public void done(Discussion object, ParseException e) {
+                            // If discussion does not exist between two users, allow current user to create a discussion
+                            if (e != null){
+                                StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
+                                startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+                                return;
+                            }
+
+                            Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                    });
 
-                        Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                });
+                    return;
+                }
+
+                Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
     }

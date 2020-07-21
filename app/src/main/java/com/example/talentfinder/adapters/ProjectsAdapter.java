@@ -54,7 +54,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-
         TextView tvTitle, tvFinderName;
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
