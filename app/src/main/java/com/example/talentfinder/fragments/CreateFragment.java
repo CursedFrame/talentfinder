@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.talentfinder.adapters.EntryChipAdapter;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
@@ -42,6 +43,7 @@ public class CreateFragment extends Fragment {
     private File photoFile;
     private List<String> tags;
     private FragmentManager fragmentManager;
+    private EntryChipAdapter entryChipAdapter;
 
     public CreateFragment() {
         // Required empty public constructor

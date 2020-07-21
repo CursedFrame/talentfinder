@@ -15,8 +15,10 @@ import com.example.talentfinder.databinding.ActivityMainBinding;
 import com.example.talentfinder.fragments.CreateFragment;
 import com.example.talentfinder.fragments.DirectMessagesFragment;
 import com.example.talentfinder.fragments.HomeFeedFragment;
+import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_messages_main:
                         Log.i(TAG, "Moving to messages fragment");
                         fragment = DirectMessagesFragment.newInstance();
+                        break;
+                    case R.id.action_profile:
+                        Log.i(TAG, "Moving to profile fragment");
+                        fragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
                         break;
                     default:
                         break;

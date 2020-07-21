@@ -13,14 +13,14 @@ import com.google.android.material.chip.Chip;
 
 import java.util.List;
 
-public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder> {
+public class EntryChipAdapter extends RecyclerView.Adapter<EntryChipAdapter.ViewHolder> {
 
-    public static final String TAG = "SkillsAdapter";
+    public static final String TAG = "EntryChipAdapter";
 
     Context context;
     List<String> skills;
 
-    public SkillsAdapter(Context context, List<String> skills) {
+    public EntryChipAdapter(Context context, List<String> skills) {
         this.context = context;
         this.skills = skills;
     }

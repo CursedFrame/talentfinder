@@ -26,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (ParseUser.getCurrentUser() != null){
+            goMainActivity();
+        }
+
         setOnClickBtnLogin();
         setOnClickTvRegisterUser();
     }
@@ -52,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "One or more fields are incorrect.", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        goMainActivity();
                     }
                 });
             }
@@ -64,9 +67,18 @@ public class LoginActivity extends AppCompatActivity {
         binding.tvRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                goRegisterActivity();
             }
         });
+    }
+
+    public void goMainActivity(){
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void goRegisterActivity(){
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 }

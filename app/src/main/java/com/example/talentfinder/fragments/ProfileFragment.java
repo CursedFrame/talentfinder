@@ -1,9 +1,12 @@
 package com.example.talentfinder.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.talentfinder.R;
+import com.example.talentfinder.activities.LoginActivity;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
 import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Discussion;
@@ -66,10 +71,39 @@ public class ProfileFragment extends Fragment {
                 .circleCrop()
                 .into(binding.ivProfilePicture);
 
-        // If the profile user is the current user, don't show the "Start Discussion" button
+        // If the profile user is the current user, show settings icon, but dont show "Start Discussion" button
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
             binding.btnStartDiscussion.setVisibility(View.GONE);
         }
+        else {
+            binding.btnSettings.setVisibility(View.GONE);
+        }
+
+        // On Settings button click, open drop down menu for settings
+        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnSettings);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.action_log_out:
+                                ParseUser.logOut();
+                                goLoginActivity();
+                                break;
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+            }
+        });
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
         binding.btnStartDiscussion.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +149,11 @@ public class ProfileFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void goLoginActivity(){
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

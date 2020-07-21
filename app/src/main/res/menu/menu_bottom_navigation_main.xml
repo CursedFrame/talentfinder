@@ -22,4 +22,8 @@
         android:title="Messages"
         android:visible="true"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        app:showAsAction="always" />
 </menu>
