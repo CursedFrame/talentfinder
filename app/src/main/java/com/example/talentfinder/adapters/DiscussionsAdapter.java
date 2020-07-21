@@ -78,36 +78,19 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
         public void bind(final Discussion discussion){
 
             // On discussion click, open that discussion
-            clDiscussion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-                    fragmentManager.beginTransaction().replace(R.id.clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
-                }
-            });
+            setOnClickClDiscussion(discussion);
 
-            /* Set opposite user's image and name */
-            // If "user" field equals the current user, load the "recipient" user's profile image
+            // Set oppositeUser's image and name to imageview and textview
+            ParseUser oppositeUser;
             if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                Glide.with(context)
-                        .load(discussion.getRecipient().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                        .circleCrop()
-                        .into(ivDiscussionRecipientUser);
-
-                tvDiscussionRecipientUser.setText(discussion.getRecipient().getString(Key_ParseUser.PROFILE_NAME));
+                oppositeUser = discussion.getRecipient();
             }
-
-            // Else, load the "user" user's profile image
             else {
-                Glide.with(context)
-                        .load(discussion.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                        .circleCrop()
-                        .into(ivDiscussionRecipientUser);
-
-                tvDiscussionRecipientUser.setText(discussion.getUser().getString(Key_ParseUser.PROFILE_NAME));
+                oppositeUser = discussion.getUser();
             }
+            loadProfilePicture(oppositeUser);
 
-            // Get latest message in the discussion
+            // Get latest message in the discussion and bind
             discussion.getRelation(Discussion.KEY_MESSAGES).getQuery()
                     .orderByDescending(Message.KEY_CREATED_AT)
                     .include(Message.KEY_USER)
@@ -118,20 +101,45 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                                 Log.e(TAG, "Unable to get most recent message", e);
                             }
 
-                            // If message user equals the current user output "You: {message content}" as message preview text
-                            else if (object.getParseUser(Message.KEY_USER).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                                tvDiscussionMessageContent.setText(context.getString(R.string.message_current_user, object.getString(Message.KEY_MESSAGE_CONTENT)));
-                                tvDiscussionMessageTimestamp.setText(object.getString(Message.KEY_CREATED_AT));
-                                return;
+                            else {
+                                loadMessageContent(object);
                             }
-
-                            // Else output "{recipient user}: {message content}" as message preview text
-                            tvDiscussionMessageContent.setText(context.getString(R.string.message_recipient_user,
-                                    object.getParseUser(Message.KEY_USER).getString(Key_ParseUser.PROFILE_NAME) ,
-                                    object.getString(Message.KEY_MESSAGE_CONTENT)));
-                            tvDiscussionMessageTimestamp.setText(object.getString(Message.KEY_CREATED_AT));
                         }
                     });
+        }
+
+        public void setOnClickClDiscussion(final Discussion discussion){
+            clDiscussion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
+                    fragmentManager.beginTransaction().replace(R.id.clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
+                }
+            });
+        }
+
+        public void loadProfilePicture(ParseUser user){
+            Glide.with(context)
+                    .load(user.getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .circleCrop()
+                    .into(ivDiscussionRecipientUser);
+
+            tvDiscussionRecipientUser.setText(user.getString(Key_ParseUser.PROFILE_NAME));
+        }
+
+        public void loadMessageContent(ParseObject object){
+            // If message user equals the current user output "You: {message content}" as message preview text
+            if (object.getParseUser(Message.KEY_USER).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                tvDiscussionMessageContent.setText(context.getString(R.string.message_current_user, object.getString(Message.KEY_MESSAGE_CONTENT)));
+            }
+
+            // Else output "{recipient user}: {message content}" as message preview text
+            else {
+                tvDiscussionMessageContent.setText(context.getString(R.string.message_recipient_user,
+                        object.getParseUser(Message.KEY_USER).getString(Key_ParseUser.PROFILE_NAME),
+                        object.getString(Message.KEY_MESSAGE_CONTENT)));
+            }
+            tvDiscussionMessageTimestamp.setText(object.getString(Message.KEY_CREATED_AT));
         }
     }
 }

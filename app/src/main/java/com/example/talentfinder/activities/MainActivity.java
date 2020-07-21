@@ -13,12 +13,10 @@ import androidx.fragment.app.FragmentManager;
 import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.ActivityMainBinding;
 import com.example.talentfinder.fragments.CreateFragment;
-import com.example.talentfinder.fragments.HomeFeedFragment;
 import com.example.talentfinder.fragments.DirectMessagesFragment;
+import com.example.talentfinder.fragments.HomeFeedFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.ParseException;
-import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,15 +29,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            ParseUser.logIn("nicholas", "nicholas");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setOnClickBottomNavigationMain();
+        binding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
+    }
+
+    public void setOnClickBottomNavigationMain(){
         binding.bottomNavigationMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        binding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
     }
 
     @Override

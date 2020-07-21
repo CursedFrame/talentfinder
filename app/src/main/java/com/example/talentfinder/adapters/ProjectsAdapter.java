@@ -18,6 +18,7 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
 import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Project;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -68,30 +69,44 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         }
 
         public void bind(final Project project){
+
+            bindProjectData(project);
+
+            // On profile click, take user to the project creator's user profile page
+            setOnClickClFinderProfileContainer(project.getUser());
+
+            // On project click, take user to that project's detail view
+            setOnClickItemView(project);
+        }
+
+        public void bindProjectData(Project project){
             tvTitle.setText(project.getTitle());
             tvFinderName.setText(project.getUser().getUsername());
 
-            Glide.with(context)
-                    .load(project.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                    .circleCrop()
-                    .into(ivFinderProfilePicture);
-
+            if (project.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl() != null) {
+                Glide.with(context)
+                        .load(project.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                        .circleCrop()
+                        .into(ivFinderProfilePicture);
+            }
             if (project.getImage() != null) {
                 Glide.with(context)
                         .load(project.getImage().getUrl())
                         .into(ivOptionalContext);
             }
+        }
 
-            // On profile click, take user to the project creator's user profile page
+        public void setOnClickClFinderProfileContainer(final ParseUser user){
             clFinderProfileContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProfileFragment profileFragment = ProfileFragment.newInstance(project.getUser());
+                    ProfileFragment profileFragment = ProfileFragment.newInstance(user);
                     fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.clContainer, profileFragment).commit();
                 }
             });
+        }
 
-            // On project click, take user to that project's detail view
+        public void setOnClickItemView(final Project project){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

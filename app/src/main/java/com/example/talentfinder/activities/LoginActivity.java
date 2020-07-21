@@ -4,72 +4,69 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.talentfinder.R;
-import com.example.talentfinder.models.Project;
-import com.parse.FindCallback;
+import com.example.talentfinder.databinding.ActivityLoginBinding;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
 
-    List<String> strings;
-    List<Project> projects;
-    TextView test;
-    Button btnLogin;
+    ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        btnLogin = findViewById(R.id.btnLogin);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        strings = new ArrayList<>();
-        projects = new ArrayList<>();
+        setOnClickBtnLogin();
+        setOnClickTvRegisterUser();
+    }
 
-        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
-
-        query.findInBackground(new FindCallback<Project>() {
+    // On "login" button click, check to see if user info is correct and if so, navigate to MainActivity
+    public void setOnClickBtnLogin(){
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void done(List<Project> objects, ParseException e) {
-                if (e != null){
-                    Log.e("oh no", "Issue with getting posts", e);
+            public void onClick(View v) {
+
+                String username = binding.etUsername.getText().toString();
+                String password = binding.etPassword.getText().toString();
+
+                if (username.isEmpty() || password.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Username or password cannot be empty.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                projects.addAll(objects);
-
-                strings = projects.get(0).getTags();
-
-                test = findViewById(R.id.texttest);
-
-                String bigstring = "";
-
-                for (String string : strings){
-                    bigstring += string;
-                }
-
-                test.setText(bigstring);
+                ParseUser.logInInBackground(username, password, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Log in failed");
+                            Toast.makeText(LoginActivity.this, "One or more fields are incorrect.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
+    }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+    public void setOnClickTvRegisterUser(){
+        binding.tvRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 }

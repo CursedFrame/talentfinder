@@ -73,27 +73,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 setConstraintsCurrentUserMessage(constraintSet);
                 constraintSet.applyTo(clMessage);
 
-                Glide.with(context)
-                        .load(message.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                        .circleCrop()
-                        .into(ivMessageUserImage);
-
-                tvMessageContent.setText(getMessageString(message));
             }
 
             // Else, bind left
-            else {
-
-                Glide.with(context)
-                        .load(message.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                        .circleCrop()
-                        .into(ivMessageUserImage);
-
-                tvMessageContent.setText(getMessageString(message));
-            }
+            Glide.with(context)
+                    .load(message.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .circleCrop()
+                    .into(ivMessageUserImage);
+            tvMessageContent.setText(getMessageString(message));
         }
     }
 
+    // Function for returning specially formatted string with bold user name
     public SpannableStringBuilder getMessageString(Message message){
         String messageUserName = message.getUser().getString(Key_ParseUser.PROFILE_NAME);
         SpannableStringBuilder messageText = new SpannableStringBuilder( messageUserName + ": " + message.getMessageContent());
@@ -102,6 +93,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         return messageText;
     }
 
+    // Setting constraints for current user's message
     public void setConstraintsCurrentUserMessage(ConstraintSet constraintSet){
         constraintSet.clear(R.id.ivMessageUserImage, ConstraintSet.START);
         constraintSet.connect(R.id.ivMessageUserImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);

@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.talentfinder.adapters.DiscussionsAdapter;
 import com.example.talentfinder.databinding.FragmentDirectMessagesBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
+import com.example.talentfinder.interfaces.Key_ParseUser;
 import com.example.talentfinder.models.Discussion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,20 +76,22 @@ public class DirectMessagesFragment extends Fragment {
     }
 
     public void queryDiscussions(){
-        ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
+        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(Key_ParseUser.CURRENT_DISCUSSIONS).getQuery();
         query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
         query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
         query.include(Discussion.KEY_USER);
         query.include(Discussion.KEY_RECIPIENT);
-        query.findInBackground(new FindCallback<Discussion>() {
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<Discussion> objects, ParseException e) {
+            public void done(List<ParseObject> objects, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error loading discussions", e);
                     return;
                 }
 
-                discussions.addAll(objects);
+                for (ParseObject object : objects){
+                    discussions.add((Discussion) object);
+                }
                 discussionsAdapter.notifyDataSetChanged();
             }
         });
