@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.adapters.MessagesAdapter;
 import com.example.talentfinder.databinding.FragmentDiscussionBinding;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
 import com.parse.FindCallback;
@@ -67,38 +67,38 @@ public class DiscussionFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         messages = new ArrayList<>();
         messagesAdapter = new MessagesAdapter(getContext(), messages);
-        binding.rvMessages.setAdapter(messagesAdapter);
-        binding.rvMessages.setLayoutManager(linearLayoutManager);
+        binding.fragmentDiscussionRvMessages.setAdapter(messagesAdapter);
+        binding.fragmentDiscussionRvMessages.setLayoutManager(linearLayoutManager);
 
         if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
             Glide.with(getContext())
-                    .load(discussion.getRecipient().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .load(discussion.getRecipient().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                     .circleCrop()
-                    .into(binding.ivOppositeUserImage);
+                    .into(binding.fragmentDiscussionIvOppositeUserImage);
 
-            binding.tvOppositeUserName.setText(discussion.getRecipient().getString(Key_ParseUser.PROFILE_NAME));
+            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getRecipient().getString(ParseUserKey.PROFILE_NAME));
         }
         else {
             Glide.with(getContext())
-                    .load(discussion.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .load(discussion.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                     .circleCrop()
-                    .into(binding.ivOppositeUserImage);
+                    .into(binding.fragmentDiscussionIvOppositeUserImage);
 
-            binding.tvOppositeUserName.setText(discussion.getUser().getString(Key_ParseUser.PROFILE_NAME));
+            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getUser().getString(ParseUserKey.PROFILE_NAME));
         }
 
         // On "send" button click, create a new message, relate it to discussion, and upload to server
-        binding.btnSendNewMessage.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentDiscussionBtnSendNewMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Message cannot be empty
-                if (binding.etNewMessageContent.getText().toString().isEmpty()){
+                if (binding.fragmentDiscussionEtNewMessageContent.getText().toString().isEmpty()){
                     Toast.makeText(getContext(), "Message cannot be empty!", Toast.LENGTH_SHORT);
                     return;
                 }
                 final Message message = new Message();
                 message.setUser(ParseUser.getCurrentUser());
-                message.setMessageContent(binding.etNewMessageContent.getText().toString());
+                message.setMessageContent(binding.fragmentDiscussionEtNewMessageContent.getText().toString());
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

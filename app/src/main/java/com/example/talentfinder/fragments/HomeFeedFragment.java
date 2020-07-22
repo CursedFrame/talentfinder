@@ -63,12 +63,12 @@ public class HomeFeedFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
         projectsAdapter = new ProjectsAdapter(getContext(), projects, getFragmentManager());
-        binding.rvHomeFeed.setAdapter(projectsAdapter);
-        binding.rvHomeFeed.setLayoutManager(linearLayoutManager);
+        binding.fragmentHomeFeedRvHomeFeed.setAdapter(projectsAdapter);
+        binding.fragmentHomeFeedRvHomeFeed.setLayoutManager(linearLayoutManager);
 
         // Add divider for RecyclerView
-        dividerItemDecoration = new DividerItemDecoration(binding.rvHomeFeed.getContext(), linearLayoutManager.getOrientation());
-        binding.rvHomeFeed.addItemDecoration(dividerItemDecoration);
+        dividerItemDecoration = new DividerItemDecoration(binding.fragmentHomeFeedRvHomeFeed.getContext(), linearLayoutManager.getOrientation());
+        binding.fragmentHomeFeedRvHomeFeed.addItemDecoration(dividerItemDecoration);
 
         queryProjects();
     }

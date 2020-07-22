@@ -77,22 +77,22 @@ public class CreateFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         tags = new ArrayList<>();
         tagsAdapter = new ChipAdapter(getContext(), tags, GlobalConstants.CHIP_ENTRY);
-        binding.rvTags.setAdapter(tagsAdapter);
-        binding.rvTags.setLayoutManager(linearLayoutManager);
+        binding.fragmentCreateRvTags.setAdapter(tagsAdapter);
+        binding.fragmentCreateRvTags.setLayoutManager(linearLayoutManager);
 
-        binding.btnImport.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentCreateBtnImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPickPhoto();
             }
         });
 
-        binding.etAddTag.setOnKeyListener(new View.OnKeyListener() {
+        binding.fragmentCreateEtAddTag.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
-                    tags.add(binding.etAddTag.getText().toString());
-                    binding.etAddTag.setText("");
+                    tags.add(binding.fragmentCreateEtAddTag.getText().toString());
+                    binding.fragmentCreateEtAddTag.setText("");
                     tagsAdapter.notifyDataSetChanged();
                     return true;
                 }
@@ -100,16 +100,16 @@ public class CreateFragment extends Fragment {
             }
         });
 
-        binding.btnCreate.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentCreateBtnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Project project = new Project();
                 project.setUser(ParseUser.getCurrentUser());
-                project.setTitle(binding.etProjectTitle.getText().toString());
+                project.setTitle(binding.fragmentCreateEtProjectTitle.getText().toString());
                 if (photoFile != null) {
                     project.setImage(new ParseFile(photoFile));
                 }
-                project.setDescription(binding.tvDescribeProject.getText().toString());
+                project.setDescription(binding.fragmentCreateTvDescribeProject.getText().toString());
                 project.setTags(tags);
                 project.setContributionCount(0);
                 project.saveInBackground(new SaveCallback() {
@@ -121,7 +121,7 @@ public class CreateFragment extends Fragment {
                         }
                         Log.i(TAG, "Contribution saved successfully");
                         Fragment fragment = HomeFeedFragment.newInstance();
-                        fragmentManager.beginTransaction().replace(R.id.clContainer, fragment).commit();
+                        fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, fragment).commit();
                     }
                 });
             }
@@ -169,7 +169,7 @@ public class CreateFragment extends Fragment {
             Bitmap selectedImage = loadImageFromUri(photoUri);
 
             // Load the selected image into a preview
-            binding.ivOptionalContext.setImageBitmap(selectedImage);
+            binding.fragmentCreateIvImage.setImageBitmap(selectedImage);
 
             // Change bitmap to File and input into photoFile
             try {

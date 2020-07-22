@@ -7,18 +7,18 @@
     tools:context=".fragments.DiscussionFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessages"
+        android:id="@+id/fragmentDiscussion_rvMessages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/etNewMessageContent"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentDiscussion_etNewMessageContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentDiscussion_clContainer" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/fragmentDiscussion_clContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,17 +26,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvOppositeUserName"
+            android:id="@+id/fragmentDiscussion_tvOppositeUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="John Doe"
-            app:layout_constraintBottom_toBottomOf="@+id/ivOppositeUserImage"
-            app:layout_constraintStart_toEndOf="@+id/ivOppositeUserImage"
-            app:layout_constraintTop_toTopOf="@+id/ivOppositeUserImage" />
+            app:layout_constraintBottom_toBottomOf="@+id/fragmentDiscussion_ivOppositeUserImage"
+            app:layout_constraintStart_toEndOf="@+id/fragmentDiscussion_ivOppositeUserImage"
+            app:layout_constraintTop_toTopOf="@+id/fragmentDiscussion_ivOppositeUserImage" />
 
         <ImageView
-            android:id="@+id/ivOppositeUserImage"
+            android:id="@+id/fragmentDiscussion_ivOppositeUserImage"
             android:layout_width="75dp"
             android:layout_height="75dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/etNewMessageContent"
+        android:id="@+id/fragmentDiscussion_etNewMessageContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,11 +54,11 @@
         android:hint="Send a message"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSendNewMessage"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentDiscussion_btnSendNewMessage"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnSendNewMessage"
+        android:id="@+id/fragmentDiscussion_btnSendNewMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

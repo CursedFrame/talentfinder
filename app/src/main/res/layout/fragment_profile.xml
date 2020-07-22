@@ -7,7 +7,7 @@
     tools:context=".fragments.ProfileFragment">
 
     <ImageView
-        android:id="@+id/ivProfilePicture"
+        android:id="@+id/fragmentProfile_ivProfilePicture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
@@ -17,71 +17,71 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvProfileName"
+        android:id="@+id/fragmentProfile_tvProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/ivProfilePicture"
-        app:layout_constraintStart_toStartOf="@+id/ivProfilePicture"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentProfile_ivProfilePicture"
+        app:layout_constraintStart_toStartOf="@+id/fragmentProfile_ivProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_ivProfilePicture"
         tools:text="John Doe" />
 
     <TextView
-        android:id="@+id/tvProfileLocation"
+        android:id="@+id/fragmentProfile_tvProfileLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileName"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_tvProfileName"
         tools:text="Washington, D.C." />
 
     <TextView
-        android:id="@+id/tvConnections"
+        android:id="@+id/fragmentProfile_tvConnections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Connections:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_tvProfileLocation" />
 
     <TextView
-        android:id="@+id/tvProjects"
+        android:id="@+id/fragmentProfile_tvProjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Projects:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvConnections" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_tvConnections" />
 
     <TextView
-        android:id="@+id/tvSkillsExperience"
+        android:id="@+id/fragmentProfile_tvSkillsExperience"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Skills/Experience:"
-        app:layout_constraintStart_toStartOf="@+id/tvProjects"
-        app:layout_constraintTop_toBottomOf="@+id/rvProjects" />
+        app:layout_constraintStart_toStartOf="@+id/fragmentProfile_tvProjects"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_rvProjects" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProjects"
+        android:id="@+id/fragmentProfile_rvProjects"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvProjects"
-        app:layout_constraintTop_toBottomOf="@+id/tvProjects" />
+        app:layout_constraintStart_toStartOf="@+id/fragmentProfile_tvProjects"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_tvProjects" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSkillsExperience"
+        android:id="@+id/fragmentProfile_rvSkillsExperience"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvSkillsExperience"
-        app:layout_constraintTop_toBottomOf="@+id/tvSkillsExperience" />
+        app:layout_constraintStart_toStartOf="@+id/fragmentProfile_tvSkillsExperience"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_tvSkillsExperience" />
 
     <Button
-        android:id="@+id/btnStartDiscussion"
+        android:id="@+id/fragmentProfile_btnStartDiscussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -89,10 +89,10 @@
         android:text="start discussion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvSkillsExperience" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_rvSkillsExperience" />
 
     <ImageButton
-        android:id="@+id/btnSettings"
+        android:id="@+id/fragmentProfile_btnSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

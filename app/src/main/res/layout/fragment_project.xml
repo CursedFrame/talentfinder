@@ -7,7 +7,7 @@
     tools:context=".fragments.ProjectFragment">
 
     <TextView
-        android:id="@+id/tvProjectTitle"
+        android:id="@+id/fragmentProject_tvProjectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -17,55 +17,55 @@
         tools:text="Need voice actor, Southern accent!!" />
 
     <ImageView
-        android:id="@+id/ivOptionalContext"
+        android:id="@+id/fragmentProject_ivProjectContextImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProjectTitle"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvProjectTitle"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/ivProjectProfileImage"
+        android:id="@+id/fragmentProject_ivProjectProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivOptionalContext"
+        app:layout_constraintTop_toBottomOf="@id/fragmentProject_ivProjectContextImage"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvProjectCreatorName"
+        android:id="@+id/fragmentProject_tvProjectCreatorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProjectProfileImage"
-        app:layout_constraintStart_toEndOf="@+id/ivProjectProfileImage"
-        app:layout_constraintTop_toTopOf="@+id/ivProjectProfileImage"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentProject_ivProjectProfileImage"
+        app:layout_constraintStart_toEndOf="@+id/fragmentProject_ivProjectProfileImage"
+        app:layout_constraintTop_toTopOf="@+id/fragmentProject_ivProjectProfileImage"
         tools:text="John Doe" />
 
     <TextView
-        android:id="@+id/tvContributions"
+        android:id="@+id/fragmentProject_tvContributions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvProjectCreatorName"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentProject_tvProjectCreatorName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvProjectCreatorName"
+        app:layout_constraintTop_toTopOf="@+id/fragmentProject_tvProjectCreatorName"
         tools:text="24 contributions" />
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/fragmentProject_tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProjectProfileImage"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_ivProjectProfileImage"
         tools:text="(Description)" />
 
     <Button
-        android:id="@+id/btnCreate"
+        android:id="@+id/fragmentProject_btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -73,15 +73,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStartDiscussion" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_btnStartDiscussion" />
 
     <Button
-        android:id="@+id/btnStartDiscussion"
+        android:id="@+id/fragmentProject_btnStartDiscussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Start Discussion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

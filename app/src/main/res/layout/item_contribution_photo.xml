@@ -6,24 +6,24 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemProject_clProfileContainer"
+        android:id="@+id/itemContributionPhoto_clCreatorProfileContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/itemProject_tvName"
+            android:id="@+id/itemContributionPhoto_tvCreatorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/itemProject_ivProfilePicture"
-            app:layout_constraintTop_toBottomOf="@+id/itemProject_ivProfilePicture"
+            app:layout_constraintStart_toStartOf="@id/itemContributionPhoto_ivCreatorProfilePicture"
+            app:layout_constraintTop_toBottomOf="@id/itemContributionPhoto_ivCreatorProfilePicture"
             tools:text="John Doe" />
 
         <ImageView
-            android:id="@+id/itemProject_ivProfilePicture"
+            android:id="@+id/itemContributionPhoto_ivCreatorProfilePicture"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_marginTop="16dp"
@@ -35,27 +35,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/itemProject_ivContextImage"
-        android:layout_width="250dp"
+        android:id="@+id/itemContributionPhoto_ivContributionMedia"
+        android:layout_width="200dp"
         android:layout_height="176dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
-        app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemContributionPhoto_clCreatorProfileContainer"
+        app:layout_constraintTop_toTopOf="@+id/itemContributionPhoto_clCreatorProfileContainer"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/itemProject_tvProjectTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Need voice actor, Southern accent!" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

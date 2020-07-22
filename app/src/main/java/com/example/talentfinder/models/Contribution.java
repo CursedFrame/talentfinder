@@ -12,6 +12,7 @@ public class Contribution extends ParseObject {
     public static final String KEY_PROJECT = "project";
     public static final String KEY_USER_DESCRIPTION = "userDescription";
     public static final String KEY_SKILLS_DESCRIPTION = "skillsDescription";
+    public static final String KEY_MEDIA_TYPE_CODE = "mediaTypeCode";
 
     // GET/SET Media
     public ParseFile getMedia() {
@@ -56,5 +57,14 @@ public class Contribution extends ParseObject {
 
     public void setSkillsDescription(String description){
         put(KEY_SKILLS_DESCRIPTION, description);
+    }
+
+    // GET/SET Media Type Code
+    public int getMediaTypeCode(){
+        return getInt(KEY_MEDIA_TYPE_CODE);
+    }
+
+    public void setMediaTypeCode(int mediaTypeCode){
+        put(KEY_MEDIA_TYPE_CODE, mediaTypeCode);
     }
 }

@@ -21,7 +21,7 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.activities.LoginActivity;
 import com.example.talentfinder.adapters.ProjectPreviewAdapter;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.parse.FindCallback;
@@ -77,32 +77,32 @@ public class ProfileFragment extends Fragment {
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
-        projectPreviewAdapter = new ProjectPreviewAdapter(getContext(), projects);
-        binding.rvProjects.setAdapter(projectPreviewAdapter);
-        binding.rvProjects.setLayoutManager(linearLayoutManager);
+        projectPreviewAdapter = new ProjectPreviewAdapter(getContext(), projects, fragmentManager);
+        binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
+        binding.fragmentProfileRvProjects.setLayoutManager(linearLayoutManager);
 
         // Bind user name and location
-        binding.tvProfileName.setText(user.getString(Key_ParseUser.PROFILE_NAME));
-        if (user.getString(Key_ParseUser.PROFILE_LOCATION) != null){
-            binding.tvProfileLocation.setText(user.getString(Key_ParseUser.PROFILE_LOCATION));
+        binding.fragmentProfileTvProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
+        if (user.getString(ParseUserKey.PROFILE_LOCATION) != null){
+            binding.fragmentProfileTvProfileLocation.setText(user.getString(ParseUserKey.PROFILE_LOCATION));
         }
 
         // Bind user profile picture
         Glide.with(getContext())
-                .load(user.getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                 .circleCrop()
-                .into(binding.ivProfilePicture);
+                .into(binding.fragmentProfileIvProfilePicture);
 
         // If the profile user is the current user, show settings icon, but dont show "Start Discussion" button
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.btnStartDiscussion.setVisibility(View.GONE);
+            binding.fragmentProfileBtnStartDiscussion.setVisibility(View.GONE);
         }
         else {
-            binding.btnSettings.setVisibility(View.GONE);
+            binding.fragmentProfileBtnSettings.setVisibility(View.GONE);
         }
 
         // On Settings button click, open drop down menu for settings
-        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProfileBtnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createSettingsPopUpMenu();
@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
         });
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
-        binding.btnStartDiscussion.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProfileBtnStartDiscussion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startDiscussion();
@@ -122,8 +122,9 @@ public class ProfileFragment extends Fragment {
 
 
     private void getProjects(){
-        ParseQuery<ParseObject> query = user.getRelation(Key_ParseUser.CURRENT_PROJECTS).getQuery();
+        ParseQuery<ParseObject> query = user.getRelation(ParseUserKey.CURRENT_PROJECTS).getQuery();
         query.orderByAscending(Project.KEY_CREATED_AT);
+        query.include(Project.KEY_USER);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -140,7 +141,7 @@ public class ProfileFragment extends Fragment {
         });
     }
     private void createSettingsPopUpMenu(){
-        PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnSettings);
+        PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileBtnSettings);
         popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

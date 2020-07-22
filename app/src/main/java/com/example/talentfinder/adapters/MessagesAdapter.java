@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Message;
 import com.parse.ParseUser;
 
@@ -58,9 +58,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            clMessage = itemView.findViewById(R.id.clMessage);
-            ivMessageUserImage = itemView.findViewById(R.id.ivMessageUserImage);
-            tvMessageContent = itemView.findViewById(R.id.tvMessageContent);
+            clMessage = itemView.findViewById(R.id.itemMessage_clMessage);
+            ivMessageUserImage = itemView.findViewById(R.id.itemMessage_ivUserImage);
+            tvMessageContent = itemView.findViewById(R.id.itemMessage_tvMessageContent);
         }
 
         public void bind(Message message){
@@ -77,7 +77,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
             // Else, bind left
             Glide.with(context)
-                    .load(message.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .load(message.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                     .circleCrop()
                     .into(ivMessageUserImage);
             tvMessageContent.setText(getMessageString(message));
@@ -86,7 +86,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     // Function for returning specially formatted string with bold user name
     public SpannableStringBuilder getMessageString(Message message){
-        String messageUserName = message.getUser().getString(Key_ParseUser.PROFILE_NAME);
+        String messageUserName = message.getUser().getString(ParseUserKey.PROFILE_NAME);
         SpannableStringBuilder messageText = new SpannableStringBuilder( messageUserName + ": " + message.getMessageContent());
         messageText.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, messageUserName.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -95,9 +95,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     // Setting constraints for current user's message
     public void setConstraintsCurrentUserMessage(ConstraintSet constraintSet){
-        constraintSet.clear(R.id.ivMessageUserImage, ConstraintSet.START);
-        constraintSet.connect(R.id.ivMessageUserImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
-        constraintSet.clear(R.id.tvMessageContent, ConstraintSet.START);
-        constraintSet.connect(R.id.tvMessageContent, ConstraintSet.END, R.id.ivMessageUserImage, ConstraintSet.START, 8);
+        constraintSet.clear(R.id.itemMessage_ivUserImage, ConstraintSet.START);
+        constraintSet.connect(R.id.itemMessage_ivUserImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        constraintSet.clear(R.id.itemMessage_tvMessageContent, ConstraintSet.START);
+        constraintSet.connect(R.id.itemMessage_tvMessageContent, ConstraintSet.END, R.id.itemMessage_ivUserImage, ConstraintSet.START, 8);
     }
 }

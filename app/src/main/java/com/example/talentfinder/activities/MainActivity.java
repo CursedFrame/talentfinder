@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                fragmentManager.beginTransaction().replace(R.id.clContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, fragment).commit();
                 return true;
             }
         });

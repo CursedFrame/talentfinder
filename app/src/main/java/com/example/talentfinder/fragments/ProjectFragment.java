@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.FragmentProjectBinding;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.parse.GetCallback;
@@ -61,28 +61,28 @@ public class ProjectFragment extends Fragment {
         fragmentManager = getFragmentManager();
         project = getArguments().getParcelable("project");
 
-        binding.tvProjectTitle.setText(project.getTitle());
-        binding.tvProjectCreatorName.setText(project.getUser().getString(Key_ParseUser.PROFILE_NAME));
-        binding.tvContributions.setText(getString(R.string.contributions, project.getContributionCount()));
-        binding.tvDescription.setText(project.getDescription());
+        binding.fragmentProjectTvProjectTitle.setText(project.getTitle());
+        binding.fragmentProjectTvProjectCreatorName.setText(project.getUser().getString(ParseUserKey.PROFILE_NAME));
+        binding.fragmentProjectTvContributions.setText(getString(R.string.contributions, project.getContributionCount()));
+        binding.fragmentProjectTvDescription.setText(project.getDescription());
 
         if (project.getImage() != null){
             Glide.with(context)
                     .load(project.getImage().getUrl())
-                    .into(binding.ivOptionalContext);
+                    .into(binding.fragmentProjectIvProjectContextImage);
         }
 
         Glide.with(context)
-                .load(project.getUser().getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
-                .into(binding.ivProjectProfileImage);
+                .load(project.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                .into(binding.fragmentProjectIvProjectProfileImage);
 
         // If the project creator is the current user, don't show the "Start Discussion" button
         if (project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.btnStartDiscussion.setVisibility(View.GONE);
+            binding.fragmentProjectBtnStartDiscussion.setVisibility(View.GONE);
         }
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
-        binding.btnStartDiscussion.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProjectBtnStartDiscussion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Get discussion where "user" is the current user and "recipient" is the recipient user
@@ -125,11 +125,11 @@ public class ProjectFragment extends Fragment {
         });
 
         // On "Create" button click, take user to the contribution create screen
-        binding.btnCreate.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProjectBtnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContributeFragment contributeFragment = ContributeFragment.newInstance(project);
-                fragmentManager.beginTransaction().addToBackStack(contributeFragment.getTag()).replace(R.id.clContainer, contributeFragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(contributeFragment.getTag()).replace(R.id.activityMain_clContainer, contributeFragment).commit();
             }
         });
 

@@ -15,6 +15,7 @@ public class Project extends ParseObject {
     public static final String KEY_CONTRIBUTION_COUNT = "contributionCount";
     public static final String KEY_TAGS = "tags";
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_CONTRIBUTIONS = "contributions";
 
 
     // GET/SET User

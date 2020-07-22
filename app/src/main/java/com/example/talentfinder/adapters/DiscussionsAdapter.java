@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.DiscussionFragment;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
 import com.parse.GetCallback;
@@ -68,11 +68,11 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            clDiscussion = itemView.findViewById(R.id.clDiscussion);
-            ivDiscussionRecipientUser = itemView.findViewById(R.id.ivDiscussionRecipientUser);
-            tvDiscussionRecipientUser = itemView.findViewById(R.id.tvDiscussionRecipientUser);
-            tvDiscussionMessageContent = itemView.findViewById(R.id.tvDiscussionMessageContent);
-            tvDiscussionMessageTimestamp = itemView.findViewById(R.id.tvDiscussionMessageTimestamp);
+            clDiscussion = itemView.findViewById(R.id.itemDiscussion_clDiscussion);
+            ivDiscussionRecipientUser = itemView.findViewById(R.id.itemDiscussion_ivRecipientUser);
+            tvDiscussionRecipientUser = itemView.findViewById(R.id.itemDiscussion_tvRecipientUser);
+            tvDiscussionMessageContent = itemView.findViewById(R.id.itemDiscussion_tvMessageContent);
+            tvDiscussionMessageTimestamp = itemView.findViewById(R.id.itemDiscussion_tvMessageTimestamp);
         }
 
         public void bind(final Discussion discussion){
@@ -113,18 +113,18 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                 @Override
                 public void onClick(View v) {
                     DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-                    fragmentManager.beginTransaction().replace(R.id.clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
                 }
             });
         }
 
         public void loadProfilePicture(ParseUser user){
             Glide.with(context)
-                    .load(user.getParseFile(Key_ParseUser.PROFILE_IMAGE).getUrl())
+                    .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                     .circleCrop()
                     .into(ivDiscussionRecipientUser);
 
-            tvDiscussionRecipientUser.setText(user.getString(Key_ParseUser.PROFILE_NAME));
+            tvDiscussionRecipientUser.setText(user.getString(ParseUserKey.PROFILE_NAME));
         }
 
         public void loadMessageContent(ParseObject object){
@@ -136,7 +136,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
             // Else output "{recipient user}: {message content}" as message preview text
             else {
                 tvDiscussionMessageContent.setText(context.getString(R.string.message_recipient_user,
-                        object.getParseUser(Message.KEY_USER).getString(Key_ParseUser.PROFILE_NAME),
+                        object.getParseUser(Message.KEY_USER).getString(ParseUserKey.PROFILE_NAME),
                         object.getString(Message.KEY_MESSAGE_CONTENT)));
             }
             tvDiscussionMessageTimestamp.setText(object.getString(Message.KEY_CREATED_AT));

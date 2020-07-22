@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.talentfinder.adapters.DiscussionsAdapter;
 import com.example.talentfinder.databinding.FragmentDirectMessagesBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -65,18 +65,18 @@ public class DirectMessagesFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         discussions = new ArrayList<>();
         discussionsAdapter = new DiscussionsAdapter(getContext(), discussions, getFragmentManager());
-        binding.rvDiscussions.setAdapter(discussionsAdapter);
-        binding.rvDiscussions.setLayoutManager(linearLayoutManager);
+        binding.fragmentDirectMessagesRvDiscussions.setAdapter(discussionsAdapter);
+        binding.fragmentDirectMessagesRvDiscussions.setLayoutManager(linearLayoutManager);
 
         // Add divider for RecyclerView
-        dividerItemDecoration = new DividerItemDecoration(binding.rvDiscussions.getContext(), linearLayoutManager.getOrientation());
-        binding.rvDiscussions.addItemDecoration(dividerItemDecoration);
+        dividerItemDecoration = new DividerItemDecoration(binding.fragmentDirectMessagesRvDiscussions.getContext(), linearLayoutManager.getOrientation());
+        binding.fragmentDirectMessagesRvDiscussions.addItemDecoration(dividerItemDecoration);
 
         queryDiscussions();
     }
 
     public void queryDiscussions(){
-        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(Key_ParseUser.CURRENT_DISCUSSIONS).getQuery();
+        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_DISCUSSIONS).getQuery();
         query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
         query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
         query.include(Discussion.KEY_USER);

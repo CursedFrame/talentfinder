@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clMessage"
+    android:id="@+id/itemMessage_clMessage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/ivMessageUserImage"
+        android:id="@+id/itemMessage_ivUserImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,12 +16,12 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvMessageContent"
+        android:id="@+id/itemMessage_tvMessageContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivMessageUserImage"
-        app:layout_constraintTop_toTopOf="@+id/ivMessageUserImage"
+        app:layout_constraintStart_toEndOf="@+id/itemMessage_ivUserImage"
+        app:layout_constraintTop_toTopOf="@+id/itemMessage_ivUserImage"
         tools:text="I liked your audition tape!" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

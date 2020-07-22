@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.ActivityRegisterBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -44,8 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         skills = new ArrayList<>();
         skillsAdapter = new ChipAdapter(this, skills, GlobalConstants.CHIP_ENTRY);
-        binding.rvSkills.setAdapter(skillsAdapter);
-        binding.rvSkills.setLayoutManager(linearLayoutManager);
+        binding.activityRegisterRvSkills.setAdapter(skillsAdapter);
+        binding.activityRegisterRvSkills.setLayoutManager(linearLayoutManager);
 
         setOnKeyEtSkills();
         setOnClickBtnCreateAccount();
@@ -56,12 +56,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setOnKeyEtSkills(){
-        binding.etSkills.setOnKeyListener(new View.OnKeyListener() {
+        binding.activityRegisterEtSkills.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
-                    skills.add(binding.etSkills.getText().toString());
-                    binding.etSkills.setText("");
+                    skills.add(binding.activityRegisterEtSkills.getText().toString());
+                    binding.activityRegisterEtSkills.setText("");
                     skillsAdapter.notifyDataSetChanged();
                     return true;
                 }
@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setOnClickBtnCreateAccount(){
-        binding.btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+        binding.activityRegisterBtnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccount();
@@ -80,14 +80,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount(){
-        String location = binding.etCity.getText().toString() + ", " + binding.etState.getText().toString() + ", " + binding.etCountry.getText().toString();
+        String location = binding.activityRegisterEtCity.getText().toString() + ", " +
+                binding.activityRegisterEtState.getText().toString() + ", " +
+                binding.activityRegisterEtCountry.getText().toString();
         ParseUser newUser = new ParseUser();
 
-        newUser.setUsername(binding.etUsername.getText().toString());
-        newUser.setPassword(binding.etPassword.getText().toString());
-        newUser.put(Key_ParseUser.PROFILE_NAME, binding.etName.getText().toString());
-        newUser.put(Key_ParseUser.PROFILE_LOCATION, location);
-        newUser.put(Key_ParseUser.PROFILE_SKILLS_EXPERIENCE, skills);
+        newUser.setUsername(binding.activityRegisterEtUsername.getText().toString());
+        newUser.setPassword(binding.activityRegisterEtPassword.getText().toString());
+        newUser.put(ParseUserKey.PROFILE_NAME, binding.activityRegisterEtName.getText().toString());
+        newUser.put(ParseUserKey.PROFILE_LOCATION, location);
+        newUser.put(ParseUserKey.PROFILE_SKILLS_EXPERIENCE, skills);
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {

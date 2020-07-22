@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.talentfinder.R;
+import com.example.talentfinder.fragments.ProjectContributionFeedFragment;
+import com.example.talentfinder.fragments.ProjectFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -20,10 +24,12 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
 
     Context context;
     List<Project> projects;
+    FragmentManager fragmentManager;
 
-    public ProjectPreviewAdapter(Context context, List<Project> projects) {
+    public ProjectPreviewAdapter(Context context, List<Project> projects, FragmentManager fragmentManager) {
         this.context = context;
         this.projects = projects;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -46,22 +52,22 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        Project project;
         LinearLayoutManager linearLayoutManager;
         ChipAdapter tagsAdapter;
-//        List<String> tags;
         RecyclerView rvTags;
         TextView tvProjectTitle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            rvTags = itemView.findViewById(R.id.rvTags);
-            tvProjectTitle = itemView.findViewById(R.id.tvProjectTitle);
+            rvTags = itemView.findViewById(R.id.itemProjectPreview_rvTags);
+            tvProjectTitle = itemView.findViewById(R.id.itemProjectPreview_tvProjectTitle);
 
             linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-//            tags = new ArrayList<>();
         }
 
         public void bind(Project project){
+            this.project = project;
 
             tagsAdapter = new ChipAdapter(context, project.getTags(), GlobalConstants.CHIP_FILTER);
 
@@ -69,6 +75,24 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
             rvTags.setLayoutManager(linearLayoutManager);
 
             tvProjectTitle.setText(project.getTitle());
+
+            setOnClickItemView();
+        }
+
+        public void setOnClickItemView(){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                        ProjectContributionFeedFragment projectContributionFeedFragment = ProjectContributionFeedFragment.newInstance(project);
+                        fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.activityMain_clContainer, projectContributionFeedFragment).commit();
+                    }
+                    else {
+                        ProjectFragment projectFragment = ProjectFragment.newInstance(project);
+                        fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.activityMain_clContainer, projectFragment).commit();
+                    }
+                }
+            });
         }
     }
 }

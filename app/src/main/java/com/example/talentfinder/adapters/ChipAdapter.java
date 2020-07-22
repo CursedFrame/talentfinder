@@ -52,7 +52,7 @@ public class ChipAdapter extends RecyclerView.Adapter<ChipAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            chipSkill = itemView.findViewById(R.id.chipSkill);
+            chipSkill = itemView.findViewById(R.id.itemChip_chipItem);
         }
 
         public void bind(final String skill){

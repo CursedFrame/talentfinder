@@ -81,11 +81,11 @@ public class ContributeFragment extends Fragment {
         project = getArguments().getParcelable("project");
         fragmentManager = getFragmentManager();
 
-        binding.btnSend.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentContributeBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userDescription = binding.etIntroduceYourself.getText().toString();
-                String skillsDescription = binding.etDescribeSkills.getText().toString();
+                String userDescription = binding.fragmentContributeEtIntroduceYourself.getText().toString();
+                String skillsDescription = binding.fragmentContributeEtDescribeSkills.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 if (userDescription.isEmpty() || skillsDescription.isEmpty()){
                     Toast.makeText(getContext(), "One or more fields are empty.", Toast.LENGTH_LONG).show();
@@ -96,25 +96,25 @@ public class ContributeFragment extends Fragment {
                     return;
                 }
                 else if (videoFile == null){
-                    saveContribution(userDescription, skillsDescription, currentUser, photoFile);
+                    saveContribution(userDescription, skillsDescription, currentUser, photoFile, GlobalConstants.MEDIA_PHOTO);
                 }
                 else {
-                    saveContribution(userDescription, skillsDescription, currentUser, videoFile);
+                    saveContribution(userDescription, skillsDescription, currentUser, videoFile, GlobalConstants.MEDIA_VIDEO);
                 }
             }
         });
 
-        binding.btnCamera.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentContributeBtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onLaunchCamera();
             }
         });
 
-        binding.btnAttachMedia.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentContributeBtnAttachMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getContext(), binding.btnAttachMedia);
+                PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentContributeBtnAttachMedia);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_contribution_file_choice, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -140,25 +140,38 @@ public class ContributeFragment extends Fragment {
     }
 
     private void saveContribution(String userDescription, String skillsDescription,
-                                  ParseUser currentUser, File contributionFile){
-        Contribution contribution = new Contribution();
+                                  ParseUser currentUser, File contributionFile, int mediaTypeCode){
+        final Contribution contribution = new Contribution();
         contribution.setUserDescription(userDescription);
         contribution.setSkillsDescription(skillsDescription);
         contribution.setMedia(new ParseFile(contributionFile));
+        contribution.setMediaTypeCode(mediaTypeCode);
         contribution.setUser(currentUser);
         contribution.setProject(project);
         contribution.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    Log.e(TAG, "Error while saving", e);
+                    Log.e(TAG, "Error while saving contribution", e);
                     return;
                 }
                 Log.i(TAG, "Contribution saved successfully");
-                binding.etIntroduceYourself.setText("");
-                binding.etDescribeSkills.setText("");
-                binding.ivContributePicture.setImageResource(0);
-                fragmentManager.popBackStackImmediate();
+                binding.fragmentContributeEtIntroduceYourself.setText("");
+                binding.fragmentContributeEtDescribeSkills.setText("");
+                binding.fragmentContributeIvContributePicture.setImageResource(0);
+
+                project.getRelation(Project.KEY_CONTRIBUTIONS).add(contribution);
+                project.setContributionCount(project.getContributionCount() + 1);
+                project.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error while saving contribution to project", e);
+                            return;
+                        }
+                        fragmentManager.popBackStackImmediate();
+                    }
+                });
             }
         });
     }
@@ -240,7 +253,7 @@ public class ContributeFragment extends Fragment {
             Bitmap selectedImage = loadImageFromUri(photoUri);
 
             // Load the selected image into a preview
-            binding.ivContributePicture.setImageBitmap(selectedImage);
+            binding.fragmentContributeIvContributePicture.setImageBitmap(selectedImage);
 
             // Convert image from bitmap to JPG file and apply to photoFile File
             try {
@@ -252,7 +265,7 @@ public class ContributeFragment extends Fragment {
         if (requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                binding.ivContributePicture.setImageBitmap(takenImage);
+                binding.fragmentContributeIvContributePicture.setImageBitmap(takenImage);
             } else {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -263,8 +276,8 @@ public class ContributeFragment extends Fragment {
             createTempVideo(videoUri);
 
             // Load the video located at videoUri into vvContributeVideo
-            binding.vvContributeVideo.setVideoPath(getContext().getCacheDir() + "/video.mp4");
-            binding.vvContributeVideo.start();
+            binding.fragmentContributeVvContributeVideo.setVideoPath(getContext().getCacheDir() + "/video.mp4");
+            binding.fragmentContributeVvContributeVideo.start();
             videoFile = new File(getContext().getCacheDir() + "/video.mp4");
         }
     }

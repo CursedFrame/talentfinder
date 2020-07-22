@@ -7,7 +7,7 @@
     tools:context=".fragments.CreateFragment">
 
     <EditText
-        android:id="@+id/etProjectTitle"
+        android:id="@+id/fragmentCreate_etProjectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivOptionalContext"
+        android:id="@+id/fragmentCreate_ivImage"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
@@ -29,30 +29,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvContextImage"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvContextImage"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvContextImage"
+        android:id="@+id/fragmentCreate_tvContextImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Provide a context image (Optional)"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etProjectTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_etProjectTitle" />
 
     <Button
-        android:id="@+id/btnImport"
+        android:id="@+id/fragmentCreate_btnImport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="import"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivOptionalContext" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentCreate_ivImage" />
 
     <EditText
-        android:id="@+id/tvDescribeProject"
+        android:id="@+id/fragmentCreate_tvDescribeProject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,29 +63,29 @@
         android:inputType="textMultiLine|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnImport" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_btnImport" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTags"
+        android:id="@+id/fragmentCreate_rvTags"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCreate"
-        app:layout_constraintEnd_toEndOf="@+id/tvDescribeProject"
-        app:layout_constraintStart_toStartOf="@+id/tvDescribeProject"
-        app:layout_constraintTop_toBottomOf="@+id/etAddTag" />
+        app:layout_constraintBottom_toTopOf="@+id/fragmentCreate_btnCreate"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentCreate_tvDescribeProject"
+        app:layout_constraintStart_toStartOf="@+id/fragmentCreate_tvDescribeProject"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_etAddTag" />
 
     <TextView
-        android:id="@+id/tvTags"
+        android:id="@+id/fragmentCreate_tvTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Tags:"
-        app:layout_constraintBottom_toBottomOf="@+id/etAddTag"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentCreate_etAddTag"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescribeProject" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvDescribeProject" />
 
     <Button
-        android:id="@+id/btnCreate"
+        android:id="@+id/fragmentCreate_btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -95,13 +95,13 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/etAddTag"
+        android:id="@+id/fragmentCreate_etAddTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Add tag..."
         android:inputType="textPersonName"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/tvTags"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescribeProject" />
+        app:layout_constraintStart_toEndOf="@+id/fragmentCreate_tvTags"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvDescribeProject" />
 </androidx.constraintlayout.widget.ConstraintLayout>

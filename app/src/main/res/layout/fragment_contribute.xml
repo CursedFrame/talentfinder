@@ -7,7 +7,7 @@
     tools:context=".fragments.ContributeFragment">
 
     <ImageView
-        android:id="@+id/ivContributePicture"
+        android:id="@+id/fragmentContribute_ivContributePicture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="27dp"
@@ -18,62 +18,62 @@
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnCamera"
+        android:id="@+id/fragmentContribute_btnCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Camera"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivContributePicture" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_ivContributePicture" />
 
     <Button
-        android:id="@+id/btnAttachMedia"
+        android:id="@+id/fragmentContribute_btnAttachMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Attach Media"
-        app:layout_constraintBottom_toBottomOf="@+id/btnCamera"
-        app:layout_constraintStart_toEndOf="@+id/btnCamera"
-        app:layout_constraintTop_toTopOf="@+id/btnCamera" />
+        app:layout_constraintBottom_toBottomOf="@id/fragmentContribute_btnCamera"
+        app:layout_constraintStart_toEndOf="@id/fragmentContribute_btnCamera"
+        app:layout_constraintTop_toTopOf="@id/fragmentContribute_btnCamera" />
 
     <EditText
-        android:id="@+id/etIntroduceYourself"
+        android:id="@+id/fragmentContribute_etIntroduceYourself"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Introduce yourself..."
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/btnCamera"
-        app:layout_constraintTop_toBottomOf="@+id/btnCamera" />
+        app:layout_constraintStart_toStartOf="@id/fragmentContribute_btnCamera"
+        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_btnCamera" />
 
     <EditText
-        android:id="@+id/etDescribeSkills"
+        android:id="@+id/fragmentContribute_etDescribeSkills"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Describe your skills..."
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/etIntroduceYourself"
-        app:layout_constraintTop_toBottomOf="@+id/etIntroduceYourself" />
+        app:layout_constraintStart_toStartOf="@id/fragmentContribute_etIntroduceYourself"
+        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_etIntroduceYourself" />
 
     <Button
-        android:id="@+id/btnSend"
+        android:id="@+id/fragmentContribute_btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Send"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDescribeSkills" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_etDescribeSkills" />
 
     <VideoView
-        android:id="@+id/vvContributeVideo"
+        android:id="@+id/fragmentContribute_vvContributeVideo"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivContributePicture"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentContribute_ivContributePicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

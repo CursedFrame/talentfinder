@@ -6,14 +6,21 @@ public interface GlobalConstants {
     public static final int DISCUSSION_LIMIT = 20;
 
     // Request codes
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-    public static final int PICK_PHOTO_CODE = 1046;
-    public static final int PICK_VIDEO_CODE = 101;
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 101;
+    public static final int PICK_PHOTO_CODE = 102;
+    public static final int PICK_VIDEO_CODE = 103;
 
     // Chip type codes
-    public static final int CHIP_ENTRY = 111;
-    public static final int CHIP_CHOICE = 76;
-    public static final int CHIP_FILTER = 71;
-    public static final int CHIP_ACTION = 95;
+    public static final int CHIP_ENTRY = 201;
+    public static final int CHIP_CHOICE = 202;
+    public static final int CHIP_FILTER = 203;
+    public static final int CHIP_ACTION = 204;
 
+    // Project type codes
+    public static final int PROJECT_FULL = 301;
+    public static final int PROJECT_PREVIEW = 302;
+
+    // Media type codes
+    public static final int MEDIA_PHOTO = 401;
+    public static final int MEDIA_VIDEO = 402;
 }

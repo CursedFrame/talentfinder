@@ -36,12 +36,12 @@ public class LoginActivity extends AppCompatActivity {
 
     // On "login" button click, check to see if user info is correct and if so, navigate to MainActivity
     public void setOnClickBtnLogin(){
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.activityLoginBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String username = binding.etUsername.getText().toString();
-                String password = binding.etPassword.getText().toString();
+                String username = binding.activityLoginEtUsername.getText().toString();
+                String password = binding.activityLoginEtPassword.getText().toString();
 
                 if (username.isEmpty() || password.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Username or password cannot be empty.", Toast.LENGTH_SHORT).show();
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void setOnClickTvRegisterUser(){
-        binding.tvRegisterUser.setOnClickListener(new View.OnClickListener() {
+        binding.activityLoginTvRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goRegisterActivity();

@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.FragmentStartDiscussionDialogBinding;
-import com.example.talentfinder.interfaces.Key_ParseUser;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
 import com.parse.ParseException;
@@ -63,21 +63,21 @@ public class StartDiscussionDialogFragment extends DialogFragment {
         fragmentManager = getFragmentManager();
         recipientUser = getArguments().getParcelable("user");
 
-        binding.tvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getString(Key_ParseUser.PROFILE_NAME)));
+        binding.fragmentStartDiscussionDialogTvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getString(ParseUserKey.PROFILE_NAME)));
         // On button send message click, create message and then discussion
-        binding.btnSendMessage.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentStartDiscussionDialogBtnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Message cannot be empty
-                if (binding.etComposeMessage.getText().toString().isEmpty()){
+                if (binding.fragmentStartDiscussionDialogEtComposeMessage.getText().toString().isEmpty()){
                     Toast.makeText(getContext(), "Message cannot be empty!", Toast.LENGTH_SHORT);
                     return;
                 }
 
                 final Message message = new Message();
                 message.setUser(ParseUser.getCurrentUser());
-                message.setMessageContent(binding.etComposeMessage.getText().toString());
+                message.setMessageContent(binding.fragmentStartDiscussionDialogEtComposeMessage.getText().toString());
 
                 message.saveInBackground(new SaveCallback() {
                     @Override
@@ -100,7 +100,7 @@ public class StartDiscussionDialogFragment extends DialogFragment {
                                     return;
                                 }
                                 DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-                                fragmentManager.beginTransaction().replace(R.id.clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
+                                fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
                                 dismiss();
                             }
                         });

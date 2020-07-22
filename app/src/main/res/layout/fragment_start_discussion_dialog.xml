@@ -7,7 +7,7 @@
     tools:context=".fragments.StartDiscussionDialogFragment">
 
     <TextView
-        android:id="@+id/tvRecipientUserName"
+        android:id="@+id/fragmentStartDiscussionDialog_tvRecipientUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -17,7 +17,7 @@
         tools:text="To: John Doe" />
 
     <EditText
-        android:id="@+id/etComposeMessage"
+        android:id="@+id/fragmentStartDiscussionDialog_etComposeMessage"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -25,16 +25,16 @@
         android:hint="Say something..."
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvRecipientUserName"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipientUserName" />
+        app:layout_constraintStart_toStartOf="@+id/fragmentStartDiscussionDialog_tvRecipientUserName"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentStartDiscussionDialog_tvRecipientUserName" />
 
     <Button
-        android:id="@+id/btnSendMessage"
+        android:id="@+id/fragmentStartDiscussionDialog_btnSendMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="send"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/etComposeMessage"
-        app:layout_constraintTop_toBottomOf="@+id/etComposeMessage" />
+        app:layout_constraintEnd_toEndOf="@+id/fragmentStartDiscussionDialog_etComposeMessage"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentStartDiscussionDialog_etComposeMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

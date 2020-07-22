@@ -7,7 +7,7 @@
     tools:context=".activities.LoginActivity">
 
     <TextView
-        android:id="@+id/tvAppTitle"
+        android:id="@+id/activityLogin_tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -21,48 +21,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/activityLogin_btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRegisterUser" />
+        app:layout_constraintTop_toBottomOf="@id/activityLogin_tvRegisterUser" />
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/activityLogin_etUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/tvAppTitle"
-        app:layout_constraintStart_toStartOf="@+id/tvAppTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/activityLogin_tvTitle"
+        app:layout_constraintStart_toStartOf="@+id/activityLogin_tvTitle"
+        app:layout_constraintTop_toBottomOf="@+id/activityLogin_tvTitle" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/activityLogin_etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/etUsername"
-        app:layout_constraintStart_toStartOf="@+id/etUsername"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
+        app:layout_constraintEnd_toEndOf="@id/activityLogin_etUsername"
+        app:layout_constraintStart_toStartOf="@id/activityLogin_etUsername"
+        app:layout_constraintTop_toBottomOf="@id/activityLogin_etUsername" />
 
     <TextView
-        android:id="@+id/tvRegisterUser"
+        android:id="@+id/activityLogin_tvRegisterUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Not a user? Register here"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/etPassword"
-        app:layout_constraintStart_toStartOf="@+id/etPassword"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintEnd_toEndOf="@id/activityLogin_etPassword"
+        app:layout_constraintStart_toStartOf="@id/activityLogin_etPassword"
+        app:layout_constraintTop_toBottomOf="@id/activityLogin_etPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
