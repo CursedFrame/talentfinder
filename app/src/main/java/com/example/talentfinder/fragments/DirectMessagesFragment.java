@@ -1,7 +1,6 @@
 package com.example.talentfinder.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.talentfinder.adapters.DiscussionsAdapter;
 import com.example.talentfinder.databinding.FragmentDirectMessagesBinding;
-import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // Fragment allowing user to access their current discussions
 public class DirectMessagesFragment extends Fragment {
@@ -32,7 +23,7 @@ public class DirectMessagesFragment extends Fragment {
     public static final String TAG = "MessagesFragment";
 
     LinearLayoutManager linearLayoutManager;
-    List<Discussion> discussions;
+    ArrayList<Discussion> discussions;
     DiscussionsAdapter discussionsAdapter;
     FragmentDirectMessagesBinding binding;
     DividerItemDecoration dividerItemDecoration;
@@ -42,10 +33,11 @@ public class DirectMessagesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DirectMessagesFragment newInstance() {
+    public static DirectMessagesFragment newInstance(ArrayList<Discussion> discussions) {
         DirectMessagesFragment fragment = new DirectMessagesFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("discussions", discussions);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -64,6 +56,7 @@ public class DirectMessagesFragment extends Fragment {
         // Recycler view and adapter creation
         linearLayoutManager = new LinearLayoutManager(getContext());
         discussions = new ArrayList<>();
+        discussions = getArguments().getParcelableArrayList("discussions");
         discussionsAdapter = new DiscussionsAdapter(getContext(), discussions, getFragmentManager());
         binding.fragmentDirectMessagesRvDiscussions.setAdapter(discussionsAdapter);
         binding.fragmentDirectMessagesRvDiscussions.setLayoutManager(linearLayoutManager);
@@ -71,29 +64,5 @@ public class DirectMessagesFragment extends Fragment {
         // Add divider for RecyclerView
         dividerItemDecoration = new DividerItemDecoration(binding.fragmentDirectMessagesRvDiscussions.getContext(), linearLayoutManager.getOrientation());
         binding.fragmentDirectMessagesRvDiscussions.addItemDecoration(dividerItemDecoration);
-
-        queryDiscussions();
-    }
-
-    public void queryDiscussions(){
-        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_DISCUSSIONS).getQuery();
-        query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
-        query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
-        query.include(Discussion.KEY_USER);
-        query.include(Discussion.KEY_RECIPIENT);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error loading discussions", e);
-                    return;
-                }
-
-                for (ParseObject object : objects){
-                    discussions.add((Discussion) object);
-                }
-                discussionsAdapter.notifyDataSetChanged();
-            }
-        });
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        ProgressBar pbProjectPreview;
         Project project;
         LinearLayoutManager linearLayoutManager;
         ChipAdapter tagsAdapter;
@@ -62,11 +64,15 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
             super(itemView);
             rvTags = itemView.findViewById(R.id.itemProjectPreview_rvTags);
             tvProjectTitle = itemView.findViewById(R.id.itemProjectPreview_tvProjectTitle);
+            pbProjectPreview = itemView.findViewById(R.id.itemProjectPreview_pbProjectPreview);
 
             linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         }
 
         public void bind(Project project){
+
+            pbProjectPreview.setVisibility(ProgressBar.VISIBLE);
+
             this.project = project;
 
             tagsAdapter = new ChipAdapter(context, project.getTags(), GlobalConstants.CHIP_FILTER);
@@ -77,6 +83,8 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
             tvProjectTitle.setText(project.getTitle());
 
             setOnClickItemView();
+
+            pbProjectPreview.setVisibility(ProgressBar.INVISIBLE);
         }
 
         public void setOnClickItemView(){

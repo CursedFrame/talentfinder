@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -35,7 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

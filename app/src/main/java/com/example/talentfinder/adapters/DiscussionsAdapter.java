@@ -24,17 +24,17 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.ViewHolder> {
 
     public static final String TAG = "DiscussionsAdapter";
 
     Context context;
-    List<Discussion> discussions;
+    ArrayList<Discussion> discussions;
     FragmentManager fragmentManager;
 
-    public DiscussionsAdapter(Context context, List<Discussion> discussions, FragmentManager fragmentManager) {
+    public DiscussionsAdapter(Context context, ArrayList<Discussion> discussions, FragmentManager fragmentManager) {
         this.context = context;
         this.discussions = discussions;
         this.fragmentManager = fragmentManager;

@@ -17,8 +17,18 @@ import com.example.talentfinder.fragments.DirectMessagesFragment;
 import com.example.talentfinder.fragments.HomeFeedFragment;
 import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.SearchFragment;
+import com.example.talentfinder.interfaces.GlobalConstants;
+import com.example.talentfinder.interfaces.ParseUserKey;
+import com.example.talentfinder.models.Discussion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private ActivityMainBinding binding;
 
+    private ArrayList<Discussion> discussions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        discussions = new ArrayList<>();
+        queryDiscussions();
 
         setOnClickBottomNavigationMain();
         binding.bottomNavigationMain.setSelectedItemId(R.id.action_home_main);
@@ -64,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_messages_main:
                         Log.i(TAG, "Moving to messages fragment");
-                        fragment = DirectMessagesFragment.newInstance();
+                        fragment = DirectMessagesFragment.newInstance(discussions);
                         break;
                     case R.id.action_profile:
                         Log.i(TAG, "Moving to profile fragment");
@@ -89,5 +104,27 @@ public class MainActivity extends AppCompatActivity {
         else {
             super.onBackPressed();
         }
+    }
+
+    public void queryDiscussions(){
+        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_DISCUSSIONS).getQuery();
+        query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
+        query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
+        query.include(Discussion.KEY_USER);
+        query.include(Discussion.KEY_MESSAGES);
+        query.include(Discussion.KEY_RECIPIENT);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading discussions", e);
+                    return;
+                }
+
+                for (ParseObject object : objects){
+                    discussions.add((Discussion) object);
+                }
+            }
+        });
     }
 }
