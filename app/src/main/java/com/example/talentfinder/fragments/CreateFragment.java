@@ -2,11 +2,8 @@ package com.example.talentfinder.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,20 +21,19 @@ import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
+import com.example.talentfinder.utilities.MediaFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 // Fragment for allowing user to create a project and upload to Parse server
-public class CreateFragment extends Fragment {
+public class CreateFragment extends MediaFragment {
 
     public static final String TAG = "CreateFragment";
 
@@ -128,38 +124,6 @@ public class CreateFragment extends Fragment {
         });
     }
 
-    // Trigger gallery selection for a photo
-    public void onPickPhoto() {
-        // Create intent for picking a photo from the gallery
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Bring up gallery to select a photo
-            startActivityForResult(intent, GlobalConstants.PICK_PHOTO_CODE);
-        }
-    }
-
-    public Bitmap loadImageFromUri(Uri photoUri) {
-        Bitmap image = null;
-        try {
-            // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
-                // on newer versions of Android, use the new decodeBitmap method
-                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
-                image = ImageDecoder.decodeBitmap(source);
-            } else {
-                // support older versions of Android by using getBitmap
-                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((data != null) && requestCode == GlobalConstants.PICK_PHOTO_CODE) {
@@ -178,22 +142,5 @@ public class CreateFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-    }
-
-    // Takes a bitmap and converts it into a File. Used for converting to ParseFile
-    public File bitmapToFile(Bitmap bitmap) throws IOException {
-        File file = new File(getContext().getCacheDir(), "photo.jpg");
-        file.createNewFile();
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] bitmapdata = byteArrayOutputStream.toByteArray();
-
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(bitmapdata);
-        fileOutputStream.flush();
-        fileOutputStream.close();
-
-        return file;
     }
 }

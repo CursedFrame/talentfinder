@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, fragment).commit();
+                fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.activityMain_clContainer, fragment).commit();
                 return true;
             }
         });

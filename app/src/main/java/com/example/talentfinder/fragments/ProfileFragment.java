@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private List<Project> projects;
     private LinearLayoutManager linearLayoutManager;
     private ProjectPreviewAdapter projectPreviewAdapter;
+    private Discussion discussion = null;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -81,6 +81,8 @@ public class ProfileFragment extends Fragment {
         binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
         binding.fragmentProfileRvProjects.setLayoutManager(linearLayoutManager);
 
+        checkDiscussion();
+
         // Bind user name and location
         binding.fragmentProfileTvProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
         if (user.getString(ParseUserKey.PROFILE_LOCATION) != null){
@@ -93,9 +95,9 @@ public class ProfileFragment extends Fragment {
                 .circleCrop()
                 .into(binding.fragmentProfileIvProfilePicture);
 
-        // If the profile user is the current user, show settings icon, but dont show "Start Discussion" button
+        // If the profile user is the current user, show settings icon, but don't show "Start Discussion" button
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.fragmentProfileBtnStartDiscussion.setVisibility(View.GONE);
+            binding.fragmentProfileBtnDiscussion.setVisibility(View.GONE);
         }
         else {
             binding.fragmentProfileBtnSettings.setVisibility(View.GONE);
@@ -110,16 +112,20 @@ public class ProfileFragment extends Fragment {
         });
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
-        binding.fragmentProfileBtnStartDiscussion.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProfileBtnDiscussion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startDiscussion();
+                if (discussion != null){
+                    goDiscussionFragment();
+                }
+                else {
+                    createDiscussionDialog();
+                }
             }
         });
 
         getProjects();
     }
-
 
     private void getProjects(){
         ParseQuery<ParseObject> query = user.getRelation(ParseUserKey.CURRENT_PROJECTS).getQuery();
@@ -162,11 +168,13 @@ public class ProfileFragment extends Fragment {
         popupMenu.show();
     }
 
-    private void startDiscussion(){
+    private void checkDiscussion(){
         // Get discussion where "user" is the current user and "recipient" is the recipient user
         final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
         query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.whereEqualTo("recipient", user);
+        query.include(Discussion.KEY_USER);
+        query.include(Discussion.KEY_RECIPIENT);
         query.getFirstInBackground(new GetCallback<Discussion>() {
             @Override
             public void done(Discussion object, ParseException e) {
@@ -174,26 +182,28 @@ public class ProfileFragment extends Fragment {
                 if (e != null){
                     query.whereEqualTo("recipient", ParseUser.getCurrentUser());
                     query.whereEqualTo("user", user);
+                    query.include(Discussion.KEY_USER);
+                    query.include(Discussion.KEY_RECIPIENT);
                     query.getFirstInBackground(new GetCallback<Discussion>() {
                         @Override
                         public void done(Discussion object, ParseException e) {
                             // If discussion does not exist between two users, allow current user to create a discussion
                             if (e != null){
-                                StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
-                                startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+                                String string = "Start Discussion";
+                                binding.fragmentProfileBtnDiscussion.setText(string);
                                 return;
                             }
 
-                            Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                            return;
+                            String string = "Continue Discussion";
+                            binding.fragmentProfileBtnDiscussion.setText(string);
+                            discussion = object;
                         }
                     });
-
                     return;
                 }
-
-                Toast.makeText(getContext(), "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                return;
+                String string = "Continue Discussion";
+                binding.fragmentProfileBtnDiscussion.setText(string);
+                discussion = object;
             }
         });
     }
@@ -201,6 +211,17 @@ public class ProfileFragment extends Fragment {
     private void goLoginActivity(){
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
+        getActivity().finish();
+    }
+
+    private void goDiscussionFragment(){
+        DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
+        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.activityMain_clContainer, discussionFragment).commit();
+    }
+
+    private void createDiscussionDialog(){
+        StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
+        startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
     }
 
     @Override

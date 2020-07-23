@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
+import com.example.talentfinder.fragments.ContributionDetailFragment;
 import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.ParseUserKey;
@@ -73,7 +73,6 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
         Contribution contribution;
         TextView tvCreatorName;
         ImageView ivCreatorProfilePicture, ivContributionMedia, ivVideoThumbnail;
-        VideoView vvContributionMedia;
         ConstraintLayout clCreatorProfileContainer;
 
         public ViewHolder(@NonNull View itemView) {
@@ -122,6 +121,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
                         .into(ivCreatorProfilePicture);
             }
             setOnClickClCreatorProfileContainer();
+            setOnClickItemView();
         }
 
         public void setOnClickClCreatorProfileContainer(){
@@ -130,6 +130,16 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
                 public void onClick(View v) {
                     ProfileFragment profileFragment = ProfileFragment.newInstance(contribution.getUser());
                     fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.activityMain_clContainer, profileFragment).commit();
+                }
+            });
+        }
+
+        public void setOnClickItemView(){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ContributionDetailFragment contributionDetailFragment = ContributionDetailFragment.newInstance(contribution);
+                    fragmentManager.beginTransaction().addToBackStack(contributionDetailFragment.getTag()).replace(R.id.activityMain_clContainer, contributionDetailFragment).commit();
                 }
             });
         }

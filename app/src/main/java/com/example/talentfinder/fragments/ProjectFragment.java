@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +30,7 @@ public class ProjectFragment extends Fragment {
     private Project project;
     private FragmentProjectBinding binding;
     public FragmentManager fragmentManager;
+    private Discussion discussion = null;
 
     public ProjectFragment() {
         // Required empty public constructor
@@ -61,6 +61,8 @@ public class ProjectFragment extends Fragment {
         fragmentManager = getFragmentManager();
         project = getArguments().getParcelable("project");
 
+        checkDiscussion();
+
         binding.fragmentProjectTvProjectTitle.setText(project.getTitle());
         binding.fragmentProjectTvProjectCreatorName.setText(project.getUser().getString(ParseUserKey.PROFILE_NAME));
         binding.fragmentProjectTvContributions.setText(getString(R.string.contributions, project.getContributionCount()));
@@ -78,49 +80,19 @@ public class ProjectFragment extends Fragment {
 
         // If the project creator is the current user, don't show the "Start Discussion" button
         if (project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.fragmentProjectBtnStartDiscussion.setVisibility(View.GONE);
+            binding.fragmentProjectBtnDiscussion.setVisibility(View.GONE);
         }
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
-        binding.fragmentProjectBtnStartDiscussion.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProjectBtnDiscussion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get discussion where "user" is the current user and "recipient" is the recipient user
-
-                final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
-                query.whereEqualTo("user", ParseUser.getCurrentUser());
-                query.whereEqualTo("recipient", project.getUser());
-                query.getFirstInBackground(new GetCallback<Discussion>() {
-                    @Override
-                    public void done(Discussion object, ParseException e) {
-                        // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
-
-                        if (e != null){
-                            query.whereEqualTo("recipient", ParseUser.getCurrentUser());
-                            query.whereEqualTo("user", project.getUser());
-                            query.getFirstInBackground(new GetCallback<Discussion>() {
-                                @Override
-                                public void done(Discussion object, ParseException e) {
-                                    // If discussion does not exist between two users, allow current user to create a discussion
-
-                                    if (e != null){
-                                        StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(project.getUser());
-                                        startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
-                                        return;
-                                    }
-
-                                    Toast.makeText(context, "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            });
-
-                            return;
-                        }
-
-                        Toast.makeText(context, "You have already started a dicussion with this person.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                });
+                if (discussion != null){
+                    goDiscussionFragment();
+                }
+                else {
+                    createDiscussionDialog();
+                }
             }
         });
 
@@ -133,6 +105,63 @@ public class ProjectFragment extends Fragment {
             }
         });
 
+    }
+
+    private void checkDiscussion(){
+        // Get discussion where "user" is the current user and "recipient" is the recipient user
+
+        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("recipient", project.getUser());
+        query.include(Discussion.KEY_USER);
+        query.include(Discussion.KEY_RECIPIENT);
+        query.getFirstInBackground(new GetCallback<Discussion>() {
+            @Override
+            public void done(Discussion object, ParseException e) {
+                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
+
+                if (e != null){
+                    query.whereEqualTo("recipient", ParseUser.getCurrentUser());
+                    query.whereEqualTo("user", project.getUser());
+                    query.include(Discussion.KEY_USER);
+                    query.include(Discussion.KEY_RECIPIENT);
+                    query.getFirstInBackground(new GetCallback<Discussion>() {
+                        @Override
+                        public void done(Discussion object, ParseException e) {
+                            // If discussion does not exist between two users, allow current user to create a discussion
+
+                            if (e != null){
+                                String string = "Start Discussion";
+                                binding.fragmentProjectBtnDiscussion.setText(string);
+                                return;
+                            }
+
+                            String string = "Continue Discussion";
+                            binding.fragmentProjectBtnDiscussion.setText(string);
+                            discussion = object;
+                            return;
+                        }
+                    });
+
+                    return;
+                }
+
+                String string = "Continue Discussion";
+                binding.fragmentProjectBtnDiscussion.setText(string);
+                discussion = object;
+                return;
+            }
+        });
+    }
+
+    private void goDiscussionFragment(){
+        DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
+        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.activityMain_clContainer, discussionFragment).commit();
+    }
+
+    private void createDiscussionDialog(){
+        StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(project.getUser());
+        startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
     }
 
     @Override
