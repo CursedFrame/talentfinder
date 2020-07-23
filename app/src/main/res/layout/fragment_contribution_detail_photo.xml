@@ -22,7 +22,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/fragmentContributionDetailPhoto_tvUserDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/textView11"
@@ -54,14 +54,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Skills Description:"
-                app:layout_constraintStart_toStartOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailPhoto_tvUserDescription"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContributionDetailPhoto_tvUserDescription" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/fragmentContributionDetailPhoto_tvSkillsDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/textView12"
+                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailPhoto_tvUserDescription"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
                 tools:text="Here's a little bit about what I can do..." />
 

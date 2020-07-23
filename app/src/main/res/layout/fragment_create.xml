@@ -23,13 +23,12 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvContextImage"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_btnImport"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -44,26 +43,26 @@
 
     <Button
         android:id="@+id/fragmentCreate_btnImport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="91dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
         android:text="import"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentCreate_ivImage" />
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentCreate_tvContextImage"
+        app:layout_constraintStart_toEndOf="@+id/fragmentCreate_tvContextImage"
+        app:layout_constraintTop_toTopOf="@+id/fragmentCreate_tvContextImage" />
 
     <EditText
         android:id="@+id/fragmentCreate_tvDescribeProject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="Describe your project or what you're looking for..."
         android:inputType="textMultiLine|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_btnImport" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_ivImage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentCreate_rvTags"

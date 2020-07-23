@@ -1,9 +1,11 @@
 package com.example.talentfinder.fragments;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +25,7 @@ public class ContributionDetailFragment extends Fragment {
     private Contribution contribution;
     private FragmentContributionDetailPhotoBinding photoBinding;
     private FragmentContributionDetailVideoBinding videoBinding;
-
+    private boolean isFirstClick = true;
 
     public ContributionDetailFragment() {
         // Required empty public constructor
@@ -64,6 +66,8 @@ public class ContributionDetailFragment extends Fragment {
         if (contribution.getMediaTypeCode() == GlobalConstants.MEDIA_PHOTO){
             photoBinding.fragmentContributionDetailPhotoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
             photoBinding.fragmentContributionDetailPhotoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
+            photoBinding.fragmentContributionDetailPhotoTvUserDescription.setText(contribution.getUserDescription());
+            photoBinding.fragmentContributionDetailPhotoTvSkillsDescription.setText(contribution.getSkillsDescription());
             if (contribution.getMedia() != null){
                 Glide.with(getContext())
                         .load(contribution.getMedia().getUrl())
@@ -75,6 +79,49 @@ public class ContributionDetailFragment extends Fragment {
                         .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                         .circleCrop()
                         .into(photoBinding.fragmentContributionDetailPhotoIvProfilePicture);
+            }
+        }
+
+        else {
+            videoBinding.fragmentContributionDetailVideoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
+            videoBinding.fragmentContributionDetailVideoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
+            videoBinding.fragmentContributionDetailVideoTvUserDescription.setText(contribution.getUserDescription());
+            videoBinding.fragmentContributionDetailVideoTvSkillsDescription.setText(contribution.getSkillsDescription());
+            if (contribution.getMedia() != null){
+
+                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setVideoPath(contribution.getMedia().getUrl());
+
+                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.start();
+                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(null);
+                    }
+                });
+
+                // When video size is adjusted, attach media controller
+                // Prevents media controller from displaying in entire itemView
+                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                            @Override
+                            public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                                MediaController mediaController = new MediaController(getContext());
+                                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setMediaController(mediaController);
+                                mediaController.setAnchorView(videoBinding.fragmentContributionDetailVideoVvMediaVideo);
+                            }
+                        });
+                    }
+                });
+
+            }
+
+            if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
+                Glide.with(getContext())
+                        .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                        .circleCrop()
+                        .into(videoBinding.fragmentContributionDetailVideoIvProfilePicture);
             }
         }
     }

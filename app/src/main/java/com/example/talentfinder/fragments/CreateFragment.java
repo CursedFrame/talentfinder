@@ -70,7 +70,7 @@ public class CreateFragment extends MediaFragment {
 
         fragmentManager = getFragmentManager();
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         tags = new ArrayList<>();
         tagsAdapter = new ChipAdapter(getContext(), tags, GlobalConstants.CHIP_ENTRY);
         binding.fragmentCreateRvTags.setAdapter(tagsAdapter);
