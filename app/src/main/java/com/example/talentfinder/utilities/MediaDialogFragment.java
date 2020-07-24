@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.talentfinder.interfaces.GlobalConstants;
 
@@ -21,9 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public abstract class MediaFragment extends Fragment {
-
-    public static final String TAG = "MediaFragment";
+public abstract class MediaDialogFragment extends DialogFragment {
+    public static final String TAG = "MediaDialogFragment";
 
     public File onLaunchCamera(String fileName) {
         // create Intent to take a picture and return control to the calling application
@@ -39,6 +38,7 @@ public abstract class MediaFragment extends Fragment {
             startActivityForResult(intent, GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
 
+        // Returns file reference
         return file;
     }
 

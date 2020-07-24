@@ -116,6 +116,7 @@ public class DiscussionFragment extends Fragment {
                                 }
                                 messages.add(message);
                                 messagesAdapter.notifyDataSetChanged();
+                                binding.fragmentDiscussionEtNewMessageContent.setText("");
                             }
                         });
                     }

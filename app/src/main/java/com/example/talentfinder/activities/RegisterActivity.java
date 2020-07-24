@@ -3,12 +3,14 @@ package com.example.talentfinder.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.talentfinder.R;
 import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.ActivityRegisterBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
@@ -20,12 +22,9 @@ import com.parse.SignUpCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = "RegisterActivity";
-
-//    MaterialDatePicker.Builder<Long> builder;
-//    MaterialDatePicker<Long> picker;
 
     LinearLayoutManager linearLayoutManager;
     List<String> skills;
@@ -47,30 +46,19 @@ public class RegisterActivity extends AppCompatActivity {
         binding.activityRegisterRvSkills.setAdapter(skillsAdapter);
         binding.activityRegisterRvSkills.setLayoutManager(linearLayoutManager);
 
-        setOnKeyEtSkills();
-        setOnClickBtnCreateAccount();
+        // Array adapter for "Skill" spinner
+        ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(this, R.array.skill, R.layout.support_simple_spinner_dropdown_item);
+        spnSkillAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        binding.activityRegisterSpnSkill.setAdapter(spnSkillAdapter);
 
-//        builder = MaterialDatePicker.Builder.datePicker();
-//        picker = builder.build();
-//        picker.show(getSupportFragmentManager(), picker.toString());
-    }
+        // Array adapter for "Talent" spinner
+        ArrayAdapter<CharSequence> spnTalentAdapter = ArrayAdapter.createFromResource(this, R.array.talent, R.layout.support_simple_spinner_dropdown_item);
+        spnTalentAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        binding.activityRegisterSpnTalent.setAdapter(spnTalentAdapter);
 
-    private void setOnKeyEtSkills(){
-        binding.activityRegisterEtSkills.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
-                    skills.add(binding.activityRegisterEtSkills.getText().toString());
-                    binding.activityRegisterEtSkills.setText("");
-                    skillsAdapter.notifyDataSetChanged();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+        // Binding listener for when talent item is selected. Initializes and updates an array adapter for "Subtalent" spinner
+        binding.activityRegisterSpnTalent.setOnItemSelectedListener(this);
 
-    private void setOnClickBtnCreateAccount(){
         binding.activityRegisterBtnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +77,9 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setPassword(binding.activityRegisterEtPassword.getText().toString());
         newUser.put(ParseUserKey.PROFILE_NAME, binding.activityRegisterEtName.getText().toString());
         newUser.put(ParseUserKey.PROFILE_LOCATION, location);
-        newUser.put(ParseUserKey.PROFILE_SKILLS_EXPERIENCE, skills);
+        newUser.put(ParseUserKey.TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
+        newUser.put(ParseUserKey.TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
+        newUser.put(ParseUserKey.TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -102,5 +92,50 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ArrayAdapter<CharSequence> spnSubTalentAdapter = null;
+        switch (position){
+            case 0:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 1:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 2:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 3:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 4:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 5:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 6:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 7:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 8:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            case 9:
+                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
+                break;
+            default:
+                break;
+        }
+        binding.activityRegisterSpnSubTalent.setAdapter(spnSubTalentAdapter);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

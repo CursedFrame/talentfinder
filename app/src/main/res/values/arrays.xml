@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="skill">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Expert</item>
+    </string-array>
+
+    <string-array name="talent">
+        <item>Art</item>
+        <item>Comedy</item>
+        <item>Drawing</item>
+        <item>Graphics</item>
+        <item>Music</item>
+        <item>Photography</item>
+        <item>Programming</item>
+        <item>Singing</item>
+        <item>Teaching</item>
+        <item>Writing</item>
+    </string-array>
+
+    <string-array name="art_subs">
+        <item>Abstract</item>
+        <item>Cubism</item>
+        <item>Expressionism</item>
+        <item>Impressionism</item>
+        <item>Minimalism</item>
+        <item>Photorealism</item>
+        <item>Pop Art</item>
+        <item>Post-Impressionism</item>
+        <item>Realism</item>
+        <item>Surrealism</item>
+    </string-array>
+
+    <string-array name="comedy_subs">
+        <item>Character</item>
+        <item>Dark</item>
+        <item>Deadpan</item>
+        <item>Improvisational</item>
+        <item>Musical</item>
+        <item>Observational</item>
+        <item>One Line</item>
+        <item>Prop</item>
+        <item>Topical</item>
+        <item>Ventriloquism</item>
+    </string-array>
+
+    <string-array name="drawing_subs">
+        <item>Academic</item>
+        <item>Anamorphic</item>
+        <item>Architectural</item>
+        <item>Caricature</item>
+        <item>Cartoon</item>
+        <item>Gestural</item>
+        <item>Line</item>
+        <item>Manga</item>
+        <item>Photorealism</item>
+        <item>Pointillism</item>
+    </string-array>
+
+    <string-array name="graphics_subs">
+        <item>Advertising</item>
+        <item>Apparel</item>
+        <item>Branding</item>
+        <item>Digital</item>
+        <item>Lettering</item>
+        <item>Motion</item>
+        <item>Packaging</item>
+        <item>Product</item>
+        <item>Publishing</item>
+        <item>User Interface</item>
+    </string-array>
+
+    <string-array name="music_subs">
+        <item>Country</item>
+        <item>Dubstep</item>
+        <item>Electro</item>
+        <item>Electronic Dance</item>
+        <item>Indie</item>
+        <item>Jazz</item>
+        <item>Pop</item>
+        <item>Rhythm and Blues</item>
+        <item>Rock</item>
+        <item>Techno</item>
+    </string-array>
+
+    <string-array name="photography_subs">
+        <item>Advertising</item>
+        <item>Aerial</item>
+        <item>Architectural</item>
+        <item>Fashion</item>
+        <item>Fine Art</item>
+        <item>Pet</item>
+        <item>Portrait</item>
+        <item>Product</item>
+        <item>Travel</item>
+        <item>Wedding</item>
+    </string-array>
+
+    <string-array name="programming_subs">
+        <item>Game Development</item>
+        <item>Mobile</item>
+        <item>Software</item>
+        <item>Web</item>
+    </string-array>
+
+    <string-array name="singing_subs">
+        <item>Alto</item>
+        <item>Baritone</item>
+        <item>Bass</item>
+        <item>Contralto</item>
+        <item>Countertenor</item>
+        <item>Mezzo Soprano</item>
+        <item>Soprano</item>
+        <item>Tenor</item>
+    </string-array>
+
+    <string-array name="teaching_subs">
+        <item>Cooking</item>
+        <item>Earth Sciences</item>
+        <item>Engineering</item>
+        <item>English</item>
+        <item>Life Sciences</item>
+        <item>Mathematics</item>
+        <item>Mixology</item>
+        <item>Music</item>
+        <item>Physical Sciences</item>
+        <item>Technology</item>
+    </string-array>
+
+    <string-array name="writing_subs">
+        <item>Biography</item>
+        <item>Column</item>
+        <item>Editing</item>
+        <item>Journal</item>
+        <item>Lyrics</item>
+        <item>Novel</item>
+        <item>Poetic</item>
+        <item>Satire</item>
+        <item>Screenplay</item>
+        <item>Technical</item>
+    </string-array>
+</resources>

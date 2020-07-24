@@ -75,6 +75,8 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
 
             this.project = project;
 
+
+
             tagsAdapter = new ChipAdapter(context, project.getTags(), GlobalConstants.CHIP_FILTER);
 
             rvTags.setAdapter(tagsAdapter);

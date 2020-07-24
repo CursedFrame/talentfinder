@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/action_change_profile_photo"
+        android:title="Change profile photo" />
+    <item
         android:id="@+id/action_log_out"
         android:title="Log out" />
 </menu>

@@ -154,6 +154,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.action_change_profile_photo:
+                        goChangeProfilePhotoDialogFragment();
+                        break;
                     case R.id.action_log_out:
                         ParseUser.logOut();
                         goLoginActivity();
@@ -212,6 +215,11 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    private void goChangeProfilePhotoDialogFragment(){
+        ChangeProfilePhotoDialogFragment changeProfilePhotoDialogFragment = ChangeProfilePhotoDialogFragment.newInstance();
+        changeProfilePhotoDialogFragment.show(fragmentManager, changeProfilePhotoDialogFragment.getTag());
     }
 
     private void goDiscussionFragment(){

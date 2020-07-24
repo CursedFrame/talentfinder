@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.talentfinder.R;
@@ -44,7 +42,6 @@ public class ContributeFragment extends MediaFragment {
     private FragmentContributeBinding binding;
     private File photoFile;
     private File videoFile;
-    public String photoFileName = "photo.jpg";
 
     public ContributeFragment() {
         // Required empty public constructor
@@ -100,7 +97,7 @@ public class ContributeFragment extends MediaFragment {
         binding.fragmentContributeBtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLaunchCamera();
+                photoFile = onLaunchCamera("photo.jpg");
             }
         });
 
@@ -169,21 +166,6 @@ public class ContributeFragment extends MediaFragment {
         });
     }
 
-    private void onLaunchCamera() {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
-        photoFile = getPhotoFileUri(photoFileName);
-
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "me.cursedfra.fileprovider", photoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -203,7 +185,7 @@ public class ContributeFragment extends MediaFragment {
                 e.printStackTrace();
             }
         }
-        if (requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        else if ((data != null) && requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 binding.fragmentContributeIvContributePicture.setImageBitmap(takenImage);
@@ -211,7 +193,7 @@ public class ContributeFragment extends MediaFragment {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
-        if ((data != null) && requestCode == GlobalConstants.PICK_VIDEO_CODE) {
+        else if ((data != null) && requestCode == GlobalConstants.PICK_VIDEO_CODE) {
             Uri videoUri = data.getData();
 
             createTempVideo(videoUri);

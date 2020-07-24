@@ -70,8 +70,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/fragmentCreate_btnCreate"
         app:layout_constraintEnd_toEndOf="@+id/fragmentCreate_tvDescribeProject"
-        app:layout_constraintStart_toStartOf="@+id/fragmentCreate_tvDescribeProject"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_etAddTag" />
+        app:layout_constraintStart_toStartOf="@+id/fragmentCreate_tvDescribeProject" />
 
     <TextView
         android:id="@+id/fragmentCreate_tvTags"
@@ -79,7 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Tags:"
-        app:layout_constraintBottom_toBottomOf="@+id/fragmentCreate_etAddTag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvDescribeProject" />
 
@@ -93,14 +91,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/fragmentCreate_etAddTag"
+    <Spinner
+        android:id="@+id/fragmentCreate_spnTalent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Add tag..."
-        android:inputType="textPersonName"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/fragmentCreate_tvTags"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvDescribeProject" />
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvTags" />
+
+    <Spinner
+        android:id="@+id/fragmentCreate_spnSubTalent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/fragmentCreate_spnTalent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_tvTags" />
+
+    <Spinner
+        android:id="@+id/fragmentCreate_spnSkill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/fragmentCreate_spnTalent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentCreate_spnTalent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Project")
@@ -13,9 +14,22 @@ public class Project extends ParseObject {
     public static final String KEY_TITLE = "title";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_CONTRIBUTION_COUNT = "contributionCount";
-    public static final String KEY_TAGS = "tags";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_CONTRIBUTIONS = "contributions";
+    public static final String KEY_TAG_SKILL = "tagSkill";
+    public static final String KEY_TAG_TALENT = "tagTalent";
+    public static final String KEY_TAG_SUBTALENT = "tagSubTalent";
+
+    // Unique methods
+    public List<String> getTags(){
+        List<String> tags = new ArrayList<>();
+
+        tags.add(getTalentTag());
+        tags.add(getSubTalentTag());
+        tags.add(getSkillTag());
+
+        return tags;
+    }
 
 
     // GET/SET User
@@ -54,15 +68,6 @@ public class Project extends ParseObject {
         put(KEY_CONTRIBUTION_COUNT, count);
     }
 
-    // GET/SET Tags
-    public List<String> getTags() {
-        return getList(KEY_TAGS);
-    }
-
-    public void setTags(List<String> tags) {
-        put(KEY_TAGS, tags);
-    }
-
     // GET/SET Description
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
@@ -70,5 +75,32 @@ public class Project extends ParseObject {
 
     public void setDescription(String description){
         put(KEY_DESCRIPTION, description);
+    }
+
+    // GET/SET Skill Tag
+    public String getSkillTag(){
+        return getString(KEY_TAG_SKILL);
+    }
+
+    public void setSkillTag(String skill){
+        put(KEY_TAG_SKILL, skill);
+    }
+
+    // GET/SET Talent Tag
+    public String getTalentTag(){
+        return getString(KEY_TAG_TALENT);
+    }
+
+    public void setTalentTag(String talent){
+        put(KEY_TAG_TALENT, talent);
+    }
+
+    // GET/SET Subtalent Tag
+    public String getSubTalentTag(){
+        return getString(KEY_TAG_SUBTALENT);
+    }
+
+    public void setSubTalentTag(String subtalent){
+        put(KEY_TAG_SUBTALENT, subtalent);
     }
 }
