@@ -100,7 +100,7 @@ public class StartDiscussionDialogFragment extends DialogFragment {
                                     return;
                                 }
                                 DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-                                fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
+                                fragmentManager.beginTransaction().replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
                                 dismiss();
                             }
                         });

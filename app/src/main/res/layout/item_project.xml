@@ -3,59 +3,119 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="2dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemProject_clProfileContainer"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="#E4E4E4"
+        app:cardCornerRadius="12dp"
+        app:contentPadding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/itemProject_tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/itemProject_ivProfilePicture"
-            app:layout_constraintTop_toBottomOf="@+id/itemProject_ivProfilePicture"
-            tools:text="John Doe" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:padding="14dp">
 
-        <ImageView
-            android:id="@+id/itemProject_ivProfilePicture"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemProject_chipSkill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_chipSubtalent"
+                tools:text="Beginner" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemProject_chipSubtalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_chipTalent"
+                tools:text="Abstract" />
 
-    <ImageView
-        android:id="@+id/itemProject_ivContextImage"
-        android:layout_width="250dp"
-        android:layout_height="176dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
-        app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle"
-        app:layout_constraintVertical_bias="1.0"
-        tools:srcCompat="@tools:sample/avatars" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemProject_chipTalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:chipIconSize="12dp"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_clProfileContainer"
+                tools:text="Art" />
 
-    <TextView
-        android:id="@+id/itemProject_tvProjectTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Need voice actor, Southern accent!" />
+            <TextView
+                android:id="@+id/itemProject_tvProjectTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Need voice actor, Southern accent!" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/itemProject_tvProjectTitle"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle">
+
+                <ImageView
+                    android:id="@+id/itemProject_ivContextImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
+                    app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/itemProject_clProfileContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/itemProject_tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/itemProject_ivProfilePicture"
+                    app:layout_constraintTop_toBottomOf="@+id/itemProject_ivProfilePicture"
+                    tools:text="John Doe" />
+
+                <ImageView
+                    android:id="@+id/itemProject_ivProfilePicture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

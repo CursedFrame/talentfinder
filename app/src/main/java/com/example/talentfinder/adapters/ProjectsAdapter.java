@@ -18,6 +18,7 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
 import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Project;
+import com.google.android.material.chip.Chip;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -58,6 +59,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         TextView tvTitle, tvFinderName;
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
+        Chip chipTalent, chipSubtalent, chipSkill;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +68,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             ivFinderProfilePicture = itemView.findViewById(R.id.itemProject_ivProfilePicture);
             ivOptionalContext = itemView.findViewById(R.id.itemProject_ivContextImage);
             clFinderProfileContainer = itemView.findViewById(R.id.itemProject_clProfileContainer);
+            chipTalent = itemView.findViewById(R.id.itemProject_chipTalent);
+            chipSubtalent = itemView.findViewById(R.id.itemProject_chipSubtalent);
+            chipSkill = itemView.findViewById(R.id.itemProject_chipSkill);
         }
 
         public void bind(final Project project){
@@ -84,6 +89,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         public void bindProjectData(){
             tvTitle.setText(project.getTitle());
             tvFinderName.setText(project.getUser().getUsername());
+            chipTalent.setText(project.getTalentTag());
+            chipSubtalent.setText(project.getSubTalentTag());
+            chipSkill.setText(project.getSkillTag());
 
             if (project.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl() != null) {
                 Glide.with(context)
@@ -93,6 +101,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             }
 
             if (project.getImage() != null) {
+                int radius = 30;
+                int margin = 10;
                 Glide.with(context)
                         .load(project.getImage().getUrl())
                         .into(ivOptionalContext);
@@ -104,7 +114,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     ProfileFragment profileFragment = ProfileFragment.newInstance(user);
-                    fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.activityMain_clContainer, profileFragment).commit();
+                    fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
                 }
             });
         }
@@ -114,7 +124,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     ProjectFragment projectFragment = ProjectFragment.newInstance(project);
-                    fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.activityMain_clContainer, projectFragment).commit();
+                    fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
                 }
             });
         }

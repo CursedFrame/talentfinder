@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:context=".fragments.TagsDialogFragment">
+
+    <Spinner
+        android:id="@+id/fragmentTagsDialog_spnTalent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/fragmentTagsDialog_spnSubTalent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentTagsDialog_spnTalent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnTalent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnTalent" />
+
+    <Spinner
+        android:id="@+id/fragmentTagsDialog_spnSkill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentTagsDialog_spnTalent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnSubTalent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnSubTalent" />
+
+    <Button
+        android:id="@+id/fragmentTagsDialog_btnConfirm"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:text="confirm"
+        app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnSkill"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnSkill" />
+</androidx.constraintlayout.widget.ConstraintLayout>

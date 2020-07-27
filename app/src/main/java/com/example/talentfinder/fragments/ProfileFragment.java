@@ -81,8 +81,6 @@ public class ProfileFragment extends Fragment {
         binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
         binding.fragmentProfileRvProjects.setLayoutManager(linearLayoutManager);
 
-        checkDiscussion();
-
         // Bind user name and location
         binding.fragmentProfileTvProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
         if (user.getString(ParseUserKey.PROFILE_LOCATION) != null){
@@ -101,6 +99,7 @@ public class ProfileFragment extends Fragment {
         }
         else {
             binding.fragmentProfileBtnSettings.setVisibility(View.GONE);
+            checkDiscussion();
         }
 
         // On Settings button click, open drop down menu for settings
@@ -224,7 +223,7 @@ public class ProfileFragment extends Fragment {
 
     private void goDiscussionFragment(){
         DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.activityMain_clContainer, discussionFragment).commit();
+        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
     }
 
     private void createDiscussionDialog(){

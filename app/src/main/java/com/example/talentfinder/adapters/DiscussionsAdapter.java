@@ -113,7 +113,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                 @Override
                 public void onClick(View v) {
                     DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-                    fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
                 }
             });
         }

@@ -129,7 +129,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
                 @Override
                 public void onClick(View v) {
                     ProfileFragment profileFragment = ProfileFragment.newInstance(contribution.getUser());
-                    fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.activityMain_clContainer, profileFragment).commit();
+                    fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
                 }
             });
         }
@@ -139,7 +139,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
                 @Override
                 public void onClick(View v) {
                     ContributionDetailFragment contributionDetailFragment = ContributionDetailFragment.newInstance(contribution);
-                    fragmentManager.beginTransaction().addToBackStack(contributionDetailFragment.getTag()).replace(R.id.activityMain_clContainer, contributionDetailFragment).commit();
+                    fragmentManager.beginTransaction().addToBackStack(contributionDetailFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, contributionDetailFragment).commit();
                 }
             });
         }

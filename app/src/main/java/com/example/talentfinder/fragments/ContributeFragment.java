@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.databinding.FragmentContributeBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
@@ -170,13 +171,12 @@ public class ContributeFragment extends MediaFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((data != null) && requestCode == GlobalConstants.PICK_PHOTO_CODE) {
+            binding.fragmentContributeVvContributeVideo.setVisibility(View.INVISIBLE);
+
             Uri photoUri = data.getData();
 
             // Load the image located at photoUri into selectedImage
             Bitmap selectedImage = loadImageFromUri(photoUri);
-
-            // Load the selected image into a preview
-            binding.fragmentContributeIvContributePicture.setImageBitmap(selectedImage);
 
             // Convert image from bitmap to JPG file and apply to photoFile File
             try {
@@ -184,8 +184,14 @@ public class ContributeFragment extends MediaFragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // Load the selected image into a preview
+            Glide.with(getContext())
+                    .load(photoFile)
+                    .into(binding.fragmentContributeIvContributePicture);
         }
         else if ((data != null) && requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            binding.fragmentContributeVvContributeVideo.setVisibility(View.INVISIBLE);
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 binding.fragmentContributeIvContributePicture.setImageBitmap(takenImage);
@@ -194,6 +200,7 @@ public class ContributeFragment extends MediaFragment {
             }
         }
         else if ((data != null) && requestCode == GlobalConstants.PICK_VIDEO_CODE) {
+            binding.fragmentContributeVvContributeVideo.setVisibility(View.VISIBLE);
             Uri videoUri = data.getData();
 
             createTempVideo(videoUri);

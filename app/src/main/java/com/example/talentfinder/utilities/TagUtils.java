@@ -12,23 +12,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TagUtils {
+public abstract class TagUtils {
 
-    private Context context;
-
-    private double weight;
-    private boolean isTalent;
-    private String tagTalent;
-
-    public TagUtils(Context context) {
-        this.context = context;
-    }
-
-    public double getWeight(Project project, List<String> specifiedTags){
+    public static int getWeight(Project project, List<String> specifiedTags, Context context){
         // Gets tags in order of Talent, Subtalent, and Skill
         List<String> tags = project.getTags();
-        weight = 0;
-        isTalent = false;
+        int weight = 0;
+        boolean isTalent = false;
 
         // Populate tag String List with only compared tags
         tags = getComparedTagList(tags, specifiedTags);
@@ -38,20 +28,20 @@ public class TagUtils {
             return 0;
         }
 
-        calculateWeight(tags);
+        weight = calculateWeight(tags, weight, isTalent, context);
 
         return weight;
     }
 
-    public double getWeight(ParseUser user, List<String> specifiedTags){
+    public static int getWeight(ParseUser user, List<String> specifiedTags, Context context){
         // Gets tags in order of Talent, Subtalent, and Skill
         List<String> tags = new ArrayList<>();
         tags.add(user.getString(ParseUserKey.TAG_TALENT));
         tags.add(user.getString(ParseUserKey.TAG_SUBTALENT));
         tags.add(user.getString(ParseUserKey.TAG_SKILL));
 
-        weight = 0;
-        isTalent = false;
+        int weight = 0;
+        boolean isTalent = false;
 
         // Populate tag String List with only compared tags
         tags = getComparedTagList(tags, specifiedTags);
@@ -61,7 +51,7 @@ public class TagUtils {
             return 0;
         }
 
-        calculateWeight(tags);
+        weight = calculateWeight(tags, weight, isTalent, context);
 
         return weight;
     }
@@ -71,7 +61,7 @@ public class TagUtils {
 
         compare_tags_loop:
         for (int i = 0 ; i < projectTags.size() ; i++){
-            for (int j = 0 ; j < specifiedTags.size() ; i++){
+            for (int j = 0 ; j < specifiedTags.size() ; j++){
                 if (comparedTags.size() == 3){
                     break compare_tags_loop;
                 }
@@ -84,20 +74,21 @@ public class TagUtils {
         return comparedTags;
     }
 
-    private void calculateWeight(List<String> tags){
+    private static int calculateWeight(List<String> tags, int weight, boolean isTalent, Context context){
 
         Resources resources = context.getResources();
+        String tagTalent = "";
 
         // First check for talent, if chosen by user, will always be the first tag in the String list
         List<String> talents = Arrays.asList(resources.getStringArray(R.array.talent));
-
-        compareTalent:
-        for (int i = 0 ; i < talents.size() ; i++){
-            if (talents.get(i).equals(tags.get(0))){
-                isTalent = true;
-                weight += 1.0;
-                tagTalent = talents.get(i);
-                break compareTalent;
+        for (String talent : talents){
+            for (String tag : tags) {
+                if (talent.equals(tag)) {
+                    isTalent = true;
+                    weight += 1.0;
+                    tagTalent = talent;
+                    break;
+                }
             }
         }
 
@@ -139,31 +130,45 @@ public class TagUtils {
                     break;
             }
 
-            for (int i = 0 ; i < subtalents.size() ; i++){
-                if (subtalents.get(i).equals(tags.get(1))){
-                    weight += 1.0;
-                    break;
+            for (String subtalent : subtalents){
+                for (String tag : tags) {
+                    if (subtalent.equals(tag)) {
+                        weight += 1.0;
+                        break;
+                    }
                 }
             }
         }
 
         // Third check for skill
         List<String> skills = Arrays.asList(resources.getStringArray(R.array.skill));
-        if (isTalent){
-            for (int i = 0 ; i < skills.size() ; i++){
-                if (skills.get(i).equals(tags.get(2))){
+
+        for (String skill : skills){
+            for (String tag : tags){
+                if (skill.equals(tag)){
                     weight += 1.0;
                     break;
                 }
             }
         }
-        else {
-            for (int i = 0 ; i < skills.size() ; i++){
-                if (skills.get(i).equals(tags.get(0))){
-                    weight += 1.0;
-                    break;
-                }
-            }
-        }
+
+//        if (isTalent){
+//            for (int i = 0 ; i < skills.size() ; i++){
+//                if (skills.get(i).equals(tags.get(2))){
+//                    weight += 1.0;
+//                    break;
+//                }
+//            }
+//        }
+//        else {
+//            for (int i = 0 ; i < skills.size() ; i++){
+//                if (skills.get(i).equals(tags.get(0))){
+//                    weight += 1.0;
+//                    break;
+//                }
+//            }
+//        }
+
+        return weight;
     }
 }

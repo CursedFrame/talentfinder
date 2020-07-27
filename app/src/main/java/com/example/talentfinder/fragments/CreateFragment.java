@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.talentfinder.R;
+import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.ParseUserKey;
@@ -117,8 +118,9 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                                     return;
                                 }
                                 Log.i(TAG, "Contribution saved successfully");
-                                Fragment fragment = HomeFeedFragment.newInstance();
-                                fragmentManager.beginTransaction().replace(R.id.activityMain_clContainer, fragment).commit();
+                                MainActivity mainActivity = (MainActivity) getActivity();
+                                Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects);
+                                fragmentManager.beginTransaction().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
                             }
                         });
 

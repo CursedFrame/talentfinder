@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_talent"
+        android:title="Talent" />
+    <item
+        android:id="@+id/action_subtalent"
+        android:title="Subtalent"
+        android:visible="false" />
+    <item
+        android:id="@+id/action_skill"
+        android:title="Skill" />
+</menu>

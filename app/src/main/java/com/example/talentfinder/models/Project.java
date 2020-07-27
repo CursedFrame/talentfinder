@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Project")
-public class Project extends ParseObject {
+public class Project extends ParseObject  implements Comparable<Project>{
     public static final String KEY_USER = "user";
     public static final String KEY_TITLE = "title";
     public static final String KEY_IMAGE = "image";
@@ -19,6 +19,8 @@ public class Project extends ParseObject {
     public static final String KEY_TAG_SKILL = "tagSkill";
     public static final String KEY_TAG_TALENT = "tagTalent";
     public static final String KEY_TAG_SUBTALENT = "tagSubTalent";
+
+    private int projectWeight;
 
     // Unique methods
     public List<String> getTags(){
@@ -30,7 +32,6 @@ public class Project extends ParseObject {
 
         return tags;
     }
-
 
     // GET/SET User
     public ParseUser getUser() {
@@ -102,5 +103,19 @@ public class Project extends ParseObject {
 
     public void setSubTalentTag(String subtalent){
         put(KEY_TAG_SUBTALENT, subtalent);
+    }
+
+    // GET/SET Project weight
+    public int getProjectWeight(){
+        return projectWeight;
+    }
+
+    public void setProjectWeight(int projectWeight){
+        this.projectWeight = projectWeight;
+    }
+
+    @Override
+    public int compareTo(Project other) {
+        return (other.getProjectWeight() - this.getProjectWeight());
     }
 }

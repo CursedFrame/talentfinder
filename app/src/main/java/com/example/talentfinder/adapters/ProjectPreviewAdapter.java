@@ -95,11 +95,11 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
                 public void onClick(View v) {
                     if (project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                         ProjectContributionFeedFragment projectContributionFeedFragment = ProjectContributionFeedFragment.newInstance(project);
-                        fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.activityMain_clContainer, projectContributionFeedFragment).commit();
+                        fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectContributionFeedFragment).commit();
                     }
                     else {
                         ProjectFragment projectFragment = ProjectFragment.newInstance(project);
-                        fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.activityMain_clContainer, projectFragment).commit();
+                        fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
                     }
                 }
             });

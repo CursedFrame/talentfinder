@@ -101,7 +101,7 @@ public class ProjectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ContributeFragment contributeFragment = ContributeFragment.newInstance(project);
-                fragmentManager.beginTransaction().addToBackStack(contributeFragment.getTag()).replace(R.id.activityMain_clContainer, contributeFragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(contributeFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, contributeFragment).commit();
             }
         });
 
@@ -156,7 +156,7 @@ public class ProjectFragment extends Fragment {
 
     private void goDiscussionFragment(){
         DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
-        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.activityMain_clContainer, discussionFragment).commit();
+        fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
     }
 
     private void createDiscussionDialog(){

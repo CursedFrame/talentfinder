@@ -1,6 +1,7 @@
 package com.example.talentfinder.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.talentfinder.databinding.FragmentDirectMessagesBinding;
 import com.example.talentfinder.models.Discussion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Fragment allowing user to access their current discussions
 public class DirectMessagesFragment extends Fragment {
@@ -33,10 +35,10 @@ public class DirectMessagesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DirectMessagesFragment newInstance(ArrayList<Discussion> discussions) {
+    public static DirectMessagesFragment newInstance(List<Discussion> discussions) {
         DirectMessagesFragment fragment = new DirectMessagesFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("discussions", discussions);
+        args.putParcelableArrayList("discussions", (ArrayList<? extends Parcelable>) discussions);
         fragment.setArguments(args);
         return fragment;
     }

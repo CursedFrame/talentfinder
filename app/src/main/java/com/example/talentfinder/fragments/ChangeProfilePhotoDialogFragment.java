@@ -102,25 +102,23 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
             // Load the image located at photoUri into selectedImage
             Bitmap selectedImage = loadImageFromUri(photoUri);
 
-            // Load the selected image into a preview
-//            binding.fragmentChangeProfilePhotoDialogIvProfilePicture.setImageBitmap(selectedImage);
-            Glide.with(getContext())
-                    .load(selectedImage)
-                    .circleCrop()
-                    .into(binding.fragmentChangeProfilePhotoDialogIvProfilePicture);
-
             // Convert image from bitmap to JPG file and apply to photoFile File
             try {
                 photoFile = bitmapToFile(selectedImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // Load the selected image into a preview
+            Glide.with(getContext())
+                    .load(photoFile)
+                    .circleCrop()
+                    .into(binding.fragmentChangeProfilePhotoDialogIvProfilePicture);
         }
 
         else if ((data != null) && (requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)){
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-//                binding.fragmentChangeProfilePhotoDialogIvProfilePicture.setImageBitmap(takenImage);
                 Glide.with(getContext())
                         .load(takenImage)
                         .circleCrop()
