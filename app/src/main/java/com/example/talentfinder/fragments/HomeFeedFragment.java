@@ -32,7 +32,6 @@ public class HomeFeedFragment extends Fragment {
     private FragmentHomeFeedBinding binding;
     private DividerItemDecoration dividerItemDecoration;
     private MaterialButton btnTags;
-    private MainActivity mainActivity;
 
     public HomeFeedFragment() {
         // Required empty public constructor

@@ -65,4 +65,14 @@
         app:layout_constraintStart_toStartOf="@id/activityLogin_etPassword"
         app:layout_constraintTop_toBottomOf="@id/activityLogin_etPassword" />
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/activityLogin_fbLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/activityLogin_btnLogin"
+        app:layout_constraintStart_toStartOf="@+id/activityLogin_btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/activityLogin_btnLogin" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

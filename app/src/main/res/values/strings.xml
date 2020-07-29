@@ -5,6 +5,11 @@
     <string name="start_discussion">To: %1$s</string>
     <string name="message_current_user">You: %1$s</string>
     <string name="message_recipient_user">%1$s: %2$s</string>
+    <string name="spinner_title_talent">Talent</string>
+    <string name="spinner_title_subtalent">Subtalent</string>
+    <string name="spinner_title_skill">Skill</string>
 
+    <string name="facebook_app_id">206510080790749</string>
+    <string name="fb_login_protocol_scheme">fb206510080790749</string>
 
 </resources>

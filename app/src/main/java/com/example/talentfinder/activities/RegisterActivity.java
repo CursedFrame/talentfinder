@@ -15,6 +15,7 @@ import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.ActivityRegisterBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.ParseUserKey;
+import com.facebook.login.LoginManager;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -29,6 +30,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     LinearLayoutManager linearLayoutManager;
     List<String> skills;
     ChipAdapter skillsAdapter;
+    boolean facebookCheck;
+    int userId;
+    String userName;
+    String userLocation;
 
     ActivityRegisterBinding binding;
 
@@ -38,6 +43,30 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Bundle loginActivityData = getIntent().getBundleExtra("bundle");
+
+        // Boolean to check if activity was triggered by Facebook login
+        facebookCheck = loginActivityData.getBoolean("facebookCheck");
+
+        if (facebookCheck) {
+            userId = loginActivityData.getInt("userId");
+            userName = loginActivityData.getString("userName");
+            userLocation = loginActivityData.getString("userLocation");
+            String[] userLocationArray = userLocation.split(", ", 2);
+
+
+            binding.activityRegisterEtName.setText(userName);
+            binding.activityRegisterEtCity.setText(userLocationArray[0]);
+            binding.activityRegisterEtState.setText(userLocationArray[1]);
+
+            binding.activityRegisterEtUsername.setVisibility(View.GONE);
+            binding.activityRegisterTvUsername.setVisibility(View.GONE);
+            binding.activityRegisterEtPassword.setVisibility(View.GONE);
+            binding.activityRegisterTvPassword.setVisibility(View.GONE);
+            binding.activityRegisterEtConfirmPassword.setVisibility(View.GONE);
+            binding.activityRegisterTvConfirmPassword.setVisibility(View.GONE);
+        }
 
         // Recycler view and adapter creation
         linearLayoutManager = new LinearLayoutManager(this);
@@ -62,7 +91,36 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         binding.activityRegisterBtnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount();
+                if (facebookCheck) {
+                    createAccountFromFacebook();
+                }
+                else {
+                    createAccount();
+                }
+            }
+        });
+    }
+
+    private void createAccountFromFacebook(){
+        ParseUser newUser = new ParseUser();
+
+        newUser.setUsername(Integer.toString(userId));
+        newUser.setPassword(Integer.toString(userId));
+        newUser.put(ParseUserKey.PROFILE_NAME, userName);
+        newUser.put(ParseUserKey.PROFILE_LOCATION, userLocation);
+        newUser.put(ParseUserKey.TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
+        newUser.put(ParseUserKey.TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
+        newUser.put(ParseUserKey.TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
+        newUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error signing up", e);
+                    return;
+                }
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -132,6 +190,12 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 break;
         }
         binding.activityRegisterSpnSubTalent.setAdapter(spnSubTalentAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        LoginManager.getInstance().logOut();
+        super.onBackPressed();
     }
 
     @Override

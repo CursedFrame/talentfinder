@@ -1,5 +1,6 @@
 package com.example.talentfinder.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.example.talentfinder.utilities.TagUtils;
+import com.facebook.login.LoginManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
@@ -60,21 +62,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+
         btnTags = findViewById(R.id.includeMainViewContainer_tagsbutton);
 
         // Queries discussions and projects
         queryObjects();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.includeMainViewContainer_toolbar);
+        Toolbar toolbar = findViewById(R.id.includeMainViewContainer_toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activityMain_drawer_layout);
+        drawerLayout = findViewById(R.id.activityMain_drawer_layout);
 
-        navigationView = (NavigationView) findViewById(R.id.activityMain_main_navigation);
+        navigationView = findViewById(R.id.activityMain_main_navigation);
 
         if (navigationView != null) {
             setupDrawerContent(navigationView);
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         btnTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TagsDialogFragment tagsDialogFragment = TagsDialogFragment.newInstance();
+                TagsDialogFragment tagsDialogFragment = TagsDialogFragment.newInstance(tags);
                 tagsDialogFragment.show(fragmentManager, tagsDialogFragment.getTag());
             }
         });
@@ -102,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 Log.i(TAG, "onOptionsItemSelected: logging");
                 return true;
+            case R.id.action_log_out:
+                ParseUser.logOut();
+                LoginManager.getInstance().logOut();
+                goLoginActivity();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -228,14 +238,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        for (Project project : projects){
-            Log.i(TAG, "sortProjectsByTag: " + project.getProjectWeight());
-        }
-
+        // Refresh fragment to update RecyclerView data
         Fragment currentHomeFragment = fragmentManager.findFragmentByTag("Main");
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.detach(currentHomeFragment);
         transaction.attach(currentHomeFragment);
         transaction.commit();
+    }
+
+    private void goLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

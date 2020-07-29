@@ -64,10 +64,10 @@
         android:layout_marginStart="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvUsername"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/activityRegister_tvUsername"
+        app:layout_constraintTop_toTopOf="@+id/activityRegister_tvUsername" />
 
     <EditText
         android:id="@+id/activityRegister_etPassword"
@@ -76,10 +76,10 @@
         android:layout_marginStart="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvPassword"
         app:layout_constraintEnd_toEndOf="@id/activityRegister_etUsername"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintStart_toEndOf="@+id/activityRegister_tvPassword"
+        app:layout_constraintTop_toTopOf="@+id/activityRegister_tvPassword" />
 
     <EditText
         android:id="@+id/activityRegister_etConfirmPassword"
@@ -88,10 +88,10 @@
         android:layout_marginStart="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvConfirmPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintStart_toEndOf="@+id/activityRegister_tvConfirmPassword"
+        app:layout_constraintTop_toTopOf="@+id/activityRegister_tvConfirmPassword" />
 
     <EditText
         android:id="@+id/activityRegister_etName"
@@ -182,7 +182,7 @@
         android:layout_marginTop="8dp"
         android:text="Location:"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
         app:layout_constraintTop_toBottomOf="@+id/activityRegister_etName" />
 
     <TextView
@@ -192,21 +192,21 @@
         android:layout_marginTop="40dp"
         android:text="Name:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
+        app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvConfirmPassword" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/activityRegister_tvConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Confirm Password:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/activityRegister_tvPassword"
+        app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvPassword" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/activityRegister_tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -216,14 +216,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/activityRegister_tvPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Password:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
+        app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvUsername" />
 
     <TextView
         android:id="@+id/textView6"

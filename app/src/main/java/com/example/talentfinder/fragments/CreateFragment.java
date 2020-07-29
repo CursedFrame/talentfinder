@@ -69,18 +69,18 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
         // Array adapter for "Skill" spinner
         ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(getContext(), R.array.skill, R.layout.support_simple_spinner_dropdown_item);
         spnSkillAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        binding.fragmentCreateSpnSkill.setAdapter(spnSkillAdapter);
+        binding.fragmentCreateProjectSpnSkill.setAdapter(spnSkillAdapter);
 
         // Array adapter for "Talent" spinner
         ArrayAdapter<CharSequence> spnTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.talent, R.layout.support_simple_spinner_dropdown_item);
         spnTalentAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        binding.fragmentCreateSpnTalent.setAdapter(spnTalentAdapter);
+        binding.fragmentCreateProjectSpnTalent.setAdapter(spnTalentAdapter);
 
         // Binding listener for when talent item is selected. Initializes and updates an array adapter for "Subtalent" spinner
-        binding.fragmentCreateSpnTalent.setOnItemSelectedListener(this);
+        binding.fragmentCreateProjectSpnTalent.setOnItemSelectedListener(this);
 
         // On "import" button click, move to media gallery activity and allow user to pick photo
-        binding.fragmentCreateBtnImport.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentCreateProjectBtnImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPickPhoto();
@@ -88,19 +88,19 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
         });
 
         // Create project on "Create" button press
-        binding.fragmentCreateBtnCreate.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentCreateProjectBtnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Project project = new Project();
                 project.setUser(ParseUser.getCurrentUser());
-                project.setTitle(binding.fragmentCreateEtProjectTitle.getText().toString());
+                project.setTitle(binding.fragmentCreateProjectEtTitle.getText().toString());
                 if (photoFile != null) {
                     project.setImage(new ParseFile(photoFile));
                 }
-                project.setDescription(binding.fragmentCreateTvDescribeProject.getText().toString());
-                project.setTalentTag(binding.fragmentCreateSpnTalent.getSelectedItem().toString());
-                project.setSubTalentTag(binding.fragmentCreateSpnSubTalent.getSelectedItem().toString());
-                project.setSkillTag(binding.fragmentCreateSpnSkill.getSelectedItem().toString());
+                project.setDescription(binding.fragmentCreateProjectEtDescription.getText().toString());
+                project.setTalentTag(binding.fragmentCreateProjectSpnTalent.getSelectedItem().toString());
+                project.setSubTalentTag(binding.fragmentCreateProjectSpnSubtalent.getSelectedItem().toString());
+                project.setSkillTag(binding.fragmentCreateProjectSpnSkill.getSelectedItem().toString());
                 project.setContributionCount(0);
                 project.saveInBackground(new SaveCallback() {
                     @Override
@@ -139,7 +139,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
             Bitmap selectedImage = loadImageFromUri(photoUri);
 
             // Load the selected image into a preview
-            binding.fragmentCreateIvImage.setImageBitmap(selectedImage);
+            binding.fragmentCreateProjectIvContext.setImageBitmap(selectedImage);
 
             // Change bitmap to File and input into photoFile
             try {
@@ -189,7 +189,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
             default:
                 break;
         }
-        binding.fragmentCreateSpnSubTalent.setAdapter(spnSubTalentAdapter);
+        binding.fragmentCreateProjectSpnSubtalent.setAdapter(spnSubTalentAdapter);
     }
 
     @Override

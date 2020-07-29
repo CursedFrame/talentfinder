@@ -17,6 +17,9 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentTagsDialogBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TagsDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener{
 
     public static final String TAG = "TagsDialogFragment";
@@ -24,15 +27,17 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
     FragmentTagsDialogBinding binding;
     MainActivity mainActivity;
     Context context;
+    List<String> currentTags;
 
     public TagsDialogFragment() {
         // Required empty public constructor
     }
 
-    public static TagsDialogFragment newInstance() {
+    public static TagsDialogFragment newInstance(List<String> tags) {
         TagsDialogFragment fragment = new TagsDialogFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putStringArrayList("currentTags", (ArrayList<String>) tags);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,6 +56,12 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
 
         context = getContext();
         mainActivity = (MainActivity) getActivity();
+
+        if (currentTags != null) {
+            for (String tag : currentTags) {
+                Log.i(TAG, "onViewCreated: " + tag);
+            }
+        }
 
         // Array adapter for "Skill" spinner
         ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(context, R.array.skill, R.layout.support_simple_spinner_dropdown_item);
@@ -73,6 +84,7 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnTalent.getSelectedItem().toString());
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSubTalent.getSelectedItem().toString());
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSkill.getSelectedItem().toString());
+
                 mainActivity.sortProjectsByTag();
                 dismiss();
             }
@@ -82,7 +94,6 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.i(TAG, "onItemSelected: triggered");
         ArrayAdapter<CharSequence> spnSubTalentAdapter = null;
 
         switch (position){

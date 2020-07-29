@@ -1,6 +1,5 @@
 package com.example.talentfinder.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
-import com.example.talentfinder.activities.LoginActivity;
 import com.example.talentfinder.adapters.ProjectPreviewAdapter;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
 import com.example.talentfinder.interfaces.ParseUserKey;
@@ -103,10 +101,10 @@ public class ProfileFragment extends Fragment {
         }
 
         // On Settings button click, open drop down menu for settings
-        binding.fragmentProfileBtnSettings.setOnClickListener(new View.OnClickListener() {
+        binding.fragmentProfileIvProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createSettingsPopUpMenu();
+                createChangeProfilePicturePopUpMenu();
             }
         });
 
@@ -145,7 +143,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-    private void createSettingsPopUpMenu(){
+    private void createChangeProfilePicturePopUpMenu(){
         PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileBtnSettings);
         popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
 
@@ -155,10 +153,6 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.action_change_profile_photo:
                         goChangeProfilePhotoDialogFragment();
-                        break;
-                    case R.id.action_log_out:
-                        ParseUser.logOut();
-                        goLoginActivity();
                         break;
                     default:
                         break;
@@ -208,12 +202,6 @@ public class ProfileFragment extends Fragment {
                 discussion = object;
             }
         });
-    }
-
-    private void goLoginActivity(){
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
     }
 
     private void goChangeProfilePhotoDialogFragment(){
