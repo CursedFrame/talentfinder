@@ -20,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     LinearLayoutManager linearLayoutManager;
     List<String> skills;
     ChipAdapter skillsAdapter;
+
     boolean facebookCheck;
     int userId;
     String userName;
     String userLocation;
+    String userLink;
+    String userProfilePicture;
 
     ActivityRegisterBinding binding;
 
@@ -53,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             userId = loginActivityData.getInt("userId");
             userName = loginActivityData.getString("userName");
             userLocation = loginActivityData.getString("userLocation");
+            userLink = loginActivityData.getString("facebookLink");
+            userProfilePicture = loginActivityData.getString("facebookPicture");
             String[] userLocationArray = userLocation.split(", ", 2);
 
 
@@ -92,7 +98,11 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
                 if (facebookCheck) {
-                    createAccountFromFacebook();
+                    try {
+                        createAccountFromFacebook();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     createAccount();
@@ -101,13 +111,17 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         });
     }
 
-    private void createAccountFromFacebook(){
+    private void createAccountFromFacebook() throws IOException {
         ParseUser newUser = new ParseUser();
 
         newUser.setUsername(Integer.toString(userId));
         newUser.setPassword(Integer.toString(userId));
+        newUser.put(ParseUserKey.FACEBOOK_CONNECTED, true);
+        newUser.put(ParseUserKey.FACEBOOK_LINK, userLink);
+        newUser.put(ParseUserKey.FACEBOOK_ID, userId);
         newUser.put(ParseUserKey.PROFILE_NAME, userName);
         newUser.put(ParseUserKey.PROFILE_LOCATION, userLocation);
+//        newUser.put(ParseUserKey.PROFILE_IMAGE, new ParseFile(MediaUtils.urlToImage(userProfilePicture, this)));
         newUser.put(ParseUserKey.TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
         newUser.put(ParseUserKey.TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
         newUser.put(ParseUserKey.TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());

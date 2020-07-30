@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.talentfinder.R;
 import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentTagsDialogBinding;
+import com.example.talentfinder.interfaces.GlobalConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,39 +98,47 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
         ArrayAdapter<CharSequence> spnSubTalentAdapter = null;
 
         switch (position){
-            case 0:
+            case GlobalConstants.POSITION_TALENT_NO:
+                break;
+            case GlobalConstants.POSITION_TALENT_ART:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 1:
+            case GlobalConstants.POSITION_TALENT_COMEDY:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 2:
+            case GlobalConstants.POSITION_TALENT_DRAWING:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 3:
+            case GlobalConstants.POSITION_TALENT_GRAPHICS:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 4:
+            case GlobalConstants.POSITION_TALENT_MUSIC:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 5:
+            case GlobalConstants.POSITION_TALENT_PHOTOGRAPHY:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 6:
+            case GlobalConstants.POSITION_TALENT_PROGRAMMING:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 7:
+            case GlobalConstants.POSITION_TALENT_SINGING:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 8:
+            case GlobalConstants.POSITION_TALENT_TEACHING:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            case 9:
+            case GlobalConstants.POSITION_TALENT_WRITING:
                 spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
                 break;
-            default:
-                break;
         }
+
+        if (position == GlobalConstants.POSITION_TALENT_NO){
+            binding.fragmentTagsDialogSpnSubTalent.setVisibility(View.GONE);
+        }
+        else {
+            binding.fragmentTagsDialogSpnSubTalent.setVisibility(View.VISIBLE);
+        }
+
         binding.fragmentTagsDialogSpnSubTalent.setAdapter(spnSubTalentAdapter);
     }
 

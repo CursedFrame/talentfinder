@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/fragmentTagsDialog_spnTalent"
-        app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnSubTalent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnTalent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnSubTalent" />
 
     <Button

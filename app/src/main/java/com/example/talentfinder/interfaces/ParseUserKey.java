@@ -10,6 +10,7 @@ public interface ParseUserKey {
     public static final String TAG_SKILL = "tagSkill";
     public static final String TAG_TALENT = "tagTalent";
     public static final String TAG_SUBTALENT = "tagSubTalent";
-    public static final String FACEBOOK_USER_ID = "facebookId";
-
+    public static final String FACEBOOK_LINK = "facebookLink";
+    public static final String FACEBOOK_CONNECTED = "facebookConnected";
+    public static final String FACEBOOK_ID = "facebookId";
 }

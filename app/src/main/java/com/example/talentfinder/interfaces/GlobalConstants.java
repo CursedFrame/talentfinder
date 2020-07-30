@@ -23,4 +23,22 @@ public interface GlobalConstants {
     // Media type codes
     public static final int MEDIA_PHOTO = 401;
     public static final int MEDIA_VIDEO = 402;
+
+
+    // Talent types
+    public static final int POSITION_TALENT_NO = 0;
+    public static final int POSITION_TALENT_ART = 1;
+    public static final int POSITION_TALENT_COMEDY = 2;
+    public static final int POSITION_TALENT_DRAWING = 3;
+    public static final int POSITION_TALENT_GRAPHICS = 4;
+    public static final int POSITION_TALENT_MUSIC = 5;
+    public static final int POSITION_TALENT_PHOTOGRAPHY = 6;
+    public static final int POSITION_TALENT_PROGRAMMING = 7;
+    public static final int POSITION_TALENT_SINGING = 8;
+    public static final int POSITION_TALENT_TEACHING = 9;
+    public static final int POSITION_TALENT_WRITING = 10;
+
+
+
+
 }

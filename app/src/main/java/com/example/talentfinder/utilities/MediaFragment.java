@@ -2,6 +2,7 @@ package com.example.talentfinder.utilities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
@@ -20,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 
 public abstract class MediaFragment extends Fragment {
 
@@ -92,6 +94,12 @@ public abstract class MediaFragment extends Fragment {
 
         // Return the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
+    }
+
+    public File urlToFile(String url) throws IOException {
+        URL imageurl = new URL(url);
+        Bitmap bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream());
+        return bitmapToFile(bitmap);
     }
 
     // Takes a bitmap and converts it into a File. Used for converting to ParseFile

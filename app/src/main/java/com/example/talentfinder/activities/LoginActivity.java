@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
     private static final String EMAIL = "email";
     private static final String LOCATION = "user_location";
+    private static final String LINK = "user_link";
+    private static final String PUBLIC_PROFILE = "public_profile";
 
     ActivityLoginBinding binding;
     CallbackManager callbackManager;
@@ -92,16 +94,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void setOnClickBtnFacebookLogin(){
-        binding.activityLoginFbLoginButton.setReadPermissions(Arrays.asList(EMAIL, LOCATION));
+
+        binding.activityLoginFbLoginButton.setReadPermissions(Arrays.asList(EMAIL, LOCATION, LINK));
         binding.activityLoginFbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                //LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("user_location"));
-
                 final AccessToken accessToken = AccessToken.getCurrentAccessToken();
                 boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
+                // Request user profile from Facebook Graph
                 GraphRequest request = GraphRequest.newMeRequest(
                         accessToken,
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -113,18 +115,45 @@ public class LoginActivity extends AppCompatActivity {
                                     final int userId = facebookObject.getInt("id");
                                     final String userName = facebookObject.getString("name");
                                     final String userLocation = facebookObject.getJSONObject("location").getString("name");
+                                    final String userLink = facebookObject.getString("link");
+//                                    final String[] userPicture = new String[1];
+
+//                                    Bundle params = new Bundle();
+//                                    params.putBoolean("redirect", false);
+//                                    params.putString("height", "200");
+//                                    params.putString("type", "normal");
+//                                    params.putString("width", "200");
+//                                    /* make the API call */
+//                                    new GraphRequest(
+//                                            AccessToken.getCurrentAccessToken(),
+//                                            "/" + userId + "/picture",
+//                                            params,
+//                                            HttpMethod.GET,
+//                                            new GraphRequest.Callback() {
+//                                                public void onCompleted(GraphResponse response) {
+//                                                    try {
+//                                                        userPicture[0] = response.getJSONObject().getString("url");
+//                                                    } catch (JSONException e) {
+//                                                        e.printStackTrace();
+//                                                    }
+//                                                }
+//                                            }
+//                                    ).executeAsync();
 
                                     ParseUser.getQuery()
                                             .whereEqualTo(ParseUserKey.PROFILE_USERNAME, Integer.toString(userId))
                                             .getFirstInBackground(new GetCallback<ParseUser>() {
                                                 @Override
                                                 public void done(ParseUser object, ParseException e) {
+                                                    // If a user exists, log in, else, go to populated RegisterActivity
                                                     if (e != null){
                                                         Log.e(TAG, "done: exception here", e);
                                                         Bundle bundle = new Bundle();
                                                         bundle.putInt("userId", userId);
                                                         bundle.putString("userName", userName);
                                                         bundle.putString("userLocation", userLocation);
+                                                        bundle.putString("facebookLink", userLink);
+//                                                        bundle.putString("facebookPicture", userPicture[0]);
                                                         goRegisterActivityForFacebook(bundle);
                                                         return;
                                                     }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="skill">
+        <item>Skill</item>
         <item>Beginner</item>
         <item>Intermediate</item>
         <item>Expert</item>
     </string-array>
 
     <string-array name="talent">
+        <item>Talent</item>
         <item>Art</item>
         <item>Comedy</item>
         <item>Drawing</item>
@@ -20,6 +22,7 @@
     </string-array>
 
     <string-array name="art_subs">
+        <item>Subtalent</item>
         <item>Abstract</item>
         <item>Cubism</item>
         <item>Expressionism</item>
@@ -33,6 +36,7 @@
     </string-array>
 
     <string-array name="comedy_subs">
+        <item>Subtalent</item>
         <item>Character</item>
         <item>Dark</item>
         <item>Deadpan</item>
@@ -46,6 +50,7 @@
     </string-array>
 
     <string-array name="drawing_subs">
+        <item>Subtalent</item>
         <item>Academic</item>
         <item>Anamorphic</item>
         <item>Architectural</item>
@@ -59,6 +64,7 @@
     </string-array>
 
     <string-array name="graphics_subs">
+        <item>Subtalent</item>
         <item>Advertising</item>
         <item>Apparel</item>
         <item>Branding</item>
@@ -72,6 +78,7 @@
     </string-array>
 
     <string-array name="music_subs">
+        <item>Subtalent</item>
         <item>Country</item>
         <item>Dubstep</item>
         <item>Electro</item>
@@ -85,6 +92,7 @@
     </string-array>
 
     <string-array name="photography_subs">
+        <item>Subtalent</item>
         <item>Advertising</item>
         <item>Aerial</item>
         <item>Architectural</item>
@@ -98,6 +106,7 @@
     </string-array>
 
     <string-array name="programming_subs">
+        <item>Subtalent</item>
         <item>Game Development</item>
         <item>Mobile</item>
         <item>Software</item>
@@ -105,6 +114,7 @@
     </string-array>
 
     <string-array name="singing_subs">
+        <item>Subtalent</item>
         <item>Alto</item>
         <item>Baritone</item>
         <item>Bass</item>
@@ -116,6 +126,7 @@
     </string-array>
 
     <string-array name="teaching_subs">
+        <item>Subtalent</item>
         <item>Cooking</item>
         <item>Earth Sciences</item>
         <item>Engineering</item>
@@ -129,6 +140,7 @@
     </string-array>
 
     <string-array name="writing_subs">
+        <item>Subtalent</item>
         <item>Biography</item>
         <item>Column</item>
         <item>Editing</item>

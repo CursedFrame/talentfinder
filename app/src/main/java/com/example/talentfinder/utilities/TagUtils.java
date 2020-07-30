@@ -28,9 +28,7 @@ public abstract class TagUtils {
             return 0;
         }
 
-        weight = calculateWeight(tags, weight, isTalent, context);
-
-        return weight;
+        return calculateWeight(tags, weight, isTalent, context);
     }
 
     public static int getWeight(ParseUser user, List<String> specifiedTags, Context context){
@@ -130,11 +128,16 @@ public abstract class TagUtils {
                     break;
             }
 
+            compare_subtalent_loop:
             for (String subtalent : subtalents){
                 for (String tag : tags) {
+                    if (tag.equals("Subtalent")){
+                        break compare_subtalent_loop;
+                    }
+
                     if (subtalent.equals(tag)) {
                         weight += 1.0;
-                        break;
+                        break compare_subtalent_loop;
                     }
                 }
             }
@@ -143,31 +146,19 @@ public abstract class TagUtils {
         // Third check for skill
         List<String> skills = Arrays.asList(resources.getStringArray(R.array.skill));
 
+        compare_skill_loop:
         for (String skill : skills){
             for (String tag : tags){
+                if (tag.equals("Skill")){
+                    break compare_skill_loop;
+                }
+
                 if (skill.equals(tag)){
                     weight += 1.0;
-                    break;
+                    break compare_skill_loop;
                 }
             }
         }
-
-//        if (isTalent){
-//            for (int i = 0 ; i < skills.size() ; i++){
-//                if (skills.get(i).equals(tags.get(2))){
-//                    weight += 1.0;
-//                    break;
-//                }
-//            }
-//        }
-//        else {
-//            for (int i = 0 ; i < skills.size() ; i++){
-//                if (skills.get(i).equals(tags.get(0))){
-//                    weight += 1.0;
-//                    break;
-//                }
-//            }
-//        }
 
         return weight;
     }

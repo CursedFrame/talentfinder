@@ -73,6 +73,7 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         user = bundle.getParcelable("user");
 
+        // Projects adapter and RecyclerView
         linearLayoutManager = new LinearLayoutManager(getContext());
         projects = new ArrayList<>();
         projectPreviewAdapter = new ProjectPreviewAdapter(getContext(), projects, fragmentManager);
@@ -96,7 +97,6 @@ public class ProfileFragment extends Fragment {
             binding.fragmentProfileBtnDiscussion.setVisibility(View.GONE);
         }
         else {
-            binding.fragmentProfileBtnSettings.setVisibility(View.GONE);
             checkDiscussion();
         }
 
@@ -144,7 +144,7 @@ public class ProfileFragment extends Fragment {
         });
     }
     private void createChangeProfilePicturePopUpMenu(){
-        PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileBtnSettings);
+        PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileIvProfilePicture);
         popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -203,6 +203,54 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+//    private void getFacebookInformation(){
+//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//
+//        String userIdString = Integer.toString(user.getNumber(ParseUserKey.FACEBOOK_ID).intValue());
+//        Log.i(TAG, "getFacebookInformation: " + userIdString);
+//
+//        GraphRequest graphRequest = GraphRequest.newGraphPathRequest(accessToken, "/" + userIdString + "/", new GraphRequest.Callback() {
+//
+//            @Override
+//            public void onCompleted(GraphResponse response) {
+//                JSONObject facebookObject = response.getJSONObject();
+//
+//                Log.i(TAG, response.getError().getErrorMessage());
+//
+//                if (facebookObject != null) {
+//                    try {
+//                        final String id, name, link;
+//
+//                        id = facebookObject.getString("id");
+//                        name = facebookObject.getString("name");
+//                        link = facebookObject.getString("link");
+////                        profilePic = facebookObject.getString("profile_pic");
+//
+//                        binding.include.connectionFacebookProfileName.setText(name);
+//                        binding.include.connectionFacebookProfilePicture.setProfileId(id);
+//                        binding.include.connectionFacebookClContainer.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Uri uri = Uri.parse(link);
+//                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                                startActivity(intent);
+//                            }
+//                        });
+//
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//
+//        Bundle parameters = new Bundle();
+//        parameters.putString("fields", "id, name, link");
+//        graphRequest.setParameters(parameters);
+//        graphRequest.executeAsync();
+//    }
 
     private void goChangeProfilePhotoDialogFragment(){
         ChangeProfilePhotoDialogFragment changeProfilePhotoDialogFragment = ChangeProfilePhotoDialogFragment.newInstance();
