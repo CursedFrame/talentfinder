@@ -61,8 +61,6 @@ public class ProjectFragment extends Fragment {
         fragmentManager = getFragmentManager();
         project = getArguments().getParcelable("project");
 
-        checkDiscussion();
-
         binding.fragmentProjectTvProjectTitle.setText(project.getTitle());
         binding.fragmentProjectTvProjectCreatorName.setText(project.getUser().getString(ParseUserKey.PROFILE_NAME));
         binding.fragmentProjectTvContributions.setText(getString(R.string.contributions, project.getContributionCount()));
@@ -82,6 +80,10 @@ public class ProjectFragment extends Fragment {
         // If the project creator is the current user, don't show the "Start Discussion" button
         if (project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
             binding.fragmentProjectBtnDiscussion.setVisibility(View.GONE);
+            binding.fragmentProjectBtnCreate.setVisibility(View.GONE);
+        }
+        else {
+            checkDiscussion();
         }
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator

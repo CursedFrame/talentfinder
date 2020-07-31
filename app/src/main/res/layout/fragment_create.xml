@@ -111,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:prompt="@string/spinner_title_skill"
-            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_spnSubtalent"
-            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_spnSubtalent"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_spnTalent"
+            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_spnTalent"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_spnSubtalent" />
 
         <Button

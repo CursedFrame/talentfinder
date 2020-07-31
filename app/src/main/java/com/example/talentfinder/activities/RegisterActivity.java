@@ -1,5 +1,6 @@
 package com.example.talentfinder.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,6 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     LinearLayoutManager linearLayoutManager;
     List<String> skills;
     ChipAdapter skillsAdapter;
+    private Context context;
 
     boolean facebookCheck;
     int userId;
@@ -47,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        context = this;
 
         Bundle loginActivityData = getIntent().getBundleExtra("bundle");
 
@@ -74,12 +77,12 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             binding.activityRegisterTvConfirmPassword.setVisibility(View.GONE);
         }
 
-        // Recycler view and adapter creation
-        linearLayoutManager = new LinearLayoutManager(this);
-        skills = new ArrayList<>();
-        skillsAdapter = new ChipAdapter(this, skills, GlobalConstants.CHIP_ENTRY);
-        binding.activityRegisterRvSkills.setAdapter(skillsAdapter);
-        binding.activityRegisterRvSkills.setLayoutManager(linearLayoutManager);
+//        // Recycler view and adapter creation
+//        linearLayoutManager = new LinearLayoutManager(this);
+//        skills = new ArrayList<>();
+//        skillsAdapter = new ChipAdapter(this, skills, GlobalConstants.CHIP_ENTRY);
+//        binding.activityRegisterRvSkills.setAdapter(skillsAdapter);
+//        binding.activityRegisterRvSkills.setLayoutManager(linearLayoutManager);
 
         // Array adapter for "Skill" spinner
         ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(this, R.array.skill, R.layout.support_simple_spinner_dropdown_item);
@@ -91,8 +94,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         spnTalentAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         binding.activityRegisterSpnTalent.setAdapter(spnTalentAdapter);
 
-        // Binding listener for when talent item is selected. Initializes and updates an array adapter for "Subtalent" spinner
         binding.activityRegisterSpnTalent.setOnItemSelectedListener(this);
+        binding.activityRegisterSpnSubTalent.setOnItemSelectedListener(this);
+        binding.activityRegisterSpnSkill.setOnItemSelectedListener(this);
 
         binding.activityRegisterBtnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     private void createAccount(){
         String location = binding.activityRegisterEtCity.getText().toString() + ", " +
-                binding.activityRegisterEtState.getText().toString() + ", " +
-                binding.activityRegisterEtCountry.getText().toString();
+                binding.activityRegisterEtState.getText().toString();
         ParseUser newUser = new ParseUser();
 
         newUser.setUsername(binding.activityRegisterEtUsername.getText().toString());
@@ -169,41 +172,58 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         ArrayAdapter<CharSequence> spnSubTalentAdapter = null;
-        switch (position){
-            case 0:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 1:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 2:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 3:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 4:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 5:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 6:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 7:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 8:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 9:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(this, R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            default:
-                break;
+
+        if (parent.getId() == R.id.activityRegister_spnTalent) {
+            switch (position) {
+                case GlobalConstants.POSITION_TALENT_NO:
+                    break;
+                case GlobalConstants.POSITION_TALENT_ART:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_COMEDY:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_DRAWING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_GRAPHICS:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_MUSIC:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_PHOTOGRAPHY:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_PROGRAMMING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_SINGING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_TEACHING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_WRITING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+            }
+
+            if (position == GlobalConstants.POSITION_TALENT_NO){
+                binding.activityRegisterSpnSubTalent.setVisibility(View.GONE);
+            }
+            else {
+                binding.activityRegisterSpnSubTalent.setVisibility(View.VISIBLE);
+            }
+
+            binding.activityRegisterSpnSubTalent.setAdapter(spnSubTalentAdapter);
         }
-        binding.activityRegisterSpnSubTalent.setAdapter(spnSubTalentAdapter);
+
+        if (!binding.activityRegisterSpnTalent.getSelectedItem().toString().equals(GlobalConstants.TALENT_TAG)
+                && !binding.activityRegisterSpnSubTalent.getSelectedItem().toString().equals(GlobalConstants.SUBTALENT_TAG)
+                && !binding.activityRegisterSpnSkill.getSelectedItem().toString().equals(GlobalConstants.SKILL_TAG)) {
+            binding.activityRegisterBtnCreateAccount.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
