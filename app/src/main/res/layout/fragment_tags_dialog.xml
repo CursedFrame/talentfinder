@@ -7,12 +7,35 @@
     android:padding="16dp"
     tools:context=".fragments.TagsDialogFragment">
 
+    <RadioGroup
+        android:id="@+id/fragmentTagsDialog_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/fragmentTagsDialog_radioSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Sort" />
+
+        <RadioButton
+            android:id="@+id/fragmentTagsDialog_radioFilter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Filter" />
+
+    </RadioGroup>
+
     <Spinner
         android:id="@+id/fragmentTagsDialog_spnTalent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_radioGroup" />
 
     <Spinner
         android:id="@+id/fragmentTagsDialog_spnSubTalent"

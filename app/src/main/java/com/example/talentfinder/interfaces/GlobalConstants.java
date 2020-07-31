@@ -3,6 +3,7 @@ package com.example.talentfinder.interfaces;
 public interface GlobalConstants {
     // Limits
     public static final int PROJECT_LIMIT = 20;
+    public static final int PROJECT_PER_TAG_LIMIT = 10;
     public static final int DISCUSSION_LIMIT = 20;
 
     // Request codes
@@ -24,7 +25,6 @@ public interface GlobalConstants {
     public static final int MEDIA_PHOTO = 401;
     public static final int MEDIA_VIDEO = 402;
 
-
     // Talent types
     public static final int POSITION_TALENT_NO = 0;
     public static final int POSITION_TALENT_ART = 1;
@@ -38,7 +38,15 @@ public interface GlobalConstants {
     public static final int POSITION_TALENT_TEACHING = 9;
     public static final int POSITION_TALENT_WRITING = 10;
 
+    // Tag positions
+    public static final int TAG_POSITION_TALENT = 0;
+    public static final int TAG_POSITION_SUBTALENT = 1;
+    public static final int TAG_POSITION_SKILL = 2;
 
+    // Tag default labels
+    public static final String TALENT_TAG = "Talent";
+    public static final String SUBTALENT_TAG = "Subtalent";
+    public static final String SKILL_TAG = "Skill";
 
 
 }

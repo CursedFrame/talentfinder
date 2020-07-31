@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -29,9 +30,11 @@ public class HomeFeedFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ProjectsAdapter projectsAdapter;
     private List<Project> projects;
+    private FragmentManager fragmentManager;
     private FragmentHomeFeedBinding binding;
     private DividerItemDecoration dividerItemDecoration;
     private MaterialButton btnTags;
+    private MainActivity activity;
 
     public HomeFeedFragment() {
         // Required empty public constructor
@@ -59,8 +62,10 @@ public class HomeFeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        fragmentManager = getFragmentManager();
+
         // Get tags button reference
-        MainActivity activity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
         this.btnTags = activity.btnTags;
         btnTags.setVisibility(View.VISIBLE);
 
@@ -83,4 +88,11 @@ public class HomeFeedFragment extends Fragment {
         binding = null;
         btnTags.setVisibility(View.GONE);
     }
+
+    // Used to update adapter when a new list of projects are introduced
+    // Mainly used in Main Activity
+    public void updateAdapter(List<Project> newProjects){
+        projectsAdapter.refresh(newProjects);
+    }
+
 }

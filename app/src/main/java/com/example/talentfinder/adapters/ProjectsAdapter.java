@@ -21,9 +21,12 @@ import com.example.talentfinder.models.Project;
 import com.google.android.material.chip.Chip;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
+
+    public static final String TAG = "ProjectsAdapter";
 
     private Context context;
     private List<Project> projects;
@@ -128,5 +131,20 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 }
             });
         }
+    }
+
+    public void refresh(List<Project> list) {
+        clear();
+        addAll(list);
+    }
+
+    public void clear() {
+        projects = new ArrayList<>();
+        this.notifyDataSetChanged();
+    }
+
+    public void addAll(List<Project> list) {
+        projects.addAll(list);
+        this.notifyDataSetChanged();
     }
 }

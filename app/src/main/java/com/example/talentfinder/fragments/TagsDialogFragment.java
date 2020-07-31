@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,10 +26,14 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
 
     public static final String TAG = "TagsDialogFragment";
 
+    public static final int TYPE_SORT = 100;
+    public static final int TYPE_FILTER = 101;
+
     FragmentTagsDialogBinding binding;
     MainActivity mainActivity;
     Context context;
     List<String> currentTags;
+    int type;
 
     public TagsDialogFragment() {
         // Required empty public constructor
@@ -85,11 +90,29 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnTalent.getSelectedItem().toString());
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSubTalent.getSelectedItem().toString());
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSkill.getSelectedItem().toString());
-
-                mainActivity.sortProjectsByTag();
+                if (type == TYPE_SORT){
+                    mainActivity.sortProjectsByTag();
+                }
+                else if (type == TYPE_FILTER){
+                    mainActivity.filterProjectsByTag();
+                }
                 dismiss();
             }
         });
+
+        binding.fragmentTagsDialogRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (binding.fragmentTagsDialogRadioSort.isChecked()){
+                    type = TYPE_SORT;
+                }
+                else {
+                    type = TYPE_FILTER;
+                }
+            }
+        });
+
+        binding.fragmentTagsDialogRadioSort.toggle();
     }
 
     @Override

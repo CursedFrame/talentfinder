@@ -15,7 +15,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.CreateFragment;
@@ -239,11 +238,81 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Refresh fragment to update RecyclerView data
-        Fragment currentHomeFragment = fragmentManager.findFragmentByTag("Main");
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.detach(currentHomeFragment);
-        transaction.attach(currentHomeFragment);
-        transaction.commit();
+        HomeFeedFragment currentHomeFragment = (HomeFeedFragment) fragmentManager.findFragmentByTag("Main");
+        currentHomeFragment.updateAdapter(projects);
+    }
+
+    public void filterProjectsByTag(){
+        projects = new ArrayList<>();
+        loadProjectsByTalentTag();
+    }
+
+    private void loadProjectsByTalentTag(){
+        if (tags.get(GlobalConstants.TAG_POSITION_TALENT).equals(GlobalConstants.TALENT_TAG)){
+            loadProjectsBySubtalentTag();
+        }
+        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
+        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
+        query.include(Project.KEY_USER);
+        query.whereContains(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+        query.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading talent projects", e);
+                    return;
+                }
+                projects.addAll(objects);
+                loadProjectsBySubtalentTag();
+            }
+        });
+    }
+
+    private void loadProjectsBySubtalentTag(){
+        if (tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SUBTALENT_TAG)){
+            loadProjectsBySkillTag();
+        }
+
+        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
+        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
+        query.include(Project.KEY_USER);
+        query.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+        query.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+        query.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading subtalent projects", e);
+                    return;
+                }
+                projects.addAll(objects);
+                loadProjectsBySkillTag();
+            }
+        });
+    }
+
+    private void loadProjectsBySkillTag(){
+        if (tags.get(GlobalConstants.TAG_POSITION_SKILL).equals(GlobalConstants.SKILL_TAG)){
+            return;
+        }
+
+        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
+        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
+        query.include(Project.KEY_USER);
+        query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
+        query.whereNotEqualTo(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+        query.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+        query.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading skill projects", e);
+                    return;
+                }
+                projects.addAll(objects);
+                sortProjectsByTag();
+            }
+        });
     }
 
     private void goLoginActivity(){
