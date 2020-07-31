@@ -71,11 +71,12 @@ public class ProjectFragment extends Fragment {
         if (project.getImage() != null){
             Glide.with(context)
                     .load(project.getImage().getUrl())
-                    .into(binding.fragmentProjectIvProjectContextImage);
+                    .into(binding.fragmentProjectIvContext);
         }
 
         Glide.with(context)
                 .load(project.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                .circleCrop()
                 .into(binding.fragmentProjectIvProjectProfileImage);
 
         // If the project creator is the current user, don't show the "Start Discussion" button
@@ -133,11 +134,13 @@ public class ProjectFragment extends Fragment {
                             if (e != null){
                                 String string = "Start Discussion";
                                 binding.fragmentProjectBtnDiscussion.setText(string);
+                                binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                                 return;
                             }
 
                             String string = "Continue Discussion";
                             binding.fragmentProjectBtnDiscussion.setText(string);
+                            binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                             discussion = object;
                             return;
                         }
@@ -148,6 +151,7 @@ public class ProjectFragment extends Fragment {
 
                 String string = "Continue Discussion";
                 binding.fragmentProjectBtnDiscussion.setText(string);
+                binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                 discussion = object;
                 return;
             }

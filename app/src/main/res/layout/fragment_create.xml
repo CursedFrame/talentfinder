@@ -20,7 +20,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_btnImport">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fragmentCreateProject_etTitle"
+                android:id="@+id/fragmentCreateProject_etProjectDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Project Description" />
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fragmentCreateProject_etDescription"
+                android:id="@+id/fragmentCreateProject_etProjectTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Button"
+            android:text="Import"
             app:layout_constraintEnd_toEndOf="@+id/cardView2"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 

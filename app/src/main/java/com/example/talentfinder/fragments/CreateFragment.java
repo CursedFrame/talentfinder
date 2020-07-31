@@ -71,7 +71,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
         context = getContext();
 
         Glide.with(context)
-                .load("https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=30")
+                .load(GlobalConstants.PLACEHOLDER_URL)
                 .into(binding.fragmentCreateProjectIvContext);
 
         // Array adapter for "Skill" spinner
@@ -102,11 +102,11 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
             public void onClick(View v) {
                 final Project project = new Project();
                 project.setUser(ParseUser.getCurrentUser());
-                project.setTitle(binding.fragmentCreateProjectEtTitle.getText().toString());
+                project.setTitle(binding.fragmentCreateProjectEtProjectTitle.getText().toString());
                 if (photoFile != null) {
                     project.setImage(new ParseFile(photoFile));
                 }
-                project.setDescription(binding.fragmentCreateProjectEtDescription.getText().toString());
+                project.setDescription(binding.fragmentCreateProjectEtProjectDescription.getText().toString());
                 project.setTalentTag(binding.fragmentCreateProjectSpnTalent.getSelectedItem().toString());
                 project.setSubTalentTag(binding.fragmentCreateProjectSpnSubtalent.getSelectedItem().toString());
                 project.setSkillTag(binding.fragmentCreateProjectSpnSkill.getSelectedItem().toString());
@@ -126,10 +126,11 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                                     Log.e(TAG, "Error while saving project to user", e);
                                     return;
                                 }
-                                Log.i(TAG, "Contribution saved successfully");
+                                Log.i(TAG, "Project saved successfully");
                                 MainActivity mainActivity = (MainActivity) getActivity();
+                                mainActivity.queryProjects();
                                 Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects);
-                                fragmentManager.beginTransaction().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
+                                fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
                             }
                         });
 

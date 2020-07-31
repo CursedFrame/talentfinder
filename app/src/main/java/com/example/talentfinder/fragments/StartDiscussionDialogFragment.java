@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.talentfinder.R;
+import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentStartDiscussionDialogBinding;
 import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
@@ -29,6 +30,7 @@ public class StartDiscussionDialogFragment extends DialogFragment {
     private FragmentManager fragmentManager;
     private FragmentStartDiscussionDialogBinding binding;
     private ParseUser recipientUser;
+    private MainActivity activity;
 
     public StartDiscussionDialogFragment() {
         // Required empty public constructor
@@ -62,6 +64,7 @@ public class StartDiscussionDialogFragment extends DialogFragment {
 
         fragmentManager = getFragmentManager();
         recipientUser = getArguments().getParcelable("user");
+        activity = (MainActivity) getActivity();
 
         binding.fragmentStartDiscussionDialogTvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getString(ParseUserKey.PROFILE_NAME)));
         // On button send message click, create message and then discussion
@@ -99,6 +102,9 @@ public class StartDiscussionDialogFragment extends DialogFragment {
                                     Log.e(TAG, "Discussion was not saved", e);
                                     return;
                                 }
+
+                                activity.queryDiscussions();
+
                                 DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
                                 fragmentManager.beginTransaction().replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).addToBackStack(discussionFragment.getTag()).commit();
                                 dismiss();

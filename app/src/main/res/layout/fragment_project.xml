@@ -11,35 +11,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Need voice actor, Southern accent!!" />
 
-    <ImageView
-        android:id="@+id/fragmentProject_ivProjectContextImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvProjectTitle"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvProjectTitle">
+
+        <ImageView
+            android:id="@+id/fragmentProject_ivContext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
+            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/fragmentProject_ivProjectProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentProject_ivProjectContextImage"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/fragmentProject_tvProjectCreatorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentProject_ivProjectProfileImage"
         app:layout_constraintStart_toEndOf="@+id/fragmentProject_ivProjectProfileImage"
         app:layout_constraintTop_toTopOf="@+id/fragmentProject_ivProjectProfileImage"
@@ -57,10 +74,11 @@
 
     <TextView
         android:id="@+id/fragmentProject_tvDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/fragmentProject_ivProjectProfileImage"
         tools:text="(Description)" />
 
@@ -68,7 +86,7 @@
         android:id="@+id/fragmentProject_btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="CREATE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -80,8 +98,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Start Discussion"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvDescription"
+        tools:text="Start Discussion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

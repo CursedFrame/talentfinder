@@ -24,7 +24,6 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.example.talentfinder.fragments.TagsDialogFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.example.talentfinder.utilities.TagUtils;
@@ -33,7 +32,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -173,36 +171,52 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void queryObjects(){
-        discussions = new ArrayList<>();
         queryDiscussions();
 
-        projects = new ArrayList<>();
         queryProjects();
     }
 
     public void queryDiscussions(){
-        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_DISCUSSIONS).getQuery();
+        discussions = new ArrayList<>();
+
+        ParseQuery<Discussion> query1 = ParseQuery.getQuery(Discussion.class);
+        query1.whereEqualTo(Discussion.KEY_USER, ParseUser.getCurrentUser());
+
+        ParseQuery<Discussion> query2 = ParseQuery.getQuery(Discussion.class);
+        query2.whereEqualTo(Discussion.KEY_RECIPIENT, ParseUser.getCurrentUser());
+
+        List<ParseQuery<Discussion>> queryList = new ArrayList<>();
+        queryList.add(query1);
+        queryList.add(query2);
+
+        ParseQuery<Discussion> query = ParseQuery.or(queryList);
         query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
         query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
         query.include(Discussion.KEY_USER);
         query.include(Discussion.KEY_MESSAGES);
         query.include(Discussion.KEY_RECIPIENT);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<Discussion>() {
             @Override
-            public void done(List<ParseObject> objects, ParseException e) {
+            public void done(List<Discussion> objects, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error loading discussions", e);
                     return;
                 }
 
-                for (ParseObject object : objects){
-                    discussions.add((Discussion) object);
+                Log.i(TAG, "done: "+ objects.size());
+
+                for (Discussion discussion : objects){
+                    Log.i(TAG, "done: "+ discussion.getRecipient().getObjectId());
                 }
+
+                discussions.addAll(objects);
             }
         });
     }
 
     public void queryProjects(){
+        projects = new ArrayList<>();
+
         Log.i(TAG, "Querying projects");
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         query.setLimit(GlobalConstants.PROJECT_LIMIT);
@@ -228,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
     public void sortProjectsByTag(){
         for (Project project : projects){
             project.setProjectWeight(TagUtils.getWeight(project, tags, this));
+            Log.i(TAG, "sortProjectsByTag: "+  project.getProjectWeight());
         }
 
         Collections.sort(projects, new Comparator<Project>() {
@@ -248,9 +263,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadProjectsByTalentTag(){
-        if (tags.get(GlobalConstants.TAG_POSITION_TALENT).equals(GlobalConstants.TALENT_TAG)){
-            loadProjectsBySubtalentTag();
-        }
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
         query.include(Project.KEY_USER);
@@ -269,10 +281,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadProjectsBySubtalentTag(){
-        if (tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SUBTALENT_TAG)){
-            loadProjectsBySkillTag();
-        }
-
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
         query.include(Project.KEY_USER);
@@ -292,10 +300,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadProjectsBySkillTag(){
-        if (tags.get(GlobalConstants.TAG_POSITION_SKILL).equals(GlobalConstants.SKILL_TAG)){
-            return;
-        }
-
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
         query.include(Project.KEY_USER);

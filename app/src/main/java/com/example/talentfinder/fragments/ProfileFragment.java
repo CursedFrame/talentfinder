@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
     }
     private void createChangeProfilePicturePopUpMenu(){
         PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileIvProfilePicture);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_settings, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.menu_profile_picture, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -181,11 +181,13 @@ public class ProfileFragment extends Fragment {
                             if (e != null){
                                 String string = "Start Discussion";
                                 binding.fragmentProfileBtnDiscussion.setText(string);
+                                binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
                                 return;
                             }
 
                             String string = "Continue Discussion";
                             binding.fragmentProfileBtnDiscussion.setText(string);
+                            binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
                             discussion = object;
                         }
                     });
@@ -193,6 +195,7 @@ public class ProfileFragment extends Fragment {
                 }
                 String string = "Continue Discussion";
                 binding.fragmentProfileBtnDiscussion.setText(string);
+                binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
                 discussion = object;
             }
         });

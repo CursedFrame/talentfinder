@@ -48,5 +48,6 @@ public interface GlobalConstants {
     public static final String SUBTALENT_TAG = "Subtalent";
     public static final String SKILL_TAG = "Skill";
 
-
+    // Placeholder image URL
+    public static final String PLACEHOLDER_URL = "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=30";
 }

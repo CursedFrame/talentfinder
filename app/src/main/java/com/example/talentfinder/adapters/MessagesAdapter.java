@@ -1,6 +1,7 @@
 package com.example.talentfinder.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,13 +54,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ConstraintLayout clMessage;
+        ConstraintLayout clMessage, clBubble;
+        CardView cardBubble;
         ImageView ivMessageUserImage;
         TextView tvMessageContent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             clMessage = itemView.findViewById(R.id.itemMessage_clMessage);
+            clBubble = itemView.findViewById(R.id.itemMessage_clBubble);
+            cardBubble = itemView.findViewById(R.id.itemMessage_cardBubble);
             ivMessageUserImage = itemView.findViewById(R.id.itemMessage_ivUserImage);
             tvMessageContent = itemView.findViewById(R.id.itemMessage_tvMessageContent);
         }
@@ -73,6 +78,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 setConstraintsCurrentUserMessage(constraintSet);
                 constraintSet.applyTo(clMessage);
 
+                // Set constraints for binding message bubble to right of screen
+                ConstraintSet constraintBubbleSet = new ConstraintSet();
+                constraintBubbleSet.clone(clBubble);
+                setConstraintsCurrentUserBubble(constraintBubbleSet);
+                constraintBubbleSet.applyTo(clBubble);
+
+                cardBubble.setCardBackgroundColor(Color.parseColor("#e7feff"));
+
             }
 
             // Else, bind left
@@ -81,6 +94,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                     .circleCrop()
                     .into(ivMessageUserImage);
             tvMessageContent.setText(getMessageString(message));
+            cardBubble.setCardBackgroundColor(Color.parseColor("#e7feff"));
         }
     }
 
@@ -99,5 +113,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         constraintSet.connect(R.id.itemMessage_ivUserImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
         constraintSet.clear(R.id.itemMessage_tvMessageContent, ConstraintSet.START);
         constraintSet.connect(R.id.itemMessage_tvMessageContent, ConstraintSet.END, R.id.itemMessage_ivUserImage, ConstraintSet.START, 8);
+    }
+
+    public void setConstraintsCurrentUserBubble(ConstraintSet constraintSet){
+        constraintSet.clear(R.id.itemMessage_cardBubble, ConstraintSet.START);
+        constraintSet.connect(R.id.itemMessage_cardBubble, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
     }
 }

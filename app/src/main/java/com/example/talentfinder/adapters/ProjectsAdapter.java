@@ -92,7 +92,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
         public void bindProjectData(){
             tvTitle.setText(project.getTitle());
-            tvFinderName.setText(project.getUser().getUsername());
+            tvFinderName.setText(project.getUser().getString(ParseUserKey.PROFILE_NAME));
             tvDescription.setText(project.getDescription());
             chipTalent.setText(project.getTalentTag());
             chipSubtalent.setText(project.getSubTalentTag());

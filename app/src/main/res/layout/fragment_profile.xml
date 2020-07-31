@@ -62,7 +62,7 @@
             android:id="@+id/fragmentProfile_tvProjects"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="16dp"
             android:text="Projects:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include" />
@@ -101,10 +101,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
-            android:text="start discussion"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_rvSkillsExperience" />
+            app:layout_constraintTop_toBottomOf="@+id/fragmentProfile_rvSkillsExperience"
+            tools:text="Start Discussion" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
