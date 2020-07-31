@@ -15,8 +15,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_ivContext"
-            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_ivContext"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
+            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_btnImport">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -54,15 +54,27 @@
             app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etDescriptionLayout"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_etTitleLayout" />
 
-        <ImageView
-            android:id="@+id/fragmentCreateProject_ivContext"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="0dp"
             android:layout_height="250dp"
-            android:scaleType="centerCrop"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
             app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <ImageView
+                android:id="@+id/fragmentCreateProject_ivContext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
+                app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                tools:src="@tools:sample/avatars" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/textView12"
@@ -79,8 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:prompt="@string/spinner_title_talent"
-            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_ivContext"
-            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_ivContext"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etDescriptionLayout"
+            app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etDescriptionLayout"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <Spinner
@@ -110,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Create"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_spnSkill"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_spnSkill" />
 
@@ -119,8 +132,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Button"
-            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_ivContext"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_ivContext" />
+            app:layout_constraintEnd_toEndOf="@+id/cardView2"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

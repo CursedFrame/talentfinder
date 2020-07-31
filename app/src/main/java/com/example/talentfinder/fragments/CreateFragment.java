@@ -1,5 +1,6 @@
 package com.example.talentfinder.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
@@ -39,6 +41,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
     private FragmentCreateBinding binding;
     private File photoFile;
     private FragmentManager fragmentManager;
+    private Context context;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -65,19 +68,25 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
         super.onViewCreated(view, savedInstanceState);
 
         fragmentManager = getFragmentManager();
+        context = getContext();
+
+        Glide.with(context)
+                .load("https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=30")
+                .into(binding.fragmentCreateProjectIvContext);
 
         // Array adapter for "Skill" spinner
-        ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(getContext(), R.array.skill, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(context, R.array.skill, R.layout.support_simple_spinner_dropdown_item);
         spnSkillAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         binding.fragmentCreateProjectSpnSkill.setAdapter(spnSkillAdapter);
 
         // Array adapter for "Talent" spinner
-        ArrayAdapter<CharSequence> spnTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.talent, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> spnTalentAdapter = ArrayAdapter.createFromResource(context, R.array.talent, R.layout.support_simple_spinner_dropdown_item);
         spnTalentAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         binding.fragmentCreateProjectSpnTalent.setAdapter(spnTalentAdapter);
 
-        // Binding listener for when talent item is selected. Initializes and updates an array adapter for "Subtalent" spinner
         binding.fragmentCreateProjectSpnTalent.setOnItemSelectedListener(this);
+        binding.fragmentCreateProjectSpnSubtalent.setOnItemSelectedListener(this);
+        binding.fragmentCreateProjectSpnSkill.setOnItemSelectedListener(this);
 
         // On "import" button click, move to media gallery activity and allow user to pick photo
         binding.fragmentCreateProjectBtnImport.setOnClickListener(new View.OnClickListener() {
@@ -155,41 +164,57 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
 
         ArrayAdapter<CharSequence> spnSubTalentAdapter = null;
 
-        switch (position){
-            case 0:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 1:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 2:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 3:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 4:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 5:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 6:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 7:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 8:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            case 9:
-                spnSubTalentAdapter = ArrayAdapter.createFromResource(getContext(), R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
-                break;
-            default:
-                break;
+        if (parent.getId() == R.id.fragmentCreateProject_spnTalent) {
+            switch (position) {
+                case GlobalConstants.POSITION_TALENT_NO:
+                    break;
+                case GlobalConstants.POSITION_TALENT_ART:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.art_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_COMEDY:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.comedy_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_DRAWING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.drawing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_GRAPHICS:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.graphics_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_MUSIC:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.music_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_PHOTOGRAPHY:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.photography_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_PROGRAMMING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.programming_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_SINGING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.singing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_TEACHING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.teaching_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+                case GlobalConstants.POSITION_TALENT_WRITING:
+                    spnSubTalentAdapter = ArrayAdapter.createFromResource(context, R.array.writing_subs, R.layout.support_simple_spinner_dropdown_item);
+                    break;
+            }
+
+            if (position == GlobalConstants.POSITION_TALENT_NO){
+                binding.fragmentCreateProjectSpnSubtalent.setVisibility(View.GONE);
+            }
+            else {
+                binding.fragmentCreateProjectSpnSubtalent.setVisibility(View.VISIBLE);
+            }
+
+            binding.fragmentCreateProjectSpnSubtalent.setAdapter(spnSubTalentAdapter);
         }
-        binding.fragmentCreateProjectSpnSubtalent.setAdapter(spnSubTalentAdapter);
+
+        if (!binding.fragmentCreateProjectSpnTalent.getSelectedItem().toString().equals(GlobalConstants.TALENT_TAG)
+                && !binding.fragmentCreateProjectSpnSubtalent.getSelectedItem().toString().equals(GlobalConstants.SUBTALENT_TAG)
+                && !binding.fragmentCreateProjectSpnSkill.getSelectedItem().toString().equals(GlobalConstants.SKILL_TAG)) {
+            binding.fragmentCreateProjectBtnCreate.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
