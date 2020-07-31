@@ -59,7 +59,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         Project project;
-        TextView tvTitle, tvFinderName;
+        TextView tvTitle, tvFinderName, tvDescription;
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
         Chip chipTalent, chipSubtalent, chipSkill;
@@ -68,6 +68,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             super(itemView);
             tvTitle = itemView.findViewById(R.id.itemProject_tvProjectTitle);
             tvFinderName = itemView.findViewById(R.id.itemProject_tvName);
+            tvDescription = itemView.findViewById(R.id.itemProject_tvDescription);
             ivFinderProfilePicture = itemView.findViewById(R.id.itemProject_ivProfilePicture);
             ivOptionalContext = itemView.findViewById(R.id.itemProject_ivContextImage);
             clFinderProfileContainer = itemView.findViewById(R.id.itemProject_clProfileContainer);
@@ -92,6 +93,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         public void bindProjectData(){
             tvTitle.setText(project.getTitle());
             tvFinderName.setText(project.getUser().getUsername());
+            tvDescription.setText(project.getDescription());
             chipTalent.setText(project.getTalentTag());
             chipSubtalent.setText(project.getSubTalentTag());
             chipSkill.setText(project.getSkillTag());

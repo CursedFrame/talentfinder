@@ -92,14 +92,6 @@ public class ProfileFragment extends Fragment {
                 .circleCrop()
                 .into(binding.fragmentProfileIvProfilePicture);
 
-        // If the profile user is the current user, show settings icon, but don't show "Start Discussion" button
-        if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.fragmentProfileBtnDiscussion.setVisibility(View.GONE);
-        }
-        else {
-            checkDiscussion();
-        }
-
         // On Settings button click, open drop down menu for settings
         binding.fragmentProfileIvProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +112,8 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+        populateTypeUser();
 
         getProjects();
     }
@@ -204,53 +198,33 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-//    private void getFacebookInformation(){
-//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//
-//        String userIdString = Integer.toString(user.getNumber(ParseUserKey.FACEBOOK_ID).intValue());
-//        Log.i(TAG, "getFacebookInformation: " + userIdString);
-//
-//        GraphRequest graphRequest = GraphRequest.newGraphPathRequest(accessToken, "/" + userIdString + "/", new GraphRequest.Callback() {
-//
-//            @Override
-//            public void onCompleted(GraphResponse response) {
-//                JSONObject facebookObject = response.getJSONObject();
-//
-//                Log.i(TAG, response.getError().getErrorMessage());
-//
-//                if (facebookObject != null) {
-//                    try {
-//                        final String id, name, link;
-//
-//                        id = facebookObject.getString("id");
-//                        name = facebookObject.getString("name");
-//                        link = facebookObject.getString("link");
-////                        profilePic = facebookObject.getString("profile_pic");
-//
-//                        binding.include.connectionFacebookProfileName.setText(name);
-//                        binding.include.connectionFacebookProfilePicture.setProfileId(id);
-//                        binding.include.connectionFacebookClContainer.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Uri uri = Uri.parse(link);
-//                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                                startActivity(intent);
-//                            }
-//                        });
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//
-//        Bundle parameters = new Bundle();
-//        parameters.putString("fields", "id, name, link");
-//        graphRequest.setParameters(parameters);
-//        graphRequest.executeAsync();
-//    }
+    private void populateTypeUser(){
+        // If the profile user is the current user, show settings icon, but don't show "Start Discussion" button
+        if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
+            binding.fragmentProfileBtnDiscussion.setVisibility(View.GONE);
+        }
+        else {
+            checkDiscussion();
+        }
+
+        // If the profile user is a Facebook user, show Facebook connection widget
+        if (user.getBoolean(ParseUserKey.FACEBOOK_CONNECTED)){
+            getFacebookPhoto();
+            binding.include.connectionFacebookProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
+        }
+        else {
+            binding.include.connectionFacebookClContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void getFacebookPhoto(){
+        String facebookUrl = "https://www.graph.facebook.com/" + user.getNumber(ParseUserKey.FACEBOOK_ID) + "/picture?type=large";
+        Glide.with(this)
+                .asBitmap()
+                .load(facebookUrl)
+                .into(binding.include.connectionFacebookIvProfileImage);
+
+    }
 
     private void goChangeProfilePhotoDialogFragment(){
         ChangeProfilePhotoDialogFragment changeProfilePhotoDialogFragment = ChangeProfilePhotoDialogFragment.newInstance();

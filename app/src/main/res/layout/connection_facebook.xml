@@ -28,25 +28,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/facebook_logo" />
 
-            <com.facebook.login.widget.ProfilePictureView
-                android:id="@+id/connectionFacebook_ProfilePicture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/connectionFacebook_Image"
-                app:layout_constraintStart_toEndOf="@+id/connectionFacebook_Image"
-                app:layout_constraintTop_toTopOf="@+id/connectionFacebook_Image" />
-
             <TextView
                 android:id="@+id/connectionFacebook_ProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/connectionFacebook_ProfilePicture"
-                app:layout_constraintStart_toEndOf="@+id/connectionFacebook_ProfilePicture"
-                app:layout_constraintTop_toTopOf="@+id/connectionFacebook_ProfilePicture"
+                app:layout_constraintBottom_toBottomOf="@+id/connectionFacebook_ivProfileImage"
+                app:layout_constraintStart_toEndOf="@+id/connectionFacebook_ivProfileImage"
+                app:layout_constraintTop_toTopOf="@+id/connectionFacebook_ivProfileImage"
                 tools:text="Dan Rivers" />
+
+            <ImageView
+                android:id="@+id/connectionFacebook_ivProfileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/connectionFacebook_Image"
+                app:layout_constraintStart_toEndOf="@+id/connectionFacebook_Image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

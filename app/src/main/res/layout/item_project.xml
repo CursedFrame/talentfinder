@@ -25,54 +25,53 @@
                 android:id="@+id/itemProject_chipSkill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 app:chipMinTouchTargetSize="35dp"
-                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintTop_toBottomOf="@+id/itemProject_chipSubtalent"
+                app:layout_constraintStart_toEndOf="@+id/itemProject_chipSubtalent"
+                app:layout_constraintTop_toTopOf="@+id/itemProject_chipSubtalent"
                 tools:text="Beginner" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/itemProject_chipSubtalent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 app:chipMinTouchTargetSize="35dp"
-                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintTop_toBottomOf="@+id/itemProject_chipTalent"
+                app:layout_constraintStart_toEndOf="@+id/itemProject_chipTalent"
+                app:layout_constraintTop_toTopOf="@+id/itemProject_chipTalent"
                 tools:text="Abstract" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/itemProject_chipTalent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:textSize="14sp"
                 app:chipIconSize="12dp"
                 app:chipMinTouchTargetSize="35dp"
-                app:layout_constraintEnd_toEndOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintStart_toStartOf="@+id/itemProject_clProfileContainer"
-                app:layout_constraintTop_toBottomOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintStart_toStartOf="@+id/itemProject_tvProjectTitle"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle"
                 tools:text="Art" />
 
             <TextView
                 android:id="@+id/itemProject_tvProjectTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Need voice actor, Southern accent!" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/itemProject_tvProjectTitle"
-                app:layout_constraintTop_toBottomOf="@+id/itemProject_tvProjectTitle">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itemProject_chipTalent">
 
                 <ImageView
                     android:id="@+id/itemProject_ivContextImage"
@@ -91,15 +90,17 @@
                 android:id="@+id/itemProject_clProfileContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
 
                 <TextView
                     android:id="@+id/itemProject_tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/itemProject_ivProfilePicture"
                     app:layout_constraintStart_toStartOf="@+id/itemProject_ivProfilePicture"
                     app:layout_constraintTop_toBottomOf="@+id/itemProject_ivProfilePicture"
                     tools:text="John Doe" />
@@ -109,11 +110,24 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/itemProject_tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:inputType="textMultiLine"
+                app:layout_constraintBottom_toBottomOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintStart_toEndOf="@+id/itemProject_clProfileContainer"
+                app:layout_constraintTop_toTopOf="@+id/itemProject_clProfileContainer"
+                tools:text="Lorem ipsum" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
