@@ -1,7 +1,10 @@
 package com.example.talentfinder.adapters;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.ProfileFragment;
+import com.example.talentfinder.fragments.ProjectContributionFeedFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
+import com.example.talentfinder.fragments.StartDiscussionDialogFragment;
 import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Project;
 import com.google.android.material.chip.Chip;
@@ -122,14 +127,48 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                     fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
                 }
             });
+
+            clFinderProfileContainer.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
+                    startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+                    return true;
+                }
+            });
         }
 
         public void setOnClickItemView(){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProjectFragment projectFragment = ProjectFragment.newInstance(project);
-                    fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
+
+                }
+            });
+
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onSingleTapConfirmed(MotionEvent e) {
+                        ProjectFragment projectFragment = ProjectFragment.newInstance(project);
+                        fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
+                        return super.onSingleTapConfirmed(e);
+                    }
+
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e) {
+                        ProjectContributionFeedFragment projectContributionFeedFragment = ProjectContributionFeedFragment.newInstance(project);
+                        fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectContributionFeedFragment).commit();
+                        return super.onDoubleTap(e);
+                    }
+        // implement here other callback methods like onFling, onScroll as necessary
+                });
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d("TEST", "Raw event: " + event.getAction() + ", (" + event.getRawX() + ", " + event.getRawY() + ")");
+                    gestureDetector.onTouchEvent(event);
+                    return true;
                 }
             });
         }
@@ -149,4 +188,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         projects.addAll(list);
         this.notifyDataSetChanged();
     }
+
+
 }

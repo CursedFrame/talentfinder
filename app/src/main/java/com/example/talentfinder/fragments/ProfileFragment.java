@@ -92,13 +92,17 @@ public class ProfileFragment extends Fragment {
                 .circleCrop()
                 .into(binding.fragmentProfileIvProfilePicture);
 
-        // On Settings button click, open drop down menu for settings
-        binding.fragmentProfileIvProfilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createChangeProfilePicturePopUpMenu();
-            }
-        });
+
+
+        if (user == ParseUser.getCurrentUser()){
+            // On profile picture click, open drop down menu for change profile picture
+            binding.fragmentProfileIvProfilePicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createChangeProfilePicturePopUpMenu();
+                }
+            });
+        }
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
         binding.fragmentProfileBtnDiscussion.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +200,7 @@ public class ProfileFragment extends Fragment {
     private void populateTypeUser(){
         // If the profile user is the current user, show settings icon, but don't show "Start Discussion" button
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.fragmentProfileBtnDiscussion.setVisibility(View.GONE);
+            binding.fragmentProfileBtnDiscussion.setVisibility(View.INVISIBLE);
         }
         else {
             checkDiscussion();
