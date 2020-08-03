@@ -13,6 +13,7 @@ public class Contribution extends ParseObject {
     public static final String KEY_USER_DESCRIPTION = "userDescription";
     public static final String KEY_SKILLS_DESCRIPTION = "skillsDescription";
     public static final String KEY_MEDIA_TYPE_CODE = "mediaTypeCode";
+    public static final String KEY_PRIVATE_CONTRIBUTION = "privateContribution";
 
     // GET/SET Media
     public ParseFile getMedia() {
@@ -66,5 +67,14 @@ public class Contribution extends ParseObject {
 
     public void setMediaTypeCode(int mediaTypeCode){
         put(KEY_MEDIA_TYPE_CODE, mediaTypeCode);
+    }
+
+    // GET/SET Contribution Privacy Bool
+    public boolean getPrivateContributionBool(){
+        return getBoolean(KEY_PRIVATE_CONTRIBUTION);
+    }
+
+    public void setPrivateContributionBool(boolean privateContributionBool){
+        put(KEY_PRIVATE_CONTRIBUTION, privateContributionBool);
     }
 }

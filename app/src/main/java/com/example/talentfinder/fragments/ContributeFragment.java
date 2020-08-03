@@ -137,6 +137,7 @@ public class ContributeFragment extends MediaFragment {
         contribution.setSkillsDescription(skillsDescription);
         contribution.setMedia(new ParseFile(contributionFile));
         contribution.setMediaTypeCode(mediaTypeCode);
+        contribution.setPrivateContributionBool(binding.fragmentContributeSwitchPrivacy.isChecked());
         contribution.setUser(currentUser);
         contribution.setProject(project);
         contribution.saveInBackground(new SaveCallback() {

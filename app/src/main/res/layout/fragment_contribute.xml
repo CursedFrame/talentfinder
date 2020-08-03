@@ -8,9 +8,8 @@
 
     <ImageView
         android:id="@+id/fragmentContribute_ivContributePicture"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="27dp"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +62,10 @@
         android:id="@+id/fragmentContribute_btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Send"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_etDescribeSkills" />
+        tools:layout_editor_absoluteY="667dp" />
 
     <VideoView
         android:id="@+id/fragmentContribute_vvContributeVideo"
@@ -78,5 +76,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/fragmentContribute_switchPrivacy"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Private"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContribute_etDescribeSkills" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

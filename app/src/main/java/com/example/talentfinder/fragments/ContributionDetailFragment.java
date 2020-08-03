@@ -91,19 +91,19 @@ public class ContributionDetailFragment extends Fragment {
 
                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setVideoPath(contribution.getMedia().getUrl());
 
-                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.start();
-                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(null);
-                    }
-                });
-
                 // When video size is adjusted, attach media controller
                 // Prevents media controller from displaying in entire itemView
                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
+                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                videoBinding.fragmentContributionDetailVideoVvMediaVideo.start();
+                                videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(null);
+                            }
+                        });
+
                         mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                             @Override
                             public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {

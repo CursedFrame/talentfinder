@@ -21,6 +21,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +86,15 @@ public class ProjectContributionFeedFragment extends Fragment {
 
     private void getContributions(){
         ParseQuery<ParseObject> query = project.getRelation(Project.KEY_CONTRIBUTIONS).getQuery();
+
+        // Only query public contributions if the viewer is not the project's user
+        if (ParseUser.getCurrentUser() != project.getUser()) {
+            query.whereEqualTo(Contribution.KEY_PRIVATE_CONTRIBUTION, false);
+        }
+
         query.orderByAscending(Contribution.KEY_CREATED_AT);
         query.include(Contribution.KEY_USER);
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

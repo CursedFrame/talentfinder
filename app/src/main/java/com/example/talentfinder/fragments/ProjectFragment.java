@@ -148,43 +148,6 @@ public class ProjectFragment extends Fragment {
         });
     }
 
-//    private void checkDiscussion(){
-//        // Get discussion where "user" is the current user and "recipient" is the recipient user
-//
-//        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
-//
-//        query.getFirstInBackground(new GetCallback<Discussion>() {
-//            @Override
-//            public void done(Discussion object, ParseException e) {
-//                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
-//
-//                if (e != null){
-//
-//                    query.getFirstInBackground(new GetCallback<Discussion>() {
-//                        @Override
-//                        public void done(Discussion object, ParseException e) {
-//                            // If discussion does not exist between two users, allow current user to create a discussion
-//
-//                            if (e != null){
-//
-//                            }
-//
-//                            String string = "Continue Discussion";
-//                            binding.fragmentProjectBtnDiscussion.setText(string);
-//                            binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
-//                            discussion = object;
-//                            return;
-//                        }
-//                    });
-//
-//                    return;
-//                }
-//
-//
-//            }
-//        });
-//    }
-
     private void goDiscussionFragment(){
         DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
         fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
@@ -193,11 +156,5 @@ public class ProjectFragment extends Fragment {
     private void createDiscussionDialog(){
         StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(project.getUser());
         startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
