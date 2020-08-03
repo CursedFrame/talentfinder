@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public MaterialButton btnTags;
     private NavigationView navigationView;
     public List<String> tags = new ArrayList<>(3);
-    public boolean tagsSet = false;
 
 
     @Override
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment, "Main").commit();
+                        fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_from_right_enter, R.anim.slide_from_right_exit).disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment, "Main").commit();
                         return true;
                     }
                 });
@@ -172,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void queryObjects(){
         queryDiscussions();
-
         queryProjects();
     }
 
