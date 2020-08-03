@@ -22,6 +22,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProjectFragment extends Fragment {
 
     public static final String TAG = "ProjectFragment";
@@ -111,43 +114,29 @@ public class ProjectFragment extends Fragment {
     }
 
     private void checkDiscussion(){
-        // Get discussion where "user" is the current user and "recipient" is the recipient user
+        ParseQuery<Discussion> query1 = ParseQuery.getQuery(Discussion.class);
+        query1.whereEqualTo("user", ParseUser.getCurrentUser());
+        query1.whereEqualTo("recipient", project.getUser());
 
-        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
-        query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.whereEqualTo("recipient", project.getUser());
+        ParseQuery<Discussion> query2 = ParseQuery.getQuery(Discussion.class);
+        query2.whereEqualTo("recipient", ParseUser.getCurrentUser());
+        query2.whereEqualTo("user", project.getUser());
+
+        List<ParseQuery<Discussion>> queryList = new ArrayList<>();
+        queryList.add(query1);
+        queryList.add(query2);
+
+        ParseQuery<Discussion> query = ParseQuery.or(queryList);
         query.include(Discussion.KEY_USER);
         query.include(Discussion.KEY_RECIPIENT);
+
         query.getFirstInBackground(new GetCallback<Discussion>() {
             @Override
             public void done(Discussion object, ParseException e) {
-                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
-
                 if (e != null){
-                    query.whereEqualTo("recipient", ParseUser.getCurrentUser());
-                    query.whereEqualTo("user", project.getUser());
-                    query.include(Discussion.KEY_USER);
-                    query.include(Discussion.KEY_RECIPIENT);
-                    query.getFirstInBackground(new GetCallback<Discussion>() {
-                        @Override
-                        public void done(Discussion object, ParseException e) {
-                            // If discussion does not exist between two users, allow current user to create a discussion
-
-                            if (e != null){
-                                String string = "Start Discussion";
-                                binding.fragmentProjectBtnDiscussion.setText(string);
-                                binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
-                                return;
-                            }
-
-                            String string = "Continue Discussion";
-                            binding.fragmentProjectBtnDiscussion.setText(string);
-                            binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
-                            discussion = object;
-                            return;
-                        }
-                    });
-
+                    String string = "Start Discussion";
+                    binding.fragmentProjectBtnDiscussion.setText(string);
+                    binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                     return;
                 }
 
@@ -155,10 +144,46 @@ public class ProjectFragment extends Fragment {
                 binding.fragmentProjectBtnDiscussion.setText(string);
                 binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                 discussion = object;
-                return;
             }
         });
     }
+
+//    private void checkDiscussion(){
+//        // Get discussion where "user" is the current user and "recipient" is the recipient user
+//
+//        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
+//
+//        query.getFirstInBackground(new GetCallback<Discussion>() {
+//            @Override
+//            public void done(Discussion object, ParseException e) {
+//                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
+//
+//                if (e != null){
+//
+//                    query.getFirstInBackground(new GetCallback<Discussion>() {
+//                        @Override
+//                        public void done(Discussion object, ParseException e) {
+//                            // If discussion does not exist between two users, allow current user to create a discussion
+//
+//                            if (e != null){
+//
+//                            }
+//
+//                            String string = "Continue Discussion";
+//                            binding.fragmentProjectBtnDiscussion.setText(string);
+//                            binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
+//                            discussion = object;
+//                            return;
+//                        }
+//                    });
+//
+//                    return;
+//                }
+//
+//
+//            }
+//        });
+//    }
 
     private void goDiscussionFragment(){
         DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);

@@ -159,40 +159,32 @@ public class ProfileFragment extends Fragment {
     }
 
     private void checkDiscussion(){
-        // Get discussion where "user" is the current user and "recipient" is the recipient user
-        final ParseQuery<Discussion> query = ParseQuery.getQuery(Discussion.class);
-        query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.whereEqualTo("recipient", user);
+        ParseQuery<Discussion> query1 = ParseQuery.getQuery(Discussion.class);
+        query1.whereEqualTo("user", ParseUser.getCurrentUser());
+        query1.whereEqualTo("recipient", user);
+
+        ParseQuery<Discussion> query2 = ParseQuery.getQuery(Discussion.class);
+        query2.whereEqualTo("recipient", ParseUser.getCurrentUser());
+        query2.whereEqualTo("user", user);
+
+        List<ParseQuery<Discussion>> queryList = new ArrayList<>();
+        queryList.add(query1);
+        queryList.add(query2);
+
+        ParseQuery<Discussion> query = ParseQuery.or(queryList);
         query.include(Discussion.KEY_USER);
         query.include(Discussion.KEY_RECIPIENT);
+
         query.getFirstInBackground(new GetCallback<Discussion>() {
             @Override
             public void done(Discussion object, ParseException e) {
-                // If discussion does not exist, get discussion where "recipient" is the current user and "user" is the recipient user
                 if (e != null){
-                    query.whereEqualTo("recipient", ParseUser.getCurrentUser());
-                    query.whereEqualTo("user", user);
-                    query.include(Discussion.KEY_USER);
-                    query.include(Discussion.KEY_RECIPIENT);
-                    query.getFirstInBackground(new GetCallback<Discussion>() {
-                        @Override
-                        public void done(Discussion object, ParseException e) {
-                            // If discussion does not exist between two users, allow current user to create a discussion
-                            if (e != null){
-                                String string = "Start Discussion";
-                                binding.fragmentProfileBtnDiscussion.setText(string);
-                                binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
-                                return;
-                            }
-
-                            String string = "Continue Discussion";
-                            binding.fragmentProfileBtnDiscussion.setText(string);
-                            binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
-                            discussion = object;
-                        }
-                    });
+                    String string = "Start Discussion";
+                    binding.fragmentProfileBtnDiscussion.setText(string);
+                    binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
                     return;
                 }
+
                 String string = "Continue Discussion";
                 binding.fragmentProfileBtnDiscussion.setText(string);
                 binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
