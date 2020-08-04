@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,13 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
+import com.example.talentfinder.fragments.DiscussionFragment;
 import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.ProjectContributionFeedFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
 import com.example.talentfinder.fragments.StartDiscussionDialogFragment;
 import com.example.talentfinder.interfaces.ParseUserKey;
+import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.google.android.material.chip.Chip;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -68,6 +74,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
         Chip chipTalent, chipSubtalent, chipSkill;
+        boolean discussionExists = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -120,19 +127,34 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         }
 
         public void setOnClickClFinderProfileContainer(final ParseUser user){
-            clFinderProfileContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ProfileFragment profileFragment = ProfileFragment.newInstance(user);
-                    fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
-                }
-            });
+            clFinderProfileContainer.setOnTouchListener(new View.OnTouchListener() {
+                private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onSingleTapConfirmed(MotionEvent e) {
+                        ProfileFragment profileFragment = ProfileFragment.newInstance(user);
+                        fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
+                        return super.onSingleTapConfirmed(e);
+                    }
 
-            clFinderProfileContainer.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public void onLongPress(MotionEvent e) {
+                        if (!project.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            checkDiscussion();
+                        }
+                        else {
+                            clFinderProfileContainer.startAnimation(AnimationUtils.loadAnimation(context, R.anim.view_shake));
+
+                        }
+                        super.onLongPress(e);
+                    }
+
+                    // implement here other callback methods like onFling, onScroll as necessary
+                });
+
                 @Override
-                public boolean onLongClick(View v) {
-                    StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(user);
-                    startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d("TEST", "Raw event: " + event.getAction() + ", (" + event.getRawX() + ", " + event.getRawY() + ")");
+                    gestureDetector.onTouchEvent(event);
                     return true;
                 }
             });
@@ -172,7 +194,48 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 }
             });
         }
+
+        private void checkDiscussion(){
+            ParseQuery<Discussion> query1 = ParseQuery.getQuery(Discussion.class);
+            query1.whereEqualTo("user", ParseUser.getCurrentUser());
+            query1.whereEqualTo("recipient", project.getUser());
+
+            ParseQuery<Discussion> query2 = ParseQuery.getQuery(Discussion.class);
+            query2.whereEqualTo("recipient", ParseUser.getCurrentUser());
+            query2.whereEqualTo("user", project.getUser());
+
+            List<ParseQuery<Discussion>> queryList = new ArrayList<>();
+            queryList.add(query1);
+            queryList.add(query2);
+
+            ParseQuery<Discussion> query = ParseQuery.or(queryList);
+            query.include(Discussion.KEY_USER);
+            query.include(Discussion.KEY_RECIPIENT);
+
+            query.getFirstInBackground(new GetCallback<Discussion>() {
+                @Override
+                public void done(Discussion object, ParseException e) {
+                    if (e != null){
+                        goStartDiscussionDialogFragment();
+                        return;
+                    }
+                    goDiscussionFragment(object);
+                }
+            });
+        }
+
+        private void goStartDiscussionDialogFragment(){
+            StartDiscussionDialogFragment startDiscussionDialogFragment = StartDiscussionDialogFragment.newInstance(project.getUser());
+            startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
+        }
+
+        private void goDiscussionFragment(Discussion discussion){
+            DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
+            fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
+        }
     }
+
+
 
     public void refresh(List<Project> list) {
         clear();

@@ -3,10 +3,8 @@ package com.example.talentfinder.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -144,27 +142,6 @@ public class ProfileFragment extends Fragment {
                 goChangeProfilePhotoDialogFragment();
             }
         });
-    }
-
-    private void createChangeProfilePicturePopUpMenu(){
-        PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileIvProfilePicture);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_profile_picture, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_change_profile_photo:
-                        goChangeProfilePhotoDialogFragment();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-
-        popupMenu.show();
     }
 
     private void checkDiscussion(){
