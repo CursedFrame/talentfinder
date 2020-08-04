@@ -5,18 +5,23 @@
 
         <item
             android:id="@+id/action_home_main"
+            android:icon="@drawable/ic_sydney_opera_house"
             android:title="Home" />
         <item
             android:id="@+id/action_search_main"
+            android:icon="@drawable/ic_search"
             android:title="Search" />
         <item
             android:id="@+id/action_create_main"
+            android:icon="@drawable/ic_draw"
             android:title="Create" />
         <item
             android:id="@+id/action_messages_main"
+            android:icon="@drawable/ic_email"
             android:title="Messages" />
         <item
             android:id="@+id/action_profile"
+            android:icon="@drawable/ic_user"
             android:title="Profile" />
     </group>
 </menu>

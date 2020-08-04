@@ -31,7 +31,7 @@
                     android:id="@+id/includeMainViewContainer_AppTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="40dp"
                     android:text="TalentFinder0"
                     android:textAppearance="@style/MyActionBarTitleText"
                     android:textColor="#FFFFFF"

@@ -94,14 +94,9 @@ public class ProfileFragment extends Fragment {
 
 
 
-        if (user == ParseUser.getCurrentUser()){
-            // On profile picture click, open drop down menu for change profile picture
-            binding.fragmentProfileIvProfilePicture.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createChangeProfilePicturePopUpMenu();
-                }
-            });
+        if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
+            binding.fragmentProfileFabChangePicture.setVisibility(View.VISIBLE);
+            setOnClickFabChangePicture();
         }
 
         // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
@@ -141,6 +136,16 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    private void setOnClickFabChangePicture(){
+        binding.fragmentProfileFabChangePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goChangeProfilePhotoDialogFragment();
+            }
+        });
+    }
+
     private void createChangeProfilePicturePopUpMenu(){
         PopupMenu popupMenu = new PopupMenu(getContext(), binding.fragmentProfileIvProfilePicture);
         popupMenu.getMenuInflater().inflate(R.menu.menu_profile_picture, popupMenu.getMenu());

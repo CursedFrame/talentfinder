@@ -10,6 +10,7 @@
     <string name="spinner_title_skill">Skill</string>
     <string name="tab_projects">Projects</string>
     <string name="tab_users">Users</string>
+    <string name="change_profile_photo">Change Profile Photo</string>
 
     <string name="facebook_app_id">279714556651360</string>
     <string name="fb_login_protocol_scheme">fb279714556651360</string>

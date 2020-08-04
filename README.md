@@ -235,4 +235,13 @@ TalentFinder is an application designed to match project managers (Finders) and 
 * (POST) Create discussion
 * (POST) Create message for discussion
 
+# Attributions
+"Toolbar Drawer Icon made by Smartline from www.flaticon.com"
+"Home Icon made by Freepik from www.flaticon.com"
+"Create Icon made by photo3idea_studio from www.flaticon.com"
+"Messages Icon made by Freepik from www.flaticon.com"
+"Profile Icon made by Freepik from www.flaticon.com"
+"Search Icon made by Freepik from www.flaticon.com"
+
+
 >>>>>>> c6b5aa720606332fa751920860f65467fe7602d3

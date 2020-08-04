@@ -67,11 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.includeMainViewContainer_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Log.i(TAG, "onCreate: " + toolbar.getHeight());
 
         drawerLayout = findViewById(R.id.activityMain_drawer_layout);
 
