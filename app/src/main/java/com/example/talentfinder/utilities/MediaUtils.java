@@ -1,7 +1,10 @@
 package com.example.talentfinder.utilities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,31 +16,30 @@ public abstract class MediaUtils {
 
     public static final String TAG = "MediaUtils";
 
-//    public static File urlToFile(String url, Context context) throws IOException {
-//        URL imageurl = new URL(url);
-//
-//        Log.i(TAG, "urlToFile: " + url);
-//
-//        Bitmap bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream());
-//        return bitmapToFile(bitmap, context);
-//    }
-//
-//    // Takes a bitmap and converts it into a File. Used for converting to ParseFile
-//    public static File bitmapToFile(Bitmap bitmap, Context context) throws IOException {
-//        File file = new File(context.getCacheDir(), "photo.jpg");
-//        file.createNewFile();
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//        byte[] bitmapdata = byteArrayOutputStream.toByteArray();
-//
-//        FileOutputStream fileOutputStream = new FileOutputStream(file);
-//        fileOutputStream.write(bitmapdata);
-//        fileOutputStream.flush();
-//        fileOutputStream.close();
-//
-//        return file;
-//    }
+    public static File urlToFile(String url, Context context) throws IOException {
+
+        InputStream inputStream = new java.net.URL(url).openStream();
+
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        return bitmapToFile(bitmap, context);
+    }
+
+    // Takes a bitmap and converts it into a File. Used for converting to ParseFile
+    public static File bitmapToFile(Bitmap bitmap, Context context) throws IOException {
+        File file = new File(context.getCacheDir(), "photo.jpg");
+        file.createNewFile();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bitmapdata = byteArrayOutputStream.toByteArray();
+
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(bitmapdata);
+        fileOutputStream.flush();
+        fileOutputStream.close();
+
+        return file;
+    }
 
     public static File urlToImage(String imageUrl, Context context) throws IOException {
         URL url = new URL(imageUrl);

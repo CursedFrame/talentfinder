@@ -42,7 +42,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
     public static final String TAG = "CreateFragment";
 
     private FragmentCreateBinding binding;
-    private File photoFile;
+    private File photoFile = null;
     private FragmentManager fragmentManager;
     private Context context;
 
@@ -73,10 +73,9 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
         fragmentManager = getFragmentManager();
         context = getContext();
 
-//        Glide.with(context)
-//                .asFile()
-//                .load(GlobalConstants.PLACEHOLDER_URL)
-//                .into(binding.fragmentCreateProjectIvContext);
+        Glide.with(context)
+                .load(GlobalConstants.PLACEHOLDER_URL)
+                .into(binding.fragmentCreateProjectIvContext);
 
         // Array adapter for "Skill" spinner
         ArrayAdapter<CharSequence> spnSkillAdapter = ArrayAdapter.createFromResource(context, R.array.skill, R.layout.support_simple_spinner_dropdown_item);
@@ -107,6 +106,11 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                 final Project project = new Project();
                 project.setUser(ParseUser.getCurrentUser());
                 project.setTitle(binding.fragmentCreateProjectEtProjectTitle.getText().toString());
+                project.setDescription(binding.fragmentCreateProjectEtProjectDescription.getText().toString());
+                project.setTalentTag(binding.fragmentCreateProjectSpnTalent.getSelectedItem().toString());
+                project.setSubTalentTag(binding.fragmentCreateProjectSpnSubtalent.getSelectedItem().toString());
+                project.setSkillTag(binding.fragmentCreateProjectSpnSkill.getSelectedItem().toString());
+                project.setContributionCount(0);
                 if (photoFile != null) {
                     project.setImage(new ParseFile(photoFile));
                 }
@@ -119,6 +123,8 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                                 public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
                                     ParseFile projectPhoto = new ParseFile(resource);
                                     project.setImage(projectPhoto);
+
+                                    saveProject(project);
                                 }
 
                                 @Override
@@ -127,36 +133,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                                 }
                             });
                 }
-                project.setDescription(binding.fragmentCreateProjectEtProjectDescription.getText().toString());
-                project.setTalentTag(binding.fragmentCreateProjectSpnTalent.getSelectedItem().toString());
-                project.setSubTalentTag(binding.fragmentCreateProjectSpnSubtalent.getSelectedItem().toString());
-                project.setSkillTag(binding.fragmentCreateProjectSpnSkill.getSelectedItem().toString());
-                project.setContributionCount(0);
-                project.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error while saving project", e);
-                            return;
-                        }
-                        ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_PROJECTS).add(project);
-                        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null){
-                                    Log.e(TAG, "Error while saving project to user", e);
-                                    return;
-                                }
-                                Log.i(TAG, "Project saved successfully");
-                                MainActivity mainActivity = (MainActivity) getActivity();
-                                mainActivity.queryProjects();
-                                Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects);
-                                fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
-                            }
-                        });
 
-                    }
-                });
             }
         });
     }
@@ -242,5 +219,33 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void saveProject(final Project project){
+        project.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error while saving project", e);
+                    return;
+                }
+                ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_PROJECTS).add(project);
+                ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error while saving project to user", e);
+                            return;
+                        }
+                        Log.i(TAG, "Project saved successfully");
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        mainActivity.queryProjects();
+                        Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects);
+                        fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
+                    }
+                });
+
+            }
+        });
     }
 }

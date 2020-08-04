@@ -25,7 +25,6 @@ public class ContributionDetailFragment extends Fragment {
     private Contribution contribution;
     private FragmentContributionDetailPhotoBinding photoBinding;
     private FragmentContributionDetailVideoBinding videoBinding;
-    private boolean isFirstClick = true;
 
     public ContributionDetailFragment() {
         // Required empty public constructor
