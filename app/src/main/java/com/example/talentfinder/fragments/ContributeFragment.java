@@ -84,6 +84,8 @@ public class ContributeFragment extends MediaFragment {
         binding.fragmentContributeBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.fragmentContributePbCreate.setVisibility(View.VISIBLE);
+
                 String contentDescription = binding.fragmentContributeEtContentDescription.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 if (contentDescription.isEmpty()){
@@ -165,6 +167,9 @@ public class ContributeFragment extends MediaFragment {
                             Log.e(TAG, "Error while saving contribution to project", e);
                             return;
                         }
+
+                        binding.fragmentContributePbCreate.setVisibility(View.GONE);
+
                         fragmentManager.popBackStackImmediate();
                     }
                 });

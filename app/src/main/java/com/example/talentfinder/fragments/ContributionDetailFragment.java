@@ -1,5 +1,6 @@
 package com.example.talentfinder.fragments;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class ContributionDetailFragment extends Fragment {
     public static final String TAG = "ContributionDetailFragment";
 
     private Contribution contribution;
+    private Context context;
     private FragmentContributionDetailPhotoBinding photoBinding;
     private FragmentContributionDetailVideoBinding videoBinding;
 
@@ -41,7 +43,7 @@ public class ContributionDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        context = getContext();
         contribution = getArguments().getParcelable("contribution");
 
         View view;
@@ -63,24 +65,27 @@ public class ContributionDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (contribution.getMediaTypeCode() == GlobalConstants.MEDIA_PHOTO){
+            photoBinding.fragmentContributionDetailPhotoPbMedia.setVisibility(View.VISIBLE);
             photoBinding.fragmentContributionDetailPhotoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
             photoBinding.fragmentContributionDetailPhotoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
             photoBinding.fragmentContributionDetailPhotoTvContentDescription.setText(contribution.getContentDescription());
             if (contribution.getMedia() != null){
-                Glide.with(getContext())
+                Glide.with(context)
                         .load(contribution.getMedia().getUrl())
                         .into(photoBinding.fragmentContributionDetailPhotoIvMediaPhoto);
             }
 
             if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
-                Glide.with(getContext())
+                Glide.with(context)
                         .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                         .circleCrop()
                         .into(photoBinding.fragmentContributionDetailPhotoIvProfilePicture);
             }
+            photoBinding.fragmentContributionDetailPhotoPbMedia.setVisibility(View.GONE);
         }
 
         else {
+            videoBinding.fragmentContributionDetailVideoPbMedia.setVisibility(View.VISIBLE);
             videoBinding.fragmentContributionDetailVideoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
             videoBinding.fragmentContributionDetailVideoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
             videoBinding.fragmentContributionDetailVideoTvContentDescription.setText(contribution.getContentDescription());
@@ -93,9 +98,13 @@ public class ContributionDetailFragment extends Fragment {
                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
-                        videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(new View.OnClickListener() {
+                        videoBinding.fragmentContributionDetailVideoPbMedia.setVisibility(View.GONE);
+                        videoBinding.fragmentContributionDetailVideoIvPlay.setVisibility(View.VISIBLE);
+
+                        videoBinding.fragmentContributionDetailVideoIvPlay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                videoBinding.fragmentContributionDetailVideoIvPlay.setVisibility(View.GONE);
                                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.start();
                                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setOnClickListener(null);
                             }
@@ -111,7 +120,6 @@ public class ContributionDetailFragment extends Fragment {
                         });
                     }
                 });
-
             }
 
             if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){

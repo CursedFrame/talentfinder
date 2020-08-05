@@ -244,6 +244,7 @@ TalentFinder is an application designed to match project managers (Finders) and 
 "Search Icon made by Freepik from www.flaticon.com"
 "Tags Icon made by Becris from www.flaticon.com"
 "Direct Message Icon made by Becris from www.flaticon.com"
+"Play Video Icon made by Freepik from www.flaticon.com"
 
 
 >>>>>>> c6b5aa720606332fa751920860f65467fe7602d3

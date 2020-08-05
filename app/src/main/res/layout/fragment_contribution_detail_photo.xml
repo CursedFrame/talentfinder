@@ -21,6 +21,19 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
+            <ProgressBar
+                android:id="@+id/fragmentContributionDetailPhoto_pbMedia"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fragmentContributionDetailPhoto_ivMediaPhoto"
+                app:layout_constraintEnd_toEndOf="@+id/fragmentContributionDetailPhoto_ivMediaPhoto"
+                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailPhoto_ivMediaPhoto"
+                app:layout_constraintTop_toTopOf="@+id/fragmentContributionDetailPhoto_ivMediaPhoto" />
+
             <TextView
                 android:id="@+id/fragmentContributionDetailPhoto_tvContentDescription"
                 android:layout_width="0dp"

@@ -21,6 +21,19 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
+            <ProgressBar
+                android:id="@+id/fragmentContributionDetailVideo_pbMedia"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintEnd_toEndOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintTop_toTopOf="@+id/fragmentContributionDetailVideo_vvMediaVideo" />
+
             <TextView
                 android:id="@+id/fragmentContributionDetailVideo_tvContentDescription"
                 android:layout_width="0dp"
@@ -80,6 +93,17 @@
                 app:layout_constraintHeight_percent=".50"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/fragmentContributionDetailVideo_ivPlay"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_video"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintEnd_toEndOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailVideo_vvMediaVideo"
+                app:layout_constraintTop_toTopOf="@+id/fragmentContributionDetailVideo_vvMediaVideo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

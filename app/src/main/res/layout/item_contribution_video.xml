@@ -21,45 +21,90 @@
             android:background="@drawable/shape_background"
             android:padding="14dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemContributionVideo_clCreatorProfileContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/itemContributionVideo_tvCreatorName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/itemContributionVideo_ivCreatorProfilePicture"
-            app:layout_constraintTop_toBottomOf="@id/itemContributionVideo_ivCreatorProfilePicture"
-            tools:text="John Doe" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/itemContributionVideo_clCreatorProfileContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/itemContributionVideo_ivCreatorProfilePicture"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+                <TextView
+                    android:id="@+id/itemContributionVideo_tvCreatorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/itemContributionVideo_ivCreatorProfilePicture"
+                    app:layout_constraintTop_toBottomOf="@id/itemContributionVideo_ivCreatorProfilePicture"
+                    tools:text="John Doe" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/itemContributionVideo_ivCreatorProfilePicture"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemContributionVideo_chipSkill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toEndOf="@+id/itemContributionVideo_chipSubtalent"
+                app:layout_constraintTop_toTopOf="@+id/itemContributionVideo_chipSubtalent"
+                tools:text="Beginner" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemContributionVideo_chipSubtalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toEndOf="@+id/itemContributionVideo_chipTalent"
+                app:layout_constraintTop_toTopOf="@+id/itemContributionVideo_chipTalent"
+                tools:text="Abstract" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemContributionVideo_chipTalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                app:chipIconSize="12dp"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itemContributionVideo_clCreatorProfileContainer"
+                tools:text="Art" />
 
             <ImageView
-                android:id="@+id/itemContributionVideo_ivVideoThumbnail"
+                android:id="@+id/itemContributionVideo_ivContributionMedia"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/itemContributionVideo_clCreatorProfileContainer"
+                app:layout_constraintTop_toBottomOf="@+id/itemContributionVideo_chipTalent"
                 tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/itemContributionVideo_tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/itemContributionVideo_chipSkill"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/itemContributionVideo_clCreatorProfileContainer"
+                app:layout_constraintTop_toTopOf="@+id/itemContributionVideo_clCreatorProfileContainer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
