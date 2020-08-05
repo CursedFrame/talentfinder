@@ -58,12 +58,13 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
         LinearLayoutManager linearLayoutManager;
         ChipAdapter tagsAdapter;
         RecyclerView rvTags;
-        TextView tvProjectTitle;
+        TextView tvProjectTitle, tvProjectDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rvTags = itemView.findViewById(R.id.itemProjectPreview_rvTags);
             tvProjectTitle = itemView.findViewById(R.id.itemProjectPreview_tvProjectTitle);
+            tvProjectDescription = itemView.findViewById(R.id.itemProjectPreview_tvDescription);
             pbProjectPreview = itemView.findViewById(R.id.itemProjectPreview_pbProjectPreview);
 
             linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -78,6 +79,7 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
             rvTags.setLayoutManager(linearLayoutManager);
 
             tvProjectTitle.setText(project.getTitle());
+            tvProjectDescription.setText(project.getDescription());
 
             setOnClickItemView();
         }

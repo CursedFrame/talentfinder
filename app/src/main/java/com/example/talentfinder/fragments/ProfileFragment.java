@@ -1,5 +1,6 @@
 package com.example.talentfinder.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
+import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.adapters.ProjectPreviewAdapter;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
+import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
@@ -37,9 +40,12 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private FragmentManager fragmentManager;
     private List<Project> projects;
-    private LinearLayoutManager linearLayoutManager;
+    private List<String> tags;
+    private LinearLayoutManager projectsLinearLayoutManager, tagsLinearLayoutManager;
     private ProjectPreviewAdapter projectPreviewAdapter;
+    private ChipAdapter tagsChipAdapter;
     private Discussion discussion = null;
+    private Context context;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -67,16 +73,27 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fragmentManager = getFragmentManager();
+        context = getContext();
 
         Bundle bundle = getArguments();
         user = bundle.getParcelable("user");
 
         // Projects adapter and RecyclerView
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        projectsLinearLayoutManager = new LinearLayoutManager(context);
         projects = new ArrayList<>();
-        projectPreviewAdapter = new ProjectPreviewAdapter(getContext(), projects, fragmentManager);
+        projectPreviewAdapter = new ProjectPreviewAdapter(context, projects, fragmentManager);
         binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
-        binding.fragmentProfileRvProjects.setLayoutManager(linearLayoutManager);
+        binding.fragmentProfileRvProjects.setLayoutManager(projectsLinearLayoutManager);
+
+        // User skill and experience adapter and RecyclerView
+        tagsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        tags = new ArrayList<>();
+        tags.add(user.getString(ParseUserKey.TAG_TALENT));
+        tags.add(user.getString(ParseUserKey.TAG_SUBTALENT));
+        tags.add(user.getString(ParseUserKey.TAG_SKILL));
+        tagsChipAdapter = new ChipAdapter(context, tags, GlobalConstants.CHIP_FILTER);
+        binding.fragmentProfileRvSkillsExperience.setAdapter(tagsChipAdapter);
+        binding.fragmentProfileRvSkillsExperience.setLayoutManager(tagsLinearLayoutManager);
 
         // Bind user name and location
         binding.fragmentProfileTvProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
@@ -85,33 +102,23 @@ public class ProfileFragment extends Fragment {
         }
 
         // Bind user profile picture
-        Glide.with(getContext())
+        Glide.with(context)
                 .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                 .circleCrop()
                 .into(binding.fragmentProfileIvProfilePicture);
 
-
-
+        // Adjusting FloatingActionButtons based on if current user or not
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
             binding.fragmentProfileFabChangePicture.setVisibility(View.VISIBLE);
             setOnClickFabChangePicture();
         }
+        else {
+            binding.fragmentProfileFabDiscussion.setVisibility(View.VISIBLE);
+            setOnClickFabDiscussion();
+        }
 
-        // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
-        binding.fragmentProfileBtnDiscussion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (discussion != null){
-                    goDiscussionFragment();
-                }
-                else {
-                    createDiscussionDialog();
-                }
-            }
-        });
-
+        checkDiscussion();
         populateTypeUser();
-
         getProjects();
     }
 
@@ -144,6 +151,21 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void setOnClickFabDiscussion(){
+        // On "Start Discussion" button click, take user to the start discussion dialog fragment to start discussion with project creator
+        binding.fragmentProfileFabDiscussion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (discussion != null){
+                    goDiscussionFragment();
+                }
+                else {
+                    createDiscussionDialog();
+                }
+            }
+        });
+    }
+
     private void checkDiscussion(){
         ParseQuery<Discussion> query1 = ParseQuery.getQuery(Discussion.class);
         query1.whereEqualTo("user", ParseUser.getCurrentUser());
@@ -165,29 +187,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void done(Discussion object, ParseException e) {
                 if (e != null){
-                    String string = "Start Discussion";
-                    binding.fragmentProfileBtnDiscussion.setText(string);
-                    binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
+                    Log.e(TAG, "Did not find discussion with this user");
                     return;
                 }
-
-                String string = "Continue Discussion";
-                binding.fragmentProfileBtnDiscussion.setText(string);
-                binding.fragmentProfileBtnDiscussion.setVisibility(View.VISIBLE);
                 discussion = object;
             }
         });
     }
 
     private void populateTypeUser(){
-        // If the profile user is the current user, show settings icon, but don't show "Start Discussion" button
-        if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            binding.fragmentProfileBtnDiscussion.setVisibility(View.INVISIBLE);
-        }
-        else {
-            checkDiscussion();
-        }
-
         // If the profile user is a Facebook user, show Facebook connection widget
         if (user.getBoolean(ParseUserKey.FACEBOOK_CONNECTED)){
             getFacebookPhoto();
@@ -200,8 +208,7 @@ public class ProfileFragment extends Fragment {
 
     private void getFacebookPhoto(){
         String facebookUrl = "https://www.graph.facebook.com/" + user.getNumber(ParseUserKey.FACEBOOK_ID) + "/picture?type=large";
-        Glide.with(this)
-                .asBitmap()
+        Glide.with(context)
                 .load(facebookUrl)
                 .into(binding.include.connectionFacebookIvProfileImage);
 

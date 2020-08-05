@@ -54,27 +54,16 @@
             app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etDescriptionLayout"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_etTitleLayout" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+        <ImageView
+            android:id="@+id/fragmentCreateProject_ivContext"
             android:layout_width="0dp"
             android:layout_height="250dp"
             android:layout_marginTop="8dp"
-            app:cardCornerRadius="12dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
             app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
-
-            <ImageView
-                android:id="@+id/fragmentCreateProject_ivContext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_etTitleLayout"
-                app:layout_constraintStart_toStartOf="@+id/fragmentCreateProject_etTitleLayout"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
-                tools:src="@tools:sample/avatars" />
-
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/textView12"
@@ -121,8 +110,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
             android:text="Create"
             android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_spnSkill"
             app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_spnSkill" />
 
@@ -132,8 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Import"
-            app:layout_constraintEnd_toEndOf="@+id/cardView2"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+            app:layout_constraintEnd_toEndOf="@+id/fragmentCreateProject_ivContext"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentCreateProject_ivContext" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

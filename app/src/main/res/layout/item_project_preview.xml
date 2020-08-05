@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/shape_background"
+    android:padding="16dp">
 
     <ProgressBar
         android:id="@+id/itemProjectPreview_pbProjectPreview"
@@ -19,6 +23,7 @@
         android:id="@+id/itemProjectPreview_tvProjectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,9 +33,10 @@
         android:id="@+id/itemProjectPreview_tvTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Tags:"
-        app:layout_constraintStart_toStartOf="@+id/itemProjectPreview_tvProjectTitle"
-        app:layout_constraintTop_toBottomOf="@+id/itemProjectPreview_tvProjectTitle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemProjectPreview_tvDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemProjectPreview_rvTags"
@@ -39,4 +45,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/itemProjectPreview_tvTags"
         app:layout_constraintTop_toBottomOf="@+id/itemProjectPreview_tvTags" />
+
+    <TextView
+        android:id="@+id/itemProjectPreview_tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemProjectPreview_tvProjectTitle"
+        tools:text="Description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

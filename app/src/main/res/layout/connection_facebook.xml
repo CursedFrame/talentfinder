@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/connectionFacebook_Image"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/facebook_logo" />
@@ -41,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/connectionFacebook_ivProfileImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/connectionFacebook_Image"
                 app:layout_constraintStart_toEndOf="@+id/connectionFacebook_Image"
