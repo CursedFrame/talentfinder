@@ -11,9 +11,9 @@
         android:id="@+id/fragmentTagsDialog_radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnSkill">
 
         <RadioButton
             android:id="@+id/fragmentTagsDialog_radioSort"
@@ -31,11 +31,11 @@
 
     <Spinner
         android:id="@+id/fragmentTagsDialog_spnTalent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_radioGroup" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/fragmentTagsDialog_spnSubTalent"
@@ -61,7 +61,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
         android:text="confirm"
         app:layout_constraintStart_toStartOf="@+id/fragmentTagsDialog_spnSkill"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_spnSkill" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTagsDialog_radioGroup" />
 </androidx.constraintlayout.widget.ConstraintLayout>

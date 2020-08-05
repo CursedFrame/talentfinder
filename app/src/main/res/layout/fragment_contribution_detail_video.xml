@@ -22,7 +22,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <TextView
-                android:id="@+id/fragmentContributionDetailVideo_tvUserDescription"
+                android:id="@+id/fragmentContributionDetailVideo_tvContentDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/textView11"
@@ -49,29 +49,12 @@
                 tools:text="John Doe" />
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Skills Description:"
-                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailVideo_tvUserDescription"
-                app:layout_constraintTop_toBottomOf="@+id/fragmentContributionDetailVideo_tvUserDescription" />
-
-            <TextView
-                android:id="@+id/fragmentContributionDetailVideo_tvSkillsDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/fragmentContributionDetailVideo_tvUserDescription"
-                app:layout_constraintTop_toBottomOf="@+id/textView13"
-                tools:text="Here's a little bit about what I can do..." />
-
-            <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="User Description:"
+                android:text="Contribution Description:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragmentContributionDetailVideo_tvProfileLocation" />
 

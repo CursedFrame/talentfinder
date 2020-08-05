@@ -23,16 +23,16 @@
             android:id="@+id/fragmentProfile_fabChangePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="108dp"
             android:src="@drawable/ic_restart"
             android:text="@string/change_profile_photo"
-            app:tint="#FFFFFF"
             android:visibility="invisible"
             app:backgroundTint="@android:color/holo_red_dark"
             app:fabSize="mini"
             app:layout_constraintStart_toStartOf="@+id/fragmentProfile_ivProfilePicture"
-            app:layout_constraintTop_toTopOf="@+id/fragmentProfile_ivProfilePicture" />
+            app:layout_constraintTop_toTopOf="@+id/fragmentProfile_ivProfilePicture"
+            app:tint="#FFFFFF" />
 
         <ImageView
             android:id="@+id/fragmentProfile_ivProfilePicture"

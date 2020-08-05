@@ -65,8 +65,7 @@ public class ContributionDetailFragment extends Fragment {
         if (contribution.getMediaTypeCode() == GlobalConstants.MEDIA_PHOTO){
             photoBinding.fragmentContributionDetailPhotoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
             photoBinding.fragmentContributionDetailPhotoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
-            photoBinding.fragmentContributionDetailPhotoTvUserDescription.setText(contribution.getUserDescription());
-            photoBinding.fragmentContributionDetailPhotoTvSkillsDescription.setText(contribution.getSkillsDescription());
+            photoBinding.fragmentContributionDetailPhotoTvContentDescription.setText(contribution.getContentDescription());
             if (contribution.getMedia() != null){
                 Glide.with(getContext())
                         .load(contribution.getMedia().getUrl())
@@ -84,8 +83,7 @@ public class ContributionDetailFragment extends Fragment {
         else {
             videoBinding.fragmentContributionDetailVideoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
             videoBinding.fragmentContributionDetailVideoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
-            videoBinding.fragmentContributionDetailVideoTvUserDescription.setText(contribution.getUserDescription());
-            videoBinding.fragmentContributionDetailVideoTvSkillsDescription.setText(contribution.getSkillsDescription());
+            videoBinding.fragmentContributionDetailVideoTvContentDescription.setText(contribution.getContentDescription());
             if (contribution.getMedia() != null){
 
                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setVideoPath(contribution.getMedia().getUrl());

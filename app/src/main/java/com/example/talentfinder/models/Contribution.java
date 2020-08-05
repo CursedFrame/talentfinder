@@ -10,8 +10,7 @@ public class Contribution extends ParseObject {
     public static final String KEY_MEDIA = "media";
     public static final String KEY_USER = "user";
     public static final String KEY_PROJECT = "project";
-    public static final String KEY_USER_DESCRIPTION = "userDescription";
-    public static final String KEY_SKILLS_DESCRIPTION = "skillsDescription";
+    public static final String KEY_CONTENT_DESCRIPTION = "contentDescription";
     public static final String KEY_MEDIA_TYPE_CODE = "mediaTypeCode";
     public static final String KEY_PRIVATE_CONTRIBUTION = "privateContribution";
 
@@ -42,22 +41,13 @@ public class Contribution extends ParseObject {
         put(KEY_PROJECT, project);
     }
 
-    // GET/SET User Description
-    public String getUserDescription(){
-        return getString(KEY_USER_DESCRIPTION);
+    // GET/SET Content Description
+    public String getContentDescription(){
+        return getString(KEY_CONTENT_DESCRIPTION);
     }
 
-    public void setUserDescription(String description){
-        put(KEY_USER_DESCRIPTION, description);
-    }
-
-    // GET/SET Skills Description
-    public String getSkillsDescription(){
-        return getString(KEY_SKILLS_DESCRIPTION);
-    }
-
-    public void setSkillsDescription(String description){
-        put(KEY_SKILLS_DESCRIPTION, description);
+    public void setContentDescription(String description){
+        put(KEY_CONTENT_DESCRIPTION, description);
     }
 
     // GET/SET Media Type Code

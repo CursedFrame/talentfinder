@@ -79,6 +79,7 @@ public class ProjectContributionFeedFragment extends Fragment {
         dividerItemDecoration = new DividerItemDecoration(binding.fragmentProjectContributionFeedRvContributions.getContext(), linearLayoutManager.getOrientation());
         binding.fragmentProjectContributionFeedRvContributions.addItemDecoration(dividerItemDecoration);
 
+        binding.fragmentProjectContributionFeedPbContributions.setVisibility(View.VISIBLE);
         binding.fragmentProjectContributionFeedTvProjectName.setText(project.getTitle());
 
         getContributions();
@@ -106,6 +107,7 @@ public class ProjectContributionFeedFragment extends Fragment {
                     contributions.add((Contribution) object);
                 }
                 contributionAdapter.notifyDataSetChanged();
+                binding.fragmentProjectContributionFeedPbContributions.setVisibility(View.GONE);
             }
         });
     }

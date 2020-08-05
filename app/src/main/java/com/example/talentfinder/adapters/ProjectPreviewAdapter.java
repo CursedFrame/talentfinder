@@ -70,12 +70,7 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
         }
 
         public void bind(Project project){
-
-            pbProjectPreview.setVisibility(ProgressBar.VISIBLE);
-
             this.project = project;
-
-
 
             tagsAdapter = new ChipAdapter(context, project.getTags(), GlobalConstants.CHIP_FILTER);
 
@@ -85,8 +80,6 @@ public class ProjectPreviewAdapter extends RecyclerView.Adapter<ProjectPreviewAd
             tvProjectTitle.setText(project.getTitle());
 
             setOnClickItemView();
-
-            pbProjectPreview.setVisibility(ProgressBar.INVISIBLE);
         }
 
         public void setOnClickItemView(){

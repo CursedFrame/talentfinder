@@ -18,38 +18,42 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#930303"
             android:theme="@style/Theme.App"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="enterAlways|snap"
             app:popupTheme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             app:titleTextAppearance="@style/MyActionBarTitleText"
             app:titleTextColor="@android:color/white">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">>
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"><![CDATA[>
+
+                ]]>
 
                 <TextView
                     android:id="@+id/includeMainViewContainer_AppTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
                     android:text="TalentFinder0"
                     android:textAppearance="@style/MyActionBarTitleText"
                     android:textColor="#FFFFFF"
+                    android:textSize="27sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
+                <ImageView
                     android:id="@+id/includeMainViewContainer_tagsbutton"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="Tags"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_tag" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>

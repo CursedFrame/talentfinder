@@ -1,90 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.ContributeFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/fragmentContribute_ivContributePicture"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.ContributeFragment">
 
-    <Button
-        android:id="@+id/fragmentContribute_btnCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Camera"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_ivContributePicture" />
+        <VideoView
+            android:id="@+id/fragmentContribute_vvContributeVideo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragmentContribute_ivContributePicture"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentContribute_ivContributePicture"
+            app:layout_constraintStart_toStartOf="@+id/fragmentContribute_ivContributePicture"
+            app:layout_constraintTop_toTopOf="@+id/fragmentContribute_ivContributePicture" />
 
-    <Button
-        android:id="@+id/fragmentContribute_btnAttachMedia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Attach Media"
-        app:layout_constraintBottom_toBottomOf="@id/fragmentContribute_btnCamera"
-        app:layout_constraintStart_toEndOf="@id/fragmentContribute_btnCamera"
-        app:layout_constraintTop_toTopOf="@id/fragmentContribute_btnCamera" />
+        <ImageView
+            android:id="@+id/fragmentContribute_ivContributePicture"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-    <EditText
-        android:id="@+id/fragmentContribute_etIntroduceYourself"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Introduce yourself..."
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@id/fragmentContribute_btnCamera"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_btnCamera" />
+        <Button
+            android:id="@+id/fragmentContribute_btnCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContribute_ivContributePicture" />
 
-    <EditText
-        android:id="@+id/fragmentContribute_etDescribeSkills"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Describe your skills..."
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@id/fragmentContribute_etIntroduceYourself"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContribute_etIntroduceYourself" />
+        <Button
+            android:id="@+id/fragmentContribute_btnAttachMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Attach Media"
+            app:layout_constraintBottom_toBottomOf="@id/fragmentContribute_btnCamera"
+            app:layout_constraintStart_toEndOf="@id/fragmentContribute_btnCamera"
+            app:layout_constraintTop_toTopOf="@id/fragmentContribute_btnCamera" />
 
-    <Button
-        android:id="@+id/fragmentContribute_btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Send"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="667dp" />
+        <Button
+            android:id="@+id/fragmentContribute_btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Create"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <VideoView
-        android:id="@+id/fragmentContribute_vvContributeVideo"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/fragmentContribute_ivContributePicture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/fragmentContribute_switchPrivacy"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Private"
+            app:layout_constraintEnd_toEndOf="@+id/fragmentContribute_vvContributeVideo"
+            app:layout_constraintTop_toTopOf="@+id/fragmentContribute_btnAttachMedia" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/fragmentContribute_switchPrivacy"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Private"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContribute_etDescribeSkills" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContribute_btnAttachMedia">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragmentContribute_etContentDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Contribution Description" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

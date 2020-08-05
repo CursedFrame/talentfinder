@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,6 @@ import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.adapters.ProjectsAdapter;
 import com.example.talentfinder.databinding.FragmentHomeFeedBinding;
 import com.example.talentfinder.models.Project;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class HomeFeedFragment extends Fragment {
     private FragmentManager fragmentManager;
     private FragmentHomeFeedBinding binding;
     private DividerItemDecoration dividerItemDecoration;
-    private MaterialButton btnTags;
+    private ImageView btnTags;
     private MainActivity activity;
 
     public HomeFeedFragment() {

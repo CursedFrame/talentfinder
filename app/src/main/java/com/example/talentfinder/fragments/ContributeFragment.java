@@ -1,8 +1,10 @@
 package com.example.talentfinder.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class ContributeFragment extends MediaFragment {
     private FragmentContributeBinding binding;
     private File photoFile;
     private File videoFile;
+    private Context context;
 
     public ContributeFragment() {
         // Required empty public constructor
@@ -71,14 +75,18 @@ public class ContributeFragment extends MediaFragment {
 
         project = getArguments().getParcelable("project");
         fragmentManager = getFragmentManager();
+        context = getContext();
+
+        Glide.with(context)
+                .load(GlobalConstants.PLACEHOLDER_URL)
+                .into(binding.fragmentContributeIvContributePicture);
 
         binding.fragmentContributeBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userDescription = binding.fragmentContributeEtIntroduceYourself.getText().toString();
-                String skillsDescription = binding.fragmentContributeEtDescribeSkills.getText().toString();
+                String contentDescription = binding.fragmentContributeEtContentDescription.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                if (userDescription.isEmpty() || skillsDescription.isEmpty()){
+                if (contentDescription.isEmpty()){
                     Toast.makeText(getContext(), "One or more fields are empty.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -87,10 +95,10 @@ public class ContributeFragment extends MediaFragment {
                     return;
                 }
                 else if (videoFile == null){
-                    saveContribution(userDescription, skillsDescription, currentUser, photoFile, GlobalConstants.MEDIA_PHOTO);
+                    saveContribution(contentDescription, currentUser, photoFile, GlobalConstants.MEDIA_PHOTO);
                 }
                 else {
-                    saveContribution(userDescription, skillsDescription, currentUser, videoFile, GlobalConstants.MEDIA_VIDEO);
+                    saveContribution(contentDescription, currentUser, videoFile, GlobalConstants.MEDIA_VIDEO);
                 }
             }
         });
@@ -130,11 +138,9 @@ public class ContributeFragment extends MediaFragment {
         });
     }
 
-    private void saveContribution(String userDescription, String skillsDescription,
-                                  ParseUser currentUser, File contributionFile, int mediaTypeCode){
+    private void saveContribution(String contentDescription, ParseUser currentUser, File contributionFile, int mediaTypeCode){
         final Contribution contribution = new Contribution();
-        contribution.setUserDescription(userDescription);
-        contribution.setSkillsDescription(skillsDescription);
+        contribution.setContentDescription(contentDescription);
         contribution.setMedia(new ParseFile(contributionFile));
         contribution.setMediaTypeCode(mediaTypeCode);
         contribution.setPrivateContributionBool(binding.fragmentContributeSwitchPrivacy.isChecked());
@@ -148,8 +154,6 @@ public class ContributeFragment extends MediaFragment {
                     return;
                 }
                 Log.i(TAG, "Contribution saved successfully");
-                binding.fragmentContributeEtIntroduceYourself.setText("");
-                binding.fragmentContributeEtDescribeSkills.setText("");
                 binding.fragmentContributeIvContributePicture.setImageResource(0);
 
                 project.getRelation(Project.KEY_CONTRIBUTIONS).add(contribution);
@@ -173,6 +177,7 @@ public class ContributeFragment extends MediaFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if ((data != null) && requestCode == GlobalConstants.PICK_PHOTO_CODE) {
             binding.fragmentContributeVvContributeVideo.setVisibility(View.INVISIBLE);
+            binding.fragmentContributeIvContributePicture.setVisibility(View.VISIBLE);
 
             Uri photoUri = data.getData();
 
@@ -193,6 +198,7 @@ public class ContributeFragment extends MediaFragment {
         }
         else if ((data != null) && requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             binding.fragmentContributeVvContributeVideo.setVisibility(View.INVISIBLE);
+            binding.fragmentContributeIvContributePicture.setVisibility(View.VISIBLE);
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 binding.fragmentContributeIvContributePicture.setImageBitmap(takenImage);
@@ -202,9 +208,33 @@ public class ContributeFragment extends MediaFragment {
         }
         else if ((data != null) && requestCode == GlobalConstants.PICK_VIDEO_CODE) {
             binding.fragmentContributeVvContributeVideo.setVisibility(View.VISIBLE);
+            binding.fragmentContributeIvContributePicture.setVisibility(View.INVISIBLE);
             Uri videoUri = data.getData();
 
             createTempVideo(videoUri);
+
+            binding.fragmentContributeVvContributeVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    binding.fragmentContributeVvContributeVideo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            binding.fragmentContributeVvContributeVideo.start();
+                            binding.fragmentContributeVvContributeVideo.setOnClickListener(null);
+                        }
+                    });
+
+                    mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                        @Override
+                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                            MediaController mediaController = new MediaController(getContext());
+                            binding.fragmentContributeVvContributeVideo.setMediaController(mediaController);
+                            mediaController.setAnchorView(binding.fragmentContributeVvContributeVideo);
+                        }
+                    });
+                }
+            });
+
 
             // Load the video located at videoUri into vvContributeVideo
             binding.fragmentContributeVvContributeVideo.setVideoPath(getContext().getCacheDir() + "/video.mp4");

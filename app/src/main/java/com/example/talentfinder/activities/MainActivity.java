@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -28,7 +29,6 @@ import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.example.talentfinder.utilities.TagUtils;
 import com.facebook.login.LoginManager;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Discussion> discussions;
     public List<Project> projects;
     private DrawerLayout drawerLayout;
-    public MaterialButton btnTags;
+    public ImageView btnTags;
     private NavigationView navigationView;
     public List<String> tags = new ArrayList<>(3);
 

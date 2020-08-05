@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProjectContributionFeedFragment">
 
+    <ProgressBar
+        android:id="@+id/fragmentProjectContributionFeed_pbContributions"
+        style="@android:style/Widget.Material.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentProjectContributionFeed_rvContributions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/fragmentProjectContributionFeed_tvProjectName"
         android:layout_width="wrap_content"
@@ -38,4 +50,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentProjectContributionFeed_tvContributions" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

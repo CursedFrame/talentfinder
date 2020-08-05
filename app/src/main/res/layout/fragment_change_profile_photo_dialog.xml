@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/fragmentChangeProfilePhotoDialog_ivProfilePicture"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,17 +28,17 @@
 
     <Button
         android:id="@+id/fragmentChangeProfilePhotoDialog_btnCamera"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Take a new photo"
-        app:layout_constraintEnd_toEndOf="@+id/fragmentChangeProfilePhotoDialog_ivProfilePicture"
-        app:layout_constraintStart_toStartOf="@+id/fragmentChangeProfilePhotoDialog_ivProfilePicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentChangeProfilePhotoDialog_ivProfilePicture" />
 
     <Button
         android:id="@+id/fragmentChangeProfilePhotoDialog_btnImport"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="choose a picture from gallery"
         app:layout_constraintEnd_toEndOf="@+id/fragmentChangeProfilePhotoDialog_btnCamera"
