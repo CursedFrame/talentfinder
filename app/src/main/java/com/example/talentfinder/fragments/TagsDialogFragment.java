@@ -28,6 +28,7 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
 
     public static final int TYPE_SORT = 100;
     public static final int TYPE_FILTER = 101;
+    public static final int TYPE_INCLUDE = 102;
 
     FragmentTagsDialogBinding binding;
     MainActivity mainActivity;
@@ -93,7 +94,10 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
                 if (type == TYPE_SORT){
                     mainActivity.sortProjectsByTag();
                 }
-                else if (type == TYPE_FILTER){
+                else if (type == TYPE_INCLUDE){
+                    mainActivity.includeProjectsByTag();
+                }
+                else {
                     mainActivity.filterProjectsByTag();
                 }
                 dismiss();
@@ -106,8 +110,11 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
                 if (binding.fragmentTagsDialogRadioSort.isChecked()){
                     type = TYPE_SORT;
                 }
-                else {
+                else if (binding.fragmentTagsDialogRadioFilter.isChecked()){
                     type = TYPE_FILTER;
+                }
+                else {
+                    type = TYPE_INCLUDE;
                 }
             }
         });

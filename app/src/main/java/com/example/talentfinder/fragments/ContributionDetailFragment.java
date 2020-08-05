@@ -113,7 +113,7 @@ public class ContributionDetailFragment extends Fragment {
                         mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                             @Override
                             public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                                MediaController mediaController = new MediaController(getContext());
+                                MediaController mediaController = new MediaController(context);
                                 videoBinding.fragmentContributionDetailVideoVvMediaVideo.setMediaController(mediaController);
                                 mediaController.setAnchorView(videoBinding.fragmentContributionDetailVideoVvMediaVideo);
                             }
@@ -123,7 +123,7 @@ public class ContributionDetailFragment extends Fragment {
             }
 
             if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
-                Glide.with(getContext())
+                Glide.with(context)
                         .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
                         .circleCrop()
                         .into(videoBinding.fragmentContributionDetailVideoIvProfilePicture);

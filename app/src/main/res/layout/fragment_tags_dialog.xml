@@ -27,6 +27,12 @@
             android:layout_height="match_parent"
             android:text="Filter" />
 
+        <RadioButton
+            android:id="@+id/fragmentTagsDialog_radioInclude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Include"/>
+
     </RadioGroup>
 
     <Spinner

@@ -258,60 +258,62 @@ public class MainActivity extends AppCompatActivity {
         currentHomeFragment.updateAdapter(projects);
     }
 
+    public void includeProjectsByTag(){
+        projects = new ArrayList<>();
+
+        ParseQuery<Project> query1 = ParseQuery.getQuery(Project.class);
+        query1.whereContains(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+
+        ParseQuery<Project> query2 = ParseQuery.getQuery(Project.class);
+        query2.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+        query2.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+
+        ParseQuery<Project> query3 = ParseQuery.getQuery(Project.class);
+        query3.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
+        query3.whereNotEqualTo(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+        query3.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+
+        List<ParseQuery<Project>> queryList = new ArrayList<>();
+        queryList.add(query1);
+        queryList.add(query2);
+        queryList.add(query3);
+
+        ParseQuery<Project> query = ParseQuery.or(queryList);
+        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
+        query.include(Project.KEY_USER);
+        query.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading included projects", e);
+                    return;
+                }
+                projects.addAll(objects);
+                sortProjectsByTag();
+            }
+        });
+    }
+
     public void filterProjectsByTag(){
         projects = new ArrayList<>();
-        loadProjectsByTalentTag();
-    }
 
-    private void loadProjectsByTalentTag(){
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
+        if (!tags.get(GlobalConstants.TAG_POSITION_TALENT).equals(GlobalConstants.TALENT_TAG)){
+            query.whereContains(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+        }
+        if (!tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SUBTALENT_TAG)){
+            query.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+        }
+        if (!tags.get(GlobalConstants.TAG_POSITION_SKILL).equals(GlobalConstants.SKILL_TAG)){
+            query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
+        }
         query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
         query.include(Project.KEY_USER);
-        query.whereContains(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
         query.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> objects, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error loading talent projects", e);
-                    return;
-                }
-                projects.addAll(objects);
-                loadProjectsBySubtalentTag();
-            }
-        });
-    }
-
-    private void loadProjectsBySubtalentTag(){
-        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
-        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
-        query.include(Project.KEY_USER);
-        query.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
-        query.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
-        query.findInBackground(new FindCallback<Project>() {
-            @Override
-            public void done(List<Project> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error loading subtalent projects", e);
-                    return;
-                }
-                projects.addAll(objects);
-                loadProjectsBySkillTag();
-            }
-        });
-    }
-
-    private void loadProjectsBySkillTag(){
-        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
-        query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
-        query.include(Project.KEY_USER);
-        query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
-        query.whereNotEqualTo(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
-        query.whereNotEqualTo(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
-        query.findInBackground(new FindCallback<Project>() {
-            @Override
-            public void done(List<Project> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error loading skill projects", e);
+                    Log.e(TAG, "Error loading filtered projects", e);
                     return;
                 }
                 projects.addAll(objects);
