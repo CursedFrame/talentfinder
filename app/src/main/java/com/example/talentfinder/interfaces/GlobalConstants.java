@@ -5,6 +5,7 @@ public interface GlobalConstants {
     public static final int PROJECT_LIMIT = 20;
     public static final int PROJECT_PER_TAG_LIMIT = 10;
     public static final int DISCUSSION_LIMIT = 20;
+    public static final int USER_LIMIT = 20;
 
     // Request codes
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 101;

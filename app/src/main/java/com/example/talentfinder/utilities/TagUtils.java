@@ -18,7 +18,6 @@ public abstract class TagUtils {
         // Gets tags in order of Talent, Subtalent, and Skill
         List<String> tags = project.getTags();
         int weight = 0;
-        boolean isTalent = false;
 
         // Populate tag String List with only compared tags
         tags = getComparedTagList(tags, specifiedTags);
@@ -28,7 +27,7 @@ public abstract class TagUtils {
             return 0;
         }
 
-        return calculateWeight(tags, weight, isTalent, context);
+        return calculateWeight(tags, weight, context);
     }
 
     public static int getWeight(ParseUser user, List<String> specifiedTags, Context context){
@@ -39,7 +38,6 @@ public abstract class TagUtils {
         tags.add(user.getString(ParseUserKey.TAG_SKILL));
 
         int weight = 0;
-        boolean isTalent = false;
 
         // Populate tag String List with only compared tags
         tags = getComparedTagList(tags, specifiedTags);
@@ -49,7 +47,7 @@ public abstract class TagUtils {
             return 0;
         }
 
-        weight = calculateWeight(tags, weight, isTalent, context);
+        weight = calculateWeight(tags, weight, context);
 
         return weight;
     }
@@ -72,10 +70,11 @@ public abstract class TagUtils {
         return comparedTags;
     }
 
-    private static int calculateWeight(List<String> tags, int weight, boolean isTalent, Context context){
+    private static int calculateWeight(List<String> tags, int weight, Context context){
 
         Resources resources = context.getResources();
         String tagTalent = "";
+        boolean isTalent = false;
 
         // First check for talent, if chosen by user, will always be the first tag in the String list
         List<String> talents = Arrays.asList(resources.getStringArray(R.array.talent));

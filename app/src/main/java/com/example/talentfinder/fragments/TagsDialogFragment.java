@@ -89,7 +89,9 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
             public void onClick(View v) {
                 mainActivity.tags.clear();
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnTalent.getSelectedItem().toString());
-                mainActivity.tags.add(binding.fragmentTagsDialogSpnSubTalent.getSelectedItem().toString());
+                if (!binding.fragmentTagsDialogSpnTalent.getSelectedItem().toString().equals(GlobalConstants.TALENT_TAG)) {
+                    mainActivity.tags.add(binding.fragmentTagsDialogSpnSubTalent.getSelectedItem().toString());
+                }
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSkill.getSelectedItem().toString());
                 if (type == TYPE_SORT){
                     mainActivity.sortProjectsByTag();

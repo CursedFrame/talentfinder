@@ -13,4 +13,5 @@ public interface ParseUserKey {
     public static final String FACEBOOK_LINK = "facebookLink";
     public static final String FACEBOOK_CONNECTED = "facebookConnected";
     public static final String FACEBOOK_ID = "facebookId";
+    public static final String UPDATED_AT = "updatedAt";
 }

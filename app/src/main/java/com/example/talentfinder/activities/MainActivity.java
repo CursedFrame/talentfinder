@@ -25,6 +25,7 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.example.talentfinder.fragments.TagsDialogFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
+import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.example.talentfinder.utilities.TagUtils;
@@ -45,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    public List<Discussion> discussions;
-    public List<Project> projects;
     private DrawerLayout drawerLayout;
     public ImageView btnTags;
     private NavigationView navigationView;
+
+    public List<Discussion> discussions;
+    public List<Project> projects;
+    public List<ParseUser> users;
     public List<String> tags = new ArrayList<>(3);
 
 
@@ -57,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
         btnTags = findViewById(R.id.includeMainViewContainer_tagsbutton);
 
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()){
                             case R.id.action_home_main:
                                 Log.i(TAG, "Moving to home feed fragment");
-                                fragment = HomeFeedFragment.newInstance(projects);
+                                fragment = HomeFeedFragment.newInstance(projects, users);
                                 break;
                             case R.id.action_search_main:
                                 Log.i(TAG, "Moving to search fragment");
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setInitialFragment(){
-        Fragment initialFragment = HomeFeedFragment.newInstance(projects);
+        Fragment initialFragment = HomeFeedFragment.newInstance(projects, users);
         fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, initialFragment, "Main").commit();
         navigationView.setCheckedItem(R.id.action_home_main);
         btnTags.setVisibility(View.VISIBLE);
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     public void queryObjects(){
         queryDiscussions();
         queryProjects();
+        queryUsers();
     }
 
     public void queryDiscussions(){
@@ -190,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         queryList.add(query1);
         queryList.add(query2);
 
+        Log.i(TAG, "Querying discussions");
         ParseQuery<Discussion> query = ParseQuery.or(queryList);
         query.setLimit(GlobalConstants.DISCUSSION_LIMIT);
         query.addDescendingOrder(Discussion.KEY_UPDATED_AT);
@@ -236,6 +239,26 @@ public class MainActivity extends AppCompatActivity {
                 setInitialFragment();
 
                 projects.addAll(objects);
+            }
+        });
+    }
+
+    public void queryUsers(){
+        users = new ArrayList<>();
+
+        Log.i(TAG, "Querying users");
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.setLimit(GlobalConstants.USER_LIMIT);
+        query.addDescendingOrder(ParseUserKey.UPDATED_AT);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading users", e);
+                    return;
+                }
+
+                users.addAll(objects);
             }
         });
     }

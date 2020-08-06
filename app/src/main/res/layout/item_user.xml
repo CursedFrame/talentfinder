@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#E4E4E4"
+        app:cardBackgroundColor="#77930303"
         app:cardCornerRadius="12dp"
-        app:contentPadding="8dp"
+        app:contentPadding="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
+            android:background="@drawable/shape_background"
             android:padding="14dp">
 
             <TextView
@@ -58,7 +58,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemUser_TagsAdapter"
+                android:id="@+id/itemUser_rvTags"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/itemUser_clProfileContainer"
@@ -66,6 +66,7 @@
                 app:layout_constraintStart_toStartOf="@+id/itemUser_tvLocation"
                 app:layout_constraintTop_toBottomOf="@+id/itemUser_tvLocation" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 

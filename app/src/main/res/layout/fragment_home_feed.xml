@@ -13,7 +13,40 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragmentHomeFeed_fabHomeFeedMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#D81B1B"
+        android:src="@drawable/ic_project"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentHomeFeed_rvHomeFeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp"
+        app:pressedTranslationZ="6dp"
+        app:tint="#FFFFFF" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragmentHomeFeed_fabHomeFeedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#A11414"
+        android:src="@drawable/ic_random"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="12dp"
+        app:fabSize="mini"
+        app:layout_constraintStart_toStartOf="@+id/fragmentHomeFeed_fabHomeFeedMain"
+        app:layout_constraintTop_toTopOf="@+id/fragmentHomeFeed_fabHomeFeedMain"
+        app:pressedTranslationZ="0dp"
+        app:tint="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

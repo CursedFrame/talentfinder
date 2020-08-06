@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
@@ -240,8 +239,9 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                         Log.i(TAG, "Project saved successfully");
                         MainActivity mainActivity = (MainActivity) getActivity();
                         mainActivity.queryProjects();
-                        Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects);
-                        fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
+                        fragmentManager.popBackStack();
+//                        Fragment fragment = HomeFeedFragment.newInstance(mainActivity.projects, users);
+//                        fragmentManager.beginTransaction().disallowAddToBackStack().replace(R.id.includeMainViewContainer_mainContainer, fragment).commit();
                     }
                 });
 
