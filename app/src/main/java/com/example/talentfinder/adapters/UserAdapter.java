@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.ProfileFragment;
-import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.User;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         User user;
         TextView tvUserLocation, tvUserName;
         RecyclerView rvTags;
-        ChipAdapter tagsAdapter;
+        Chip chipSkill, chipTalent, chipSubtalent;
         LinearLayoutManager tagsLinearLayoutManager;
         List<String> tags;
 
@@ -66,7 +66,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             ivUserImage = itemView.findViewById(R.id.itemUser_ivProfilePicture);
             tvUserLocation = itemView.findViewById(R.id.itemUser_tvLocation);
             tvUserName = itemView.findViewById(R.id.itemUser_tvName);
-            rvTags = itemView.findViewById(R.id.itemUser_rvTags);
+            chipSkill = itemView.findViewById(R.id.itemUser_chipSkill);
+            chipTalent = itemView.findViewById(R.id.itemUser_chipTalent);
+            chipSubtalent = itemView.findViewById(R.id.itemUser_chipSubtalent);
         }
 
         public void bind(User user){
@@ -78,15 +80,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     .circleCrop()
                     .into(ivUserImage);
 
-            // User skill and experience adapter and RecyclerView
-            tagsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-            tags = new ArrayList<>();
-            tags.add(user.getTalentTag());
-            tags.add(user.getSubTalentTag());
-            tags.add(user.getSkillTag());
-            tagsAdapter = new ChipAdapter(context, tags, GlobalConstants.CHIP_FILTER);
-            rvTags.setAdapter(tagsAdapter);
-            rvTags.setLayoutManager(tagsLinearLayoutManager);
+            chipTalent.setText(user.getTalentTag());
+            chipSubtalent.setText(user.getSubTalentTag());
+            chipSkill.setText(user.getSkillTag());
 
             setOnClickItemView();
         }

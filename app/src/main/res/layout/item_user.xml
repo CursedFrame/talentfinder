@@ -26,15 +26,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toEndOf="@+id/itemUser_clProfileContainer"
-                app:layout_constraintTop_toTopOf="@+id/itemUser_clProfileContainer"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Seattle, Washington" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/itemUser_clProfileContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/itemUser_chipSkill"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@+id/itemUser_tvLocation">
 
                 <TextView
                     android:id="@+id/itemUser_tvName"
@@ -57,14 +58,38 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemUser_rvTags"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/itemUser_clProfileContainer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/itemUser_tvLocation"
-                app:layout_constraintTop_toBottomOf="@+id/itemUser_tvLocation" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemUser_chipSkill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toStartOf="@+id/itemUser_chipSubtalent"
+                app:layout_constraintTop_toBottomOf="@+id/itemUser_chipSubtalent"
+                tools:text="Beginner" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemUser_chipSubtalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toStartOf="@+id/itemUser_chipTalent"
+                app:layout_constraintTop_toBottomOf="@+id/itemUser_chipTalent"
+                tools:text="Abstract" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/itemUser_chipTalent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                app:chipIconSize="12dp"
+                app:chipMinTouchTargetSize="35dp"
+                app:layout_constraintStart_toEndOf="@+id/itemUser_clProfileContainer"
+                app:layout_constraintTop_toBottomOf="@+id/itemUser_tvLocation"
+                tools:text="Art" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
