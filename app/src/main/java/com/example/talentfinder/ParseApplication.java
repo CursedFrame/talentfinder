@@ -6,6 +6,7 @@ import com.example.talentfinder.models.Contribution;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
 import com.example.talentfinder.models.Project;
+import com.example.talentfinder.models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -19,6 +20,8 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Contribution.class);
         ParseObject.registerSubclass(Discussion.class);
         ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(User.class);
+
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured

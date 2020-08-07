@@ -281,6 +281,24 @@ public class MainActivity extends AppCompatActivity {
         currentHomeFragment.updateAdapter(projects);
     }
 
+//    public void sortUsersByTag(){
+//        for (ParseUser user : users){
+//            user.setWeight(TagUtils.getWeight(project, tags, this));
+//            Log.i(TAG, "sortProjectsByTag: "+  project.getProjectWeight());
+//        }
+//
+//        Collections.sort(projects, new Comparator<Project>() {
+//            @Override
+//            public int compare(Project o1, Project o2) {
+//                return o1.compareTo(o2);
+//            }
+//        });
+//
+//        // Refresh fragment to update RecyclerView data
+//        HomeFeedFragment currentHomeFragment = (HomeFeedFragment) fragmentManager.findFragmentByTag("Main");
+//        currentHomeFragment.updateAdapter(projects);
+//    }
+
     public void includeProjectsByTag(){
         projects = new ArrayList<>();
 
