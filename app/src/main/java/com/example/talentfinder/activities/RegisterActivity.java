@@ -15,7 +15,7 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.databinding.ActivityRegisterBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
+import com.example.talentfinder.models.User;
 import com.facebook.login.LoginManager;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -120,15 +120,15 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         newUser.setUsername(Integer.toString(userId));
         newUser.setPassword(Integer.toString(userId));
-        newUser.put(ParseUserKey.FACEBOOK_CONNECTED, true);
-        newUser.put(ParseUserKey.FACEBOOK_LINK, userLink);
-        newUser.put(ParseUserKey.FACEBOOK_ID, userId);
-        newUser.put(ParseUserKey.PROFILE_NAME, userName);
-        newUser.put(ParseUserKey.PROFILE_LOCATION, userLocation);
+        newUser.put(User.KEY_FACEBOOK_CONNECTED, true);
+        newUser.put(User.KEY_FACEBOOK_LINK, userLink);
+        newUser.put(User.KEY_FACEBOOK_ID, userId);
+        newUser.put(User.KEY_NAME, userName);
+        newUser.put(User.KEY_LOCATION, userLocation);
 //        newUser.put(ParseUserKey.PROFILE_IMAGE, new ParseFile(MediaUtils.urlToImage(userProfilePicture, this)));
-        newUser.put(ParseUserKey.TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
-        newUser.put(ParseUserKey.TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
-        newUser.put(ParseUserKey.TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -150,11 +150,11 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         newUser.setUsername(binding.activityRegisterEtUsername.getText().toString());
         newUser.setPassword(binding.activityRegisterEtPassword.getText().toString());
-        newUser.put(ParseUserKey.PROFILE_NAME, binding.activityRegisterEtName.getText().toString());
-        newUser.put(ParseUserKey.PROFILE_LOCATION, location);
-        newUser.put(ParseUserKey.TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
-        newUser.put(ParseUserKey.TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
-        newUser.put(ParseUserKey.TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
+        newUser.put(User.KEY_NAME, binding.activityRegisterEtName.getText().toString());
+        newUser.put(User.KEY_LOCATION, location);
+        newUser.put(User.KEY_TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {

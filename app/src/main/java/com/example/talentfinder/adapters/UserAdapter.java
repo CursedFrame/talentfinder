@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
+import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.User;
 
 import java.util.ArrayList;
@@ -54,6 +54,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivUserImage;
+        User user;
         TextView tvUserLocation, tvUserName;
         RecyclerView rvTags;
         ChipAdapter tagsAdapter;
@@ -69,22 +70,38 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         public void bind(User user){
-            tvUserLocation.setText(user.getString(ParseUserKey.PROFILE_LOCATION));
-            tvUserName.setText(user.getString(ParseUserKey.PROFILE_NAME));
+            this.user = user;
+            tvUserLocation.setText(user.getLocation());
+            tvUserName.setText(user.getName());
             Glide.with(context)
-                    .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                    .load(user.getImage().getUrl())
                     .circleCrop()
                     .into(ivUserImage);
 
             // User skill and experience adapter and RecyclerView
             tagsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             tags = new ArrayList<>();
-            tags.add(user.getString(ParseUserKey.TAG_TALENT));
-            tags.add(user.getString(ParseUserKey.TAG_SUBTALENT));
-            tags.add(user.getString(ParseUserKey.TAG_SKILL));
+            tags.add(user.getTalentTag());
+            tags.add(user.getSubTalentTag());
+            tags.add(user.getSkillTag());
             tagsAdapter = new ChipAdapter(context, tags, GlobalConstants.CHIP_FILTER);
             rvTags.setAdapter(tagsAdapter);
             rvTags.setLayoutManager(tagsLinearLayoutManager);
+
+            setOnClickItemView();
+        }
+
+        private void setOnClickItemView(){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goProfileFragment();
+                }
+            });
+        }
+        private void goProfileFragment(){
+            ProfileFragment profileFragment = ProfileFragment.newInstance(user);
+            fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
         }
     }
 

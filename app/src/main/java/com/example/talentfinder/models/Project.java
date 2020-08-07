@@ -34,8 +34,8 @@ public class Project extends ParseObject implements Comparable<Project>{
     }
 
     // GET/SET User
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    public User getUser() {
+        return (User) getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user) {

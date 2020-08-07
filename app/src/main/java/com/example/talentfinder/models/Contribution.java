@@ -24,8 +24,8 @@ public class Contribution extends ParseObject {
     }
 
     // GET/SET User
-    public ParseUser getUser(){
-        return getParseUser(KEY_USER);
+    public User getUser(){
+        return (User) getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user){

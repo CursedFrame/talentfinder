@@ -17,10 +17,9 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.ContributionDetailFragment;
 import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Contribution;
+import com.example.talentfinder.models.User;
 import com.google.android.material.chip.Chip;
-import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
         ImageView ivCreatorProfilePicture, ivContributionMedia, ivVideoThumbnail;
         ConstraintLayout clCreatorProfileContainer;
         Chip chipTalent, chipSubtalent, chipSkill;
-        ParseUser contributionUser;
+        User contributionUser;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,13 +123,13 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
 
             // Bind and initialize similar properties
             contributionUser = contribution.getUser();
-            tvCreatorName.setText(contributionUser.getString(ParseUserKey.PROFILE_NAME));
-            chipTalent.setText(contributionUser.getString(ParseUserKey.TAG_TALENT));
-            chipSubtalent.setText(contributionUser.getString(ParseUserKey.TAG_SUBTALENT));
-            chipSkill.setText(contributionUser.getString(ParseUserKey.TAG_SKILL));
-            if (contributionUser.getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
+            tvCreatorName.setText(contributionUser.getName());
+            chipTalent.setText(contributionUser.getTalentTag());
+            chipSubtalent.setText(contributionUser.getSubTalentTag());
+            chipSkill.setText(contributionUser.getSkillTag());
+            if (contributionUser.getImage() != null){
                 Glide.with(context)
-                        .load(contributionUser.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                        .load(contributionUser.getImage().getUrl())
                         .circleCrop()
                         .into(ivCreatorProfilePicture);
             }

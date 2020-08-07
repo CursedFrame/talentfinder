@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.databinding.FragmentChangeProfilePhotoDialogBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
+import com.example.talentfinder.models.User;
 import com.example.talentfinder.utilities.MediaDialogFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -61,8 +61,10 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        User currentUser = (User) ParseUser.getCurrentUser();
+
         Glide.with(getContext())
-                .load(ParseUser.getCurrentUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                .load(currentUser.getImage().getUrl())
                 .circleCrop()
                 .into(binding.fragmentChangeProfilePhotoDialogIvProfilePicture);
 
@@ -127,7 +129,7 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
 
     public void saveProfilePicture(){
         ParseUser currentUser = ParseUser.getCurrentUser();
-        currentUser.put(ParseUserKey.PROFILE_IMAGE, new ParseFile(photoFile));
+        currentUser.put(User.KEY_IMAGE, new ParseFile(photoFile));
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.adapters.MessagesAdapter;
 import com.example.talentfinder.databinding.FragmentDiscussionBinding;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
 import com.parse.FindCallback;
@@ -72,19 +71,19 @@ public class DiscussionFragment extends Fragment {
 
         if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
             Glide.with(getContext())
-                    .load(discussion.getRecipient().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                    .load(discussion.getRecipient().getImage().getUrl())
                     .circleCrop()
                     .into(binding.fragmentDiscussionIvOppositeUserImage);
 
-            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getRecipient().getString(ParseUserKey.PROFILE_NAME));
+            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getRecipient().getName());
         }
         else {
             Glide.with(getContext())
-                    .load(discussion.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                    .load(discussion.getUser().getImage().getUrl())
                     .circleCrop()
                     .into(binding.fragmentDiscussionIvOppositeUserImage);
 
-            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getUser().getString(ParseUserKey.PROFILE_NAME));
+            binding.fragmentDiscussionTvOppositeUserName.setText(discussion.getUser().getName());
         }
 
         // On "send" button click, create a new message, relate it to discussion, and upload to server

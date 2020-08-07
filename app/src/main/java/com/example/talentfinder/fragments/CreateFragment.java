@@ -24,8 +24,8 @@ import com.example.talentfinder.R;
 import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentCreateBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Project;
+import com.example.talentfinder.models.User;
 import com.example.talentfinder.utilities.MediaFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -228,7 +228,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                     Log.e(TAG, "Error while saving project", e);
                     return;
                 }
-                ParseUser.getCurrentUser().getRelation(ParseUserKey.CURRENT_PROJECTS).add(project);
+                ParseUser.getCurrentUser().getRelation(User.KEY_PROJECTS).add(project);
                 ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.example.talentfinder.databinding.FragmentContributionDetailPhotoBinding;
 import com.example.talentfinder.databinding.FragmentContributionDetailVideoBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Contribution;
 
 public class ContributionDetailFragment extends Fragment {
@@ -66,8 +65,8 @@ public class ContributionDetailFragment extends Fragment {
 
         if (contribution.getMediaTypeCode() == GlobalConstants.MEDIA_PHOTO){
             photoBinding.fragmentContributionDetailPhotoPbMedia.setVisibility(View.VISIBLE);
-            photoBinding.fragmentContributionDetailPhotoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
-            photoBinding.fragmentContributionDetailPhotoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
+            photoBinding.fragmentContributionDetailPhotoTvProfileName.setText(contribution.getUser().getName());
+            photoBinding.fragmentContributionDetailPhotoTvProfileLocation.setText(contribution.getUser().getLocation());
             photoBinding.fragmentContributionDetailPhotoTvContentDescription.setText(contribution.getContentDescription());
             if (contribution.getMedia() != null){
                 Glide.with(context)
@@ -75,9 +74,9 @@ public class ContributionDetailFragment extends Fragment {
                         .into(photoBinding.fragmentContributionDetailPhotoIvMediaPhoto);
             }
 
-            if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
+            if (contribution.getUser().getImage() != null){
                 Glide.with(context)
-                        .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                        .load(contribution.getUser().getImage().getUrl())
                         .circleCrop()
                         .into(photoBinding.fragmentContributionDetailPhotoIvProfilePicture);
             }
@@ -86,8 +85,8 @@ public class ContributionDetailFragment extends Fragment {
 
         else {
             videoBinding.fragmentContributionDetailVideoPbMedia.setVisibility(View.VISIBLE);
-            videoBinding.fragmentContributionDetailVideoTvProfileName.setText(contribution.getUser().getString(ParseUserKey.PROFILE_NAME));
-            videoBinding.fragmentContributionDetailVideoTvProfileLocation.setText(contribution.getUser().getString(ParseUserKey.PROFILE_LOCATION));
+            videoBinding.fragmentContributionDetailVideoTvProfileName.setText(contribution.getUser().getName());
+            videoBinding.fragmentContributionDetailVideoTvProfileLocation.setText(contribution.getUser().getLocation());
             videoBinding.fragmentContributionDetailVideoTvContentDescription.setText(contribution.getContentDescription());
             if (contribution.getMedia() != null){
 
@@ -122,9 +121,9 @@ public class ContributionDetailFragment extends Fragment {
                 });
             }
 
-            if (contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE) != null){
+            if (contribution.getUser().getImage() != null){
                 Glide.with(context)
-                        .load(contribution.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                        .load(contribution.getUser().getImage().getUrl())
                         .circleCrop()
                         .into(videoBinding.fragmentContributionDetailVideoIvProfilePicture);
             }

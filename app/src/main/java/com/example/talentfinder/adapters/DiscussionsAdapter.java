@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.fragments.DiscussionFragment;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
+import com.example.talentfinder.models.User;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -81,7 +81,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
             setOnClickClDiscussion(discussion);
 
             // Set oppositeUser's image and name to imageview and textview
-            ParseUser oppositeUser;
+            User oppositeUser;
             if (discussion.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                 oppositeUser = discussion.getRecipient();
             }
@@ -118,28 +118,28 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
             });
         }
 
-        public void loadProfilePicture(ParseUser user){
+        public void loadProfilePicture(User user){
             Glide.with(context)
-                    .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                    .load(user.getImage().getUrl())
                     .circleCrop()
                     .into(ivDiscussionRecipientUser);
 
-            tvDiscussionRecipientUser.setText(user.getString(ParseUserKey.PROFILE_NAME));
+            tvDiscussionRecipientUser.setText(user.getName());
         }
 
-        public void loadMessageContent(ParseObject object){
+        public void loadMessageContent(ParseObject message){
             // If message user equals the current user output "You: {message content}" as message preview text
-            if (object.getParseUser(Message.KEY_USER).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                tvDiscussionMessageContent.setText(context.getString(R.string.message_current_user, object.getString(Message.KEY_MESSAGE_CONTENT)));
+            if (message.getParseUser(Message.KEY_USER).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                tvDiscussionMessageContent.setText(context.getString(R.string.message_current_user, message.getString(Message.KEY_MESSAGE_CONTENT)));
             }
 
             // Else output "{recipient user}: {message content}" as message preview text
             else {
                 tvDiscussionMessageContent.setText(context.getString(R.string.message_recipient_user,
-                        object.getParseUser(Message.KEY_USER).getString(ParseUserKey.PROFILE_NAME),
-                        object.getString(Message.KEY_MESSAGE_CONTENT)));
+                        message.getParseUser(Message.KEY_USER).getString(User.KEY_NAME),
+                        message.getString(Message.KEY_MESSAGE_CONTENT)));
             }
-            tvDiscussionMessageTimestamp.setText(object.getString(Message.KEY_CREATED_AT));
+            tvDiscussionMessageTimestamp.setText(message.getString(Message.KEY_CREATED_AT));
         }
     }
 }

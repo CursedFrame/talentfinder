@@ -25,7 +25,6 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.SearchFragment;
 import com.example.talentfinder.fragments.TagsDialogFragment;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
 import com.example.talentfinder.models.User;
@@ -240,6 +239,8 @@ public class MainActivity extends AppCompatActivity {
                 // Array list has been populated
                 setInitialFragment();
 
+                Log.i(TAG, "queryProjects: " + objects.size());
+
                 projects.addAll(objects);
             }
         });
@@ -248,12 +249,10 @@ public class MainActivity extends AppCompatActivity {
     public void queryUsers(){
         users = new ArrayList<>();
 
-        ParseUser user = ParseUser.getCurrentUser();
-
         Log.i(TAG, "Querying users");
         ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
         query.setLimit(GlobalConstants.USER_LIMIT);
-        query.addDescendingOrder(ParseUserKey.UPDATED_AT);
+        query.addDescendingOrder(User.KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {

@@ -11,8 +11,8 @@ public class Discussion extends ParseObject {
     public static final String KEY_MESSAGES = "messages";
 
     // GET/SET User
-    public ParseUser getUser(){
-        return getParseUser(KEY_USER);
+    public User getUser(){
+        return (User) getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user){
@@ -20,8 +20,8 @@ public class Discussion extends ParseObject {
     }
 
     // GET/SET Recipient
-    public ParseUser getRecipient(){
-        return getParseUser(KEY_RECIPIENT);
+    public User getRecipient(){
+        return (User) getParseUser(KEY_RECIPIENT);
     }
 
     public void setRecipient(ParseUser recipient){

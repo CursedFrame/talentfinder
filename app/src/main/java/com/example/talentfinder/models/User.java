@@ -2,6 +2,7 @@ package com.example.talentfinder.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
@@ -10,6 +11,9 @@ import java.util.List;
 
 @ParseClassName("_User")
 public class User extends ParseUser implements Comparable<User>{
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_UPDATED_AT = "updatedAt";
+
     public static final String KEY_IMAGE = "profileImage";
     public static final String KEY_NAME = "name";
     public static final String KEY_LOCATION = "location";
@@ -108,21 +112,21 @@ public class User extends ParseUser implements Comparable<User>{
     }
 
     // GET/SET Facebook Id
-    public String getFacebookId() {
-        return getString(KEY_FACEBOOK_ID);
+    public Number getFacebookId() {
+        return getNumber(KEY_FACEBOOK_ID);
     }
 
-    public void setFacebookId(String facebookId){
+    public void setFacebookId(int facebookId){
         put(KEY_FACEBOOK_ID, facebookId);
     }
 
     // GET/SET User discussions
-    public ParseRelation<Discussion> getDiscussions(){
+    public ParseRelation<ParseObject> getDiscussions(){
         return getRelation(KEY_DISCUSSIONS);
     }
 
     // GET/SET User projects
-    public ParseRelation<Project> getProjects(){
+    public ParseRelation<ParseObject> getProjects(){
         return getRelation(KEY_PROJECTS);
     }
 

@@ -23,9 +23,9 @@ import com.example.talentfinder.fragments.ProfileFragment;
 import com.example.talentfinder.fragments.ProjectContributionFeedFragment;
 import com.example.talentfinder.fragments.ProjectFragment;
 import com.example.talentfinder.fragments.StartDiscussionDialogFragment;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
+import com.example.talentfinder.models.User;
 import com.google.android.material.chip.Chip;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -70,6 +70,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         Project project;
+        User user;
         TextView tvTitle, tvFinderName, tvDescription;
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
@@ -91,11 +92,12 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         public void bind(final Project project){
 
             this.project = project;
+            this.user = project.getUser();
 
             bindProjectData();
 
             // On profile click, take user to the project creator's user profile page
-            setOnClickClFinderProfileContainer(project.getUser());
+            setOnClickClFinderProfileContainer();
 
             // On project click, take user to that project's detail view
             setOnClickItemView();
@@ -103,15 +105,15 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
         public void bindProjectData(){
             tvTitle.setText(project.getTitle());
-            tvFinderName.setText(project.getUser().getString(ParseUserKey.PROFILE_NAME));
+            tvFinderName.setText(project.getUser().getName());
             tvDescription.setText(project.getDescription());
             chipTalent.setText(project.getTalentTag());
             chipSubtalent.setText(project.getSubTalentTag());
             chipSkill.setText(project.getSkillTag());
 
-            if (project.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl() != null) {
+            if (project.getUser().getImage().getUrl() != null) {
                 Glide.with(context)
-                        .load(project.getUser().getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                        .load(project.getUser().getImage().getUrl())
                         .circleCrop()
                         .into(ivFinderProfilePicture);
             }
@@ -125,13 +127,12 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             }
         }
 
-        public void setOnClickClFinderProfileContainer(final ParseUser user){
+        public void setOnClickClFinderProfileContainer(){
             clFinderProfileContainer.setOnTouchListener(new View.OnTouchListener() {
                 private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                     @Override
                     public boolean onSingleTapConfirmed(MotionEvent e) {
-                        ProfileFragment profileFragment = ProfileFragment.newInstance(user);
-                        fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
+                        goProfileFragment();
                         return super.onSingleTapConfirmed(e);
                     }
 
@@ -171,15 +172,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                     @Override
                     public boolean onSingleTapConfirmed(MotionEvent e) {
-                        ProjectFragment projectFragment = ProjectFragment.newInstance(project);
-                        fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
+                        goProjectFragment();
                         return super.onSingleTapConfirmed(e);
                     }
 
                     @Override
                     public boolean onDoubleTap(MotionEvent e) {
-                        ProjectContributionFeedFragment projectContributionFeedFragment = ProjectContributionFeedFragment.newInstance(project);
-                        fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectContributionFeedFragment).commit();
+                        goProjectContributionFeedFragment();
                         return super.onDoubleTap(e);
                     }
         // implement here other callback methods like onFling, onScroll as necessary
@@ -228,9 +227,24 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             startDiscussionDialogFragment.show(fragmentManager, startDiscussionDialogFragment.getTag());
         }
 
+        private void goProfileFragment(){
+            ProfileFragment profileFragment = ProfileFragment.newInstance(user);
+            fragmentManager.beginTransaction().addToBackStack(profileFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, profileFragment).commit();
+        }
+
+        private void goProjectFragment(){
+            ProjectFragment projectFragment = ProjectFragment.newInstance(project);
+            fragmentManager.beginTransaction().addToBackStack(projectFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectFragment).commit();
+        }
+
         private void goDiscussionFragment(Discussion discussion){
             DiscussionFragment discussionFragment = DiscussionFragment.newInstance(discussion);
             fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
+        }
+
+        private void goProjectContributionFeedFragment(){
+            ProjectContributionFeedFragment projectContributionFeedFragment = ProjectContributionFeedFragment.newInstance(project);
+            fragmentManager.beginTransaction().addToBackStack(projectContributionFeedFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, projectContributionFeedFragment).commit();
         }
     }
 

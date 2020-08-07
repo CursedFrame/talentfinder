@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentfinder.databinding.ActivityLoginBinding;
-import com.example.talentfinder.interfaces.ParseUserKey;
+import com.example.talentfinder.models.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                    ).executeAsync();
 
                                     ParseUser.getQuery()
-                                            .whereEqualTo(ParseUserKey.PROFILE_USERNAME, Integer.toString(userId))
+                                            .whereEqualTo(User.KEY_USERNAME, Integer.toString(userId))
                                             .getFirstInBackground(new GetCallback<ParseUser>() {
                                                 @Override
                                                 public void done(ParseUser object, ParseException e) {

@@ -10,8 +10,8 @@ public class Message extends ParseObject {
     public static final String KEY_MESSAGE_CONTENT = "messageContent";
 
     // GET/SET User
-    public ParseUser getUser(){
-        return getParseUser(KEY_USER);
+    public User getUser(){
+        return (User) getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user){

@@ -19,9 +19,9 @@ import com.example.talentfinder.adapters.ChipAdapter;
 import com.example.talentfinder.adapters.ProjectPreviewAdapter;
 import com.example.talentfinder.databinding.FragmentProfileBinding;
 import com.example.talentfinder.interfaces.GlobalConstants;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Project;
+import com.example.talentfinder.models.User;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
 
-    private ParseUser user;
+    private User user;
     private FragmentProfileBinding binding;
     private FragmentManager fragmentManager;
     private List<Project> projects;
@@ -88,22 +88,22 @@ public class ProfileFragment extends Fragment {
         // User skill and experience adapter and RecyclerView
         tagsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         tags = new ArrayList<>();
-        tags.add(user.getString(ParseUserKey.TAG_TALENT));
-        tags.add(user.getString(ParseUserKey.TAG_SUBTALENT));
-        tags.add(user.getString(ParseUserKey.TAG_SKILL));
+        tags.add(user.getTalentTag());
+        tags.add(user.getSubTalentTag());
+        tags.add(user.getSkillTag());
         tagsChipAdapter = new ChipAdapter(context, tags, GlobalConstants.CHIP_FILTER);
         binding.fragmentProfileRvSkillsExperience.setAdapter(tagsChipAdapter);
         binding.fragmentProfileRvSkillsExperience.setLayoutManager(tagsLinearLayoutManager);
 
         // Bind user name and location
-        binding.fragmentProfileTvProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
-        if (user.getString(ParseUserKey.PROFILE_LOCATION) != null){
-            binding.fragmentProfileTvProfileLocation.setText(user.getString(ParseUserKey.PROFILE_LOCATION));
+        binding.fragmentProfileTvProfileName.setText(user.getName());
+        if (user.getLocation() != null){
+            binding.fragmentProfileTvProfileLocation.setText(user.getLocation());
         }
 
         // Bind user profile picture
         Glide.with(context)
-                .load(user.getParseFile(ParseUserKey.PROFILE_IMAGE).getUrl())
+                .load(user.getImage().getUrl())
                 .circleCrop()
                 .into(binding.fragmentProfileIvProfilePicture);
 
@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getProjects(){
-        ParseQuery<ParseObject> query = user.getRelation(ParseUserKey.CURRENT_PROJECTS).getQuery();
+        ParseQuery<ParseObject> query = user.getProjects().getQuery();
         query.orderByAscending(Project.KEY_CREATED_AT);
         query.include(Project.KEY_USER);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -197,9 +197,9 @@ public class ProfileFragment extends Fragment {
 
     private void populateTypeUser(){
         // If the profile user is a Facebook user, show Facebook connection widget
-        if (user.getBoolean(ParseUserKey.FACEBOOK_CONNECTED)){
+        if (user.getFacebookConnected()){
             getFacebookPhoto();
-            binding.include.connectionFacebookProfileName.setText(user.getString(ParseUserKey.PROFILE_NAME));
+            binding.include.connectionFacebookProfileName.setText(user.getName());
         }
         else {
             binding.include.connectionFacebookClContainer.setVisibility(View.GONE);
@@ -207,7 +207,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getFacebookPhoto(){
-        String facebookUrl = "https://www.graph.facebook.com/" + user.getNumber(ParseUserKey.FACEBOOK_ID) + "/picture?type=large";
+        String facebookUrl = "https://www.graph.facebook.com/" + user.getFacebookId() + "/picture?type=large";
         Glide.with(context)
                 .load(facebookUrl)
                 .into(binding.include.connectionFacebookIvProfileImage);

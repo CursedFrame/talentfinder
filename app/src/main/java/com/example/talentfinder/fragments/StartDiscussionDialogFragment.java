@@ -16,9 +16,9 @@ import androidx.fragment.app.FragmentManager;
 import com.example.talentfinder.R;
 import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.databinding.FragmentStartDiscussionDialogBinding;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Discussion;
 import com.example.talentfinder.models.Message;
+import com.example.talentfinder.models.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -29,14 +29,14 @@ public class StartDiscussionDialogFragment extends DialogFragment {
 
     private FragmentManager fragmentManager;
     private FragmentStartDiscussionDialogBinding binding;
-    private ParseUser recipientUser;
+    private User recipientUser;
     private MainActivity activity;
 
     public StartDiscussionDialogFragment() {
         // Required empty public constructor
     }
 
-    public static StartDiscussionDialogFragment newInstance(ParseUser user) {
+    public static StartDiscussionDialogFragment newInstance(User user) {
         StartDiscussionDialogFragment fragment = new StartDiscussionDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable("user", user);
@@ -66,7 +66,7 @@ public class StartDiscussionDialogFragment extends DialogFragment {
         recipientUser = getArguments().getParcelable("user");
         activity = (MainActivity) getActivity();
 
-        binding.fragmentStartDiscussionDialogTvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getString(ParseUserKey.PROFILE_NAME)));
+        binding.fragmentStartDiscussionDialogTvRecipientUserName.setText(getString(R.string.start_discussion, recipientUser.getName()));
         // On button send message click, create message and then discussion
         binding.fragmentStartDiscussionDialogBtnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
