@@ -74,7 +74,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         ImageView ivFinderProfilePicture, ivOptionalContext;
         ConstraintLayout clFinderProfileContainer;
         Chip chipTalent, chipSubtalent, chipSkill;
-        boolean discussionExists = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -234,8 +233,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             fragmentManager.beginTransaction().addToBackStack(discussionFragment.getTag()).replace(R.id.includeMainViewContainer_mainContainer, discussionFragment).commit();
         }
     }
-
-
 
     public void refresh(List<Project> list) {
         clear();

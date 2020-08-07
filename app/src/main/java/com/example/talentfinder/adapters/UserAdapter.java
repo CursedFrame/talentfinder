@@ -16,18 +16,18 @@ import com.bumptech.glide.Glide;
 import com.example.talentfinder.R;
 import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.interfaces.ParseUserKey;
-import com.parse.ParseUser;
+import com.example.talentfinder.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private List<ParseUser> users;
+    private List<User> users;
     private Context context;
     private FragmentManager fragmentManager;
 
-    public UserAdapter(Context context, List<ParseUser> users, FragmentManager fragmentManager) {
+    public UserAdapter(Context context, List<User> users, FragmentManager fragmentManager) {
         this.users = users;
         this.context = context;
         this.fragmentManager = fragmentManager;
@@ -42,7 +42,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ParseUser user = users.get(position);
+        User user = users.get(position);
         holder.bind(user);
     }
 
@@ -68,7 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             rvTags = itemView.findViewById(R.id.itemUser_rvTags);
         }
 
-        public void bind(ParseUser user){
+        public void bind(User user){
             tvUserLocation.setText(user.getString(ParseUserKey.PROFILE_LOCATION));
             tvUserName.setText(user.getString(ParseUserKey.PROFILE_NAME));
             Glide.with(context)
@@ -86,5 +86,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             rvTags.setAdapter(tagsAdapter);
             rvTags.setLayoutManager(tagsLinearLayoutManager);
         }
+    }
+
+    public void refresh(List<User> list) {
+        clear();
+        addAll(list);
+    }
+
+    public void clear() {
+        users = new ArrayList<>();
+        this.notifyDataSetChanged();
+    }
+
+    public void addAll(List<User> list) {
+        users.addAll(list);
+        this.notifyDataSetChanged();
     }
 }

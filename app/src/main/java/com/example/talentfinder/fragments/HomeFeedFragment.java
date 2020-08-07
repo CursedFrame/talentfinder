@@ -20,8 +20,9 @@ import com.example.talentfinder.activities.MainActivity;
 import com.example.talentfinder.adapters.ProjectsAdapter;
 import com.example.talentfinder.adapters.UserAdapter;
 import com.example.talentfinder.databinding.FragmentHomeFeedBinding;
+import com.example.talentfinder.interfaces.GlobalConstants;
 import com.example.talentfinder.models.Project;
-import com.parse.ParseUser;
+import com.example.talentfinder.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,21 +36,21 @@ public class HomeFeedFragment extends Fragment {
     private ProjectsAdapter projectsAdapter;
     private UserAdapter usersAdapter;
     private List<Project> projects;
-    private List<ParseUser> users;
+    private List<User> users;
     private FragmentManager fragmentManager;
     private FragmentHomeFeedBinding binding;
     private DividerItemDecoration dividerItemDecoration;
     private ImageView btnTags;
     private MainActivity activity;
     private Context context;
-    private boolean isClicked = false;
+    private boolean onProject = true;
 
     public HomeFeedFragment() {
         // Required empty public constructor
     }
 
 
-    public static HomeFeedFragment newInstance(List<Project> projects, List<ParseUser> users) {
+    public static HomeFeedFragment newInstance(List<Project> projects, List<User> users) {
         HomeFeedFragment fragment = new HomeFeedFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("projects", (ArrayList<? extends Parcelable>) projects);
@@ -99,13 +100,13 @@ public class HomeFeedFragment extends Fragment {
         binding.fragmentHomeFeedFabHomeFeedSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isClicked){
-                    switchProjectAdapter();
-                    isClicked = false;
+                if (onProject){
+                    switchToUserAdapter();
+                    onProject = false;
                 }
                 else {
-                    switchUserAdapter();
-                    isClicked = true;
+                    switchToProjectAdapter();
+                    onProject = true;
                 }
             }
         });
@@ -120,20 +121,28 @@ public class HomeFeedFragment extends Fragment {
 
     // Used to update adapter when a new list of projects are introduced
     // Mainly used in Main Activity
-    public void updateAdapter(List<Project> newProjects){
+    public void updateProjectsAdapter(List<Project> newProjects){
         projectsAdapter.refresh(newProjects);
     }
 
-    public void switchUserAdapter(){
+    // Used to update adapter when a new list of users are introduced
+    // Mainly used in Main Activity
+    public void updateUsersAdapter(List<User> newUsers){
+        usersAdapter.refresh(newUsers);
+    }
+
+    public void switchToUserAdapter(){
         binding.fragmentHomeFeedRvHomeFeed.setAdapter(usersAdapter);
         binding.fragmentHomeFeedRvHomeFeed.setLayoutManager(linearLayoutManager);
         binding.fragmentHomeFeedFabHomeFeedMain.setImageDrawable(context.getDrawable(R.drawable.ic_user));
+        activity.typeItem = GlobalConstants.FILTER_USERS;
     }
 
-    public void switchProjectAdapter(){
+    public void switchToProjectAdapter(){
         binding.fragmentHomeFeedRvHomeFeed.setAdapter(projectsAdapter);
         binding.fragmentHomeFeedRvHomeFeed.setLayoutManager(linearLayoutManager);
         binding.fragmentHomeFeedFabHomeFeedMain.setImageDrawable(context.getDrawable(R.drawable.ic_project));
+        activity.typeItem = GlobalConstants.FILTER_PROJECTS;
     }
 
 }

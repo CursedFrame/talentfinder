@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.talentfinder.R;
-import com.example.talentfinder.interfaces.ParseUserKey;
 import com.example.talentfinder.models.Project;
-import com.parse.ParseUser;
+import com.example.talentfinder.models.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,12 +29,9 @@ public abstract class TagUtils {
         return calculateWeight(tags, weight, context);
     }
 
-    public static int getWeight(ParseUser user, List<String> specifiedTags, Context context){
+    public static int getWeight(User user, List<String> specifiedTags, Context context){
         // Gets tags in order of Talent, Subtalent, and Skill
-        List<String> tags = new ArrayList<>();
-        tags.add(user.getString(ParseUserKey.TAG_TALENT));
-        tags.add(user.getString(ParseUserKey.TAG_SUBTALENT));
-        tags.add(user.getString(ParseUserKey.TAG_SKILL));
+        List<String> tags = user.getTags();
 
         int weight = 0;
 
@@ -47,9 +43,7 @@ public abstract class TagUtils {
             return 0;
         }
 
-        weight = calculateWeight(tags, weight, context);
-
-        return weight;
+        return calculateWeight(tags, weight, context);
     }
 
     private static List<String> getComparedTagList(List<String> projectTags, List<String> specifiedTags){

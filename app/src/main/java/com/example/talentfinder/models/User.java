@@ -2,12 +2,14 @@ package com.example.talentfinder.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
-@ParseClassName("User")
-public class User extends ParseObject {
-    public static final String KEY_USERNAME = "username";
+import java.util.ArrayList;
+import java.util.List;
+
+@ParseClassName("_User")
+public class User extends ParseUser implements Comparable<User>{
     public static final String KEY_IMAGE = "profileImage";
     public static final String KEY_NAME = "name";
     public static final String KEY_LOCATION = "location";
@@ -23,9 +25,14 @@ public class User extends ParseObject {
 
     private int userWeight;
 
-    // GET User username
-    public String getUsername() {
-        return getString(KEY_USERNAME);
+    public List<String> getTags(){
+        List<String> tags = new ArrayList<>();
+
+        tags.add(getTalentTag());
+        tags.add(getSubTalentTag());
+        tags.add(getSkillTag());
+
+        return tags;
     }
 
     // GET/SET Profile image
@@ -56,29 +63,29 @@ public class User extends ParseObject {
     }
 
     // GET/SET Skill tag
-    public String getTagSkill() {
+    public String getSkillTag() {
         return getString(KEY_TAG_SKILL);
     }
 
-    public void setTagSkill(String skill){
+    public void setSkillTag(String skill){
         put(KEY_TAG_SKILL, skill);
     }
 
     // GET/SET Talent tag
-    public String getTagTalent() {
+    public String getTalentTag() {
         return getString(KEY_TAG_TALENT);
     }
 
-    public void setTagTalent(String talent){
+    public void setTalentTag(String talent){
         put(KEY_TAG_TALENT, talent);
     }
 
     // GET/SET Subtalent tag
-    public String getTagSubtalent() {
+    public String getSubTalentTag() {
         return getString(KEY_TAG_SUBTALENT);
     }
 
-    public void setTagSubtalent(String subtalent){
+    public void setSubTalentTag(String subtalent){
         put(KEY_TAG_SUBTALENT, subtalent);
     }
 
@@ -117,5 +124,19 @@ public class User extends ParseObject {
     // GET/SET User projects
     public ParseRelation<Project> getProjects(){
         return getRelation(KEY_PROJECTS);
+    }
+
+    // GET/SET Project weight
+    public int getUserWeight(){
+        return userWeight;
+    }
+
+    public void setUserWeight(int userWeight){
+        this.userWeight = userWeight;
+    }
+
+    @Override
+    public int compareTo(User other) {
+        return (other.getUserWeight() - this.getUserWeight());
     }
 }

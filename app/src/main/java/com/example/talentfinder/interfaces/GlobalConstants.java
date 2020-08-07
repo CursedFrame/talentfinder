@@ -26,6 +26,11 @@ public interface GlobalConstants {
     public static final int MEDIA_PHOTO = 401;
     public static final int MEDIA_VIDEO = 402;
 
+    // Filter type codes
+
+    public static final int FILTER_PROJECTS = 501;
+    public static final int FILTER_USERS = 502;
+
     // Talent types
     public static final int POSITION_TALENT_NO = 0;
     public static final int POSITION_TALENT_ART = 1;

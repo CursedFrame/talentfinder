@@ -30,19 +30,21 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
     public static final int TYPE_FILTER = 101;
     public static final int TYPE_INCLUDE = 102;
 
-    FragmentTagsDialogBinding binding;
-    MainActivity mainActivity;
-    Context context;
-    List<String> currentTags;
-    int type;
+    private FragmentTagsDialogBinding binding;
+    private MainActivity mainActivity;
+    private Context context;
+    private List<String> currentTags;
+    int typeRadio;
+    int typeItem;
 
     public TagsDialogFragment() {
         // Required empty public constructor
     }
 
-    public static TagsDialogFragment newInstance(List<String> tags) {
+    public static TagsDialogFragment newInstance(List<String> tags, int typeItemCode) {
         TagsDialogFragment fragment = new TagsDialogFragment();
         Bundle args = new Bundle();
+        args.putInt("typeItem", typeItemCode);
         args.putStringArrayList("currentTags", (ArrayList<String>) tags);
         fragment.setArguments(args);
         return fragment;
@@ -63,6 +65,7 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
 
         context = getContext();
         mainActivity = (MainActivity) getActivity();
+        typeItem = getArguments().getInt("typeItem");
 
         if (currentTags != null) {
             for (String tag : currentTags) {
@@ -93,15 +96,17 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
                     mainActivity.tags.add(binding.fragmentTagsDialogSpnSubTalent.getSelectedItem().toString());
                 }
                 mainActivity.tags.add(binding.fragmentTagsDialogSpnSkill.getSelectedItem().toString());
-                if (type == TYPE_SORT){
-                    mainActivity.sortProjectsByTag();
+
+                if (typeRadio == TYPE_SORT){
+                    mainActivity.sortByTag(typeItem);
                 }
-                else if (type == TYPE_INCLUDE){
-                    mainActivity.includeProjectsByTag();
+                else if (typeRadio == TYPE_INCLUDE){
+                    mainActivity.includeByTag(typeItem);
                 }
                 else {
-                    mainActivity.filterProjectsByTag();
+                    mainActivity.filterByTag(typeItem);
                 }
+
                 dismiss();
             }
         });
@@ -110,13 +115,13 @@ public class TagsDialogFragment extends DialogFragment implements AdapterView.On
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (binding.fragmentTagsDialogRadioSort.isChecked()){
-                    type = TYPE_SORT;
+                    typeRadio = TYPE_SORT;
                 }
                 else if (binding.fragmentTagsDialogRadioFilter.isChecked()){
-                    type = TYPE_FILTER;
+                    typeRadio = TYPE_FILTER;
                 }
                 else {
-                    type = TYPE_INCLUDE;
+                    typeRadio = TYPE_INCLUDE;
                 }
             }
         });

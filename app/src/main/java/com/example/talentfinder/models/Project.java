@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Project")
-public class Project extends ParseObject  implements Comparable<Project>{
+public class Project extends ParseObject implements Comparable<Project>{
     public static final String KEY_USER = "user";
     public static final String KEY_TITLE = "title";
     public static final String KEY_IMAGE = "image";
