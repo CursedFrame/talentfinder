@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                final AccessToken accessToken = loginResult.getAccessToken();
                 boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
                 // Request user profile from Facebook Graph
@@ -112,36 +112,13 @@ public class LoginActivity extends AppCompatActivity {
                                     final JSONObject facebookObject,
                                     GraphResponse response) {
                                 try {
-                                    final int userId = facebookObject.getInt("id");
+                                    final String userId = facebookObject.getString("id");
                                     final String userName = facebookObject.getString("name");
                                     final String userLocation = facebookObject.getJSONObject("location").getString("name");
                                     final String userLink = facebookObject.getString("link");
-//                                    final String[] userPicture = new String[1];
-
-//                                    Bundle params = new Bundle();
-//                                    params.putBoolean("redirect", false);
-//                                    params.putString("height", "200");
-//                                    params.putString("type", "normal");
-//                                    params.putString("width", "200");
-//                                    /* make the API call */
-//                                    new GraphRequest(
-//                                            AccessToken.getCurrentAccessToken(),
-//                                            "/" + userId + "/picture",
-//                                            params,
-//                                            HttpMethod.GET,
-//                                            new GraphRequest.Callback() {
-//                                                public void onCompleted(GraphResponse response) {
-//                                                    try {
-//                                                        userPicture[0] = response.getJSONObject().getString("url");
-//                                                    } catch (JSONException e) {
-//                                                        e.printStackTrace();
-//                                                    }
-//                                                }
-//                                            }
-//                                    ).executeAsync();
 
                                     ParseUser.getQuery()
-                                            .whereEqualTo(User.KEY_USERNAME, Integer.toString(userId))
+                                            .whereEqualTo(User.KEY_USERNAME, userId)
                                             .getFirstInBackground(new GetCallback<ParseUser>() {
                                                 @Override
                                                 public void done(ParseUser object, ParseException e) {
@@ -149,16 +126,15 @@ public class LoginActivity extends AppCompatActivity {
                                                     if (e != null){
                                                         Log.e(TAG, "done: exception here", e);
                                                         Bundle bundle = new Bundle();
-                                                        bundle.putInt("userId", userId);
+                                                        bundle.putString("userId", userId);
                                                         bundle.putString("userName", userName);
                                                         bundle.putString("userLocation", userLocation);
                                                         bundle.putString("facebookLink", userLink);
-//                                                        bundle.putString("facebookPicture", userPicture[0]);
                                                         goRegisterActivityForFacebook(bundle);
                                                         return;
                                                     }
 
-                                                    ParseUser.logInInBackground(Integer.toString(userId), Integer.toString(userId), new LogInCallback() {
+                                                    ParseUser.logInInBackground(userId, userId, new LogInCallback() {
                                                         @Override
                                                         public void done(ParseUser user, ParseException e) {
                                                             if (e != null){

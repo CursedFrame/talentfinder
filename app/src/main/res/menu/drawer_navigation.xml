@@ -8,10 +8,6 @@
             android:icon="@drawable/ic_sydney_opera_house"
             android:title="Home" />
         <item
-            android:id="@+id/action_search_main"
-            android:icon="@drawable/ic_search"
-            android:title="Search" />
-        <item
             android:id="@+id/action_create_main"
             android:icon="@drawable/ic_draw"
             android:title="Create" />

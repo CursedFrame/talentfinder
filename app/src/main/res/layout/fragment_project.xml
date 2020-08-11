@@ -84,25 +84,36 @@
         app:layout_constraintTop_toBottomOf="@+id/fragmentProject_ivProjectProfileImage"
         tools:text="(Description)" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragmentProject_btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_draw"
         android:text="CREATE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_btnDiscussion" />
+        app:backgroundTint="@color/design_default_color_error"
+        app:fabCustomSize="80dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentProject_tvContributions"
+        app:maxImageSize="50dp"
+        app:tint="#FFFFFF" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragmentProject_btnDiscussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentProject_tvDescription"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_chat"
+        android:visibility="visible"
+        app:backgroundTint="@color/design_default_color_error"
+        app:fabCustomSize="80dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentProject_ivProjectProfileImage"
+        app:maxImageSize="40dp"
+        app:tint="#FFFFFF"
         tools:text="Start Discussion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

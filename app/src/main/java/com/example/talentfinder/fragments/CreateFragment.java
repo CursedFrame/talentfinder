@@ -112,6 +112,7 @@ public class CreateFragment extends MediaFragment implements AdapterView.OnItemS
                 project.setContributionCount(0);
                 if (photoFile != null) {
                     project.setImage(new ParseFile(photoFile));
+                    saveProject(project);
                 }
                 else {
                     Glide.with(context)

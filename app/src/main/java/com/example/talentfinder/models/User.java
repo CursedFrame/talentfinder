@@ -112,11 +112,11 @@ public class User extends ParseUser implements Comparable<User>{
     }
 
     // GET/SET Facebook Id
-    public Number getFacebookId() {
-        return getNumber(KEY_FACEBOOK_ID);
+    public String getFacebookId() {
+        return getString(KEY_FACEBOOK_ID);
     }
 
-    public void setFacebookId(int facebookId){
+    public void setFacebookId(String facebookId){
         put(KEY_FACEBOOK_ID, facebookId);
     }
 

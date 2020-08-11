@@ -56,4 +56,8 @@ public interface GlobalConstants {
 
     // Placeholder image URL
     public static final String PLACEHOLDER_URL = "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=30";
+
+    // Facebook links
+    public static final String FACEBOOK_LINK_BEGIN = "https://graph.facebook.com/";
+    public static final String FACEBOOK_LINK_PROFILE_PIC_END = "/picture?type=large";
 }

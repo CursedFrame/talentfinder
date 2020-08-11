@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.action_profile:
                                 Log.i(TAG, "Moving to profile fragment");
-                                fragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
+                                fragment = ProfileFragment.newInstance((User) ParseUser.getCurrentUser());
                                 break;
                             default:
                                 break;
@@ -388,13 +388,21 @@ public class MainActivity extends AppCompatActivity {
             ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
             if (!tags.get(GlobalConstants.TAG_POSITION_TALENT).equals(GlobalConstants.TALENT_TAG)) {
                 query.whereContains(Project.KEY_TAG_TALENT, tags.get(GlobalConstants.TAG_POSITION_TALENT));
+
+                if (!tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SUBTALENT_TAG)) {
+                    query.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+                }
+                if (!tags.get(GlobalConstants.TAG_POSITION_SKILL).equals(GlobalConstants.SKILL_TAG)) {
+                    query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
+                }
             }
-            if (!tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SUBTALENT_TAG)) {
-                query.whereContains(Project.KEY_TAG_SUBTALENT, tags.get(GlobalConstants.TAG_POSITION_SUBTALENT));
+            // In the case that a subtalent is not chosen
+            else {
+                if (!tags.get(GlobalConstants.TAG_POSITION_SUBTALENT).equals(GlobalConstants.SKILL_TAG)) {
+                    query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
+                }
             }
-            if (!tags.get(GlobalConstants.TAG_POSITION_SKILL).equals(GlobalConstants.SKILL_TAG)) {
-                query.whereContains(Project.KEY_TAG_SKILL, tags.get(GlobalConstants.TAG_POSITION_SKILL));
-            }
+
             query.setLimit(GlobalConstants.PROJECT_PER_TAG_LIMIT);
             query.include(Project.KEY_USER);
             query.findInBackground(new FindCallback<Project>() {

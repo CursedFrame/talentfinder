@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activityRegister_clContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
@@ -13,16 +14,113 @@
         android:paddingEnd="16dp"
         tools:context=".activities.RegisterActivity">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilConfirmPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activityRegister_tilState"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilCity">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activityRegister_etState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="State" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <Spinner
             android:id="@+id/activityRegister_spnTalent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activityRegister_etCity" />
+            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tilState" />
 
         <Spinner
             android:id="@+id/activityRegister_spnSubTalent"
@@ -42,157 +140,16 @@
             app:layout_constraintStart_toStartOf="@+id/activityRegister_spnTalent"
             app:layout_constraintTop_toBottomOf="@+id/activityRegister_spnSubTalent" />
 
-        <EditText
-            android:id="@+id/activityRegister_etCity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="@+id/textView9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-        <EditText
-            android:id="@+id/activityRegister_etState"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
-
-        <EditText
-            android:id="@+id/activityRegister_etUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvUsername"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activityRegister_tvUsername"
-            app:layout_constraintTop_toTopOf="@+id/activityRegister_tvUsername" />
-
-        <EditText
-            android:id="@+id/activityRegister_etPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvPassword"
-            app:layout_constraintEnd_toEndOf="@id/activityRegister_etUsername"
-            app:layout_constraintStart_toEndOf="@+id/activityRegister_tvPassword"
-            app:layout_constraintTop_toTopOf="@+id/activityRegister_tvPassword" />
-
-        <EditText
-            android:id="@+id/activityRegister_etConfirmPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="@+id/activityRegister_tvConfirmPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activityRegister_tvConfirmPassword"
-            app:layout_constraintTop_toTopOf="@+id/activityRegister_tvConfirmPassword" />
-
-        <EditText
-            android:id="@+id/activityRegister_etName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4" />
-
         <Button
             android:id="@+id/activityRegister_btnCreateAccount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Create Account"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/activityRegister_spnSkill"
+            app:layout_constraintStart_toStartOf="@+id/activityRegister_spnSkill"
             app:layout_constraintTop_toBottomOf="@+id/activityRegister_spnSkill" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="City:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="State:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Location:"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
-            app:layout_constraintTop_toBottomOf="@+id/activityRegister_etName" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Name:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
-            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvConfirmPassword" />
-
-        <TextView
-            android:id="@+id/activityRegister_tvConfirmPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Confirm Password:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/activityRegister_tvPassword"
-            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvPassword" />
-
-        <TextView
-            android:id="@+id/activityRegister_tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Username:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/activityRegister_tvPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Password:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/activityRegister_tvUsername"
-            app:layout_constraintTop_toBottomOf="@+id/activityRegister_tvUsername" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

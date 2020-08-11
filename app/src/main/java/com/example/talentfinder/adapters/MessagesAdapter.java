@@ -93,7 +93,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                     .circleCrop()
                     .into(ivMessageUserImage);
             tvMessageContent.setText(getMessageString(message));
-            cardBubble.setCardBackgroundColor(Color.parseColor("#e7feff"));
+            cardBubble.setCardBackgroundColor(Color.parseColor("#B1BCBE"));
         }
     }
 

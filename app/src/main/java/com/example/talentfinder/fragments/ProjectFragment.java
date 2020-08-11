@@ -2,6 +2,7 @@ package com.example.talentfinder.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,15 +134,10 @@ public class ProjectFragment extends Fragment {
             @Override
             public void done(Discussion object, ParseException e) {
                 if (e != null){
-                    String string = "Start Discussion";
-                    binding.fragmentProjectBtnDiscussion.setText(string);
-                    binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
+                    Log.e(TAG, "Error getting discussion", e);
                     return;
                 }
 
-                String string = "Continue Discussion";
-                binding.fragmentProjectBtnDiscussion.setText(string);
-                binding.fragmentProjectBtnDiscussion.setVisibility(View.VISIBLE);
                 discussion = object;
             }
         });

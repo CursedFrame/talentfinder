@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.talentfinder.databinding.FragmentChangeProfilePhotoDialogBinding;
@@ -108,8 +110,9 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
             }
 
             // Load the selected image into a preview
+            binding.fragmentChangeProfilePhotoDialogIvProfilePicture.setImageResource(0);
             Glide.with(getContext())
-                    .load(photoFile)
+                    .load(selectedImage)
                     .circleCrop()
                     .into(binding.fragmentChangeProfilePhotoDialogIvProfilePicture);
         }
@@ -117,6 +120,7 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
         else if ((data != null) && (requestCode == GlobalConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)){
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                binding.fragmentChangeProfilePhotoDialogIvProfilePicture.setImageResource(0);
                 Glide.with(getContext())
                         .load(takenImage)
                         .circleCrop()
@@ -137,6 +141,9 @@ public class ChangeProfilePhotoDialogFragment extends MediaDialogFragment {
                     Log.e(TAG, "Error saving new profile picture!", e);
                     return;
                 }
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = fragmentManager.findFragmentByTag("Main");
+                fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
                 dismiss();
             }
         });

@@ -78,22 +78,18 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         user = bundle.getParcelable("user");
 
-        // Projects adapter and RecyclerView
-        projectsLinearLayoutManager = new LinearLayoutManager(context);
         projects = new ArrayList<>();
-        projectPreviewAdapter = new ProjectPreviewAdapter(context, projects, fragmentManager);
-        binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
-        binding.fragmentProfileRvProjects.setLayoutManager(projectsLinearLayoutManager);
+        tags = new ArrayList<>();
 
         // User skill and experience adapter and RecyclerView
         tagsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        tags = new ArrayList<>();
         tags.add(user.getTalentTag());
         tags.add(user.getSubTalentTag());
         tags.add(user.getSkillTag());
         tagsChipAdapter = new ChipAdapter(context, tags, GlobalConstants.CHIP_FILTER);
         binding.fragmentProfileRvSkillsExperience.setAdapter(tagsChipAdapter);
         binding.fragmentProfileRvSkillsExperience.setLayoutManager(tagsLinearLayoutManager);
+        binding.fragmentProfileRvSkillsExperience.setLayoutFrozen(true);
 
         // Bind user name and location
         binding.fragmentProfileTvProfileName.setText(user.getName());
@@ -133,6 +129,17 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "Error getting user projects", e);
                     return;
                 }
+                if (objects.isEmpty()){
+                    binding.fragmentProfileTvProjects.setVisibility(View.GONE);
+                    binding.fragmentProfileRvProjects.setVisibility(View.GONE);
+                    return;
+                }
+
+                // Projects adapter and RecyclerView
+                projectsLinearLayoutManager = new LinearLayoutManager(context);
+                projectPreviewAdapter = new ProjectPreviewAdapter(context, projects, fragmentManager);
+                binding.fragmentProfileRvProjects.setAdapter(projectPreviewAdapter);
+                binding.fragmentProfileRvProjects.setLayoutManager(projectsLinearLayoutManager);
 
                 for (ParseObject object : objects){
                     projects.add((Project) object);
@@ -207,11 +214,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getFacebookPhoto(){
-        String facebookUrl = "https://www.graph.facebook.com/" + user.getFacebookId() + "/picture?type=large";
+        String facebookUrl = GlobalConstants.FACEBOOK_LINK_BEGIN + user.getFacebookId() + GlobalConstants.FACEBOOK_LINK_PROFILE_PIC_END;
         Glide.with(context)
                 .load(facebookUrl)
+                .circleCrop()
                 .into(binding.include.connectionFacebookIvProfileImage);
-
     }
 
     private void goChangeProfilePhotoDialogFragment(){

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -56,10 +55,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         ImageView ivUserImage;
         User user;
         TextView tvUserLocation, tvUserName;
-        RecyclerView rvTags;
         Chip chipSkill, chipTalent, chipSubtalent;
-        LinearLayoutManager tagsLinearLayoutManager;
-        List<String> tags;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
