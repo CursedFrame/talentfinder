@@ -82,9 +82,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 constraintBubbleSet.clone(clBubble);
                 setConstraintsCurrentUserBubble(constraintBubbleSet);
                 constraintBubbleSet.applyTo(clBubble);
-
-                cardBubble.setCardBackgroundColor(Color.parseColor("#e7feff"));
-
+                cardBubble.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            else {
+                cardBubble.setCardBackgroundColor(Color.parseColor("#D3D3D3"));
             }
 
             // Else, bind left
@@ -93,7 +94,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                     .circleCrop()
                     .into(ivMessageUserImage);
             tvMessageContent.setText(getMessageString(message));
-            cardBubble.setCardBackgroundColor(Color.parseColor("#B1BCBE"));
+
         }
     }
 
@@ -111,11 +112,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         constraintSet.clear(R.id.itemMessage_ivUserImage, ConstraintSet.START);
         constraintSet.connect(R.id.itemMessage_ivUserImage, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
         constraintSet.clear(R.id.itemMessage_tvMessageContent, ConstraintSet.START);
-        constraintSet.connect(R.id.itemMessage_tvMessageContent, ConstraintSet.END, R.id.itemMessage_ivUserImage, ConstraintSet.START, 8);
+        constraintSet.clear(R.id.itemMessage_tvMessageContent, ConstraintSet.END);
+        constraintSet.connect(R.id.itemMessage_tvMessageContent, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
+        constraintSet.connect(R.id.itemMessage_tvMessageContent, ConstraintSet.END, R.id.itemMessage_ivUserImage, ConstraintSet.START, 16);
     }
 
     public void setConstraintsCurrentUserBubble(ConstraintSet constraintSet){
         constraintSet.clear(R.id.itemMessage_cardBubble, ConstraintSet.START);
+//        constraintSet.connect(R.id.itemMessage_cardBubble, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
         constraintSet.connect(R.id.itemMessage_cardBubble, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
     }
 }

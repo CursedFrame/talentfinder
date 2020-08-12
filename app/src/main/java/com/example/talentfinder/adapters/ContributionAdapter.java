@@ -72,7 +72,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
 
         Contribution contribution;
-        TextView tvCreatorName;
+        TextView tvCreatorName, tvDescription;
         ImageView ivCreatorProfilePicture, ivContributionMedia, ivVideoThumbnail;
         ConstraintLayout clCreatorProfileContainer;
         Chip chipTalent, chipSubtalent, chipSkill;
@@ -89,6 +89,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
             if (contribution.getMediaTypeCode() == GlobalConstants.MEDIA_PHOTO){
                 clCreatorProfileContainer = itemView.findViewById(R.id.itemContributionPhoto_clCreatorProfileContainer);
                 tvCreatorName = itemView.findViewById(R.id.itemContributionPhoto_tvCreatorName);
+                tvDescription = itemView.findViewById(R.id.itemContributionPhoto_tvDescription);
                 ivCreatorProfilePicture = itemView.findViewById(R.id.itemContributionPhoto_ivCreatorProfilePicture);
                 ivContributionMedia = itemView.findViewById(R.id.itemContributionPhoto_ivContributionMedia);
                 chipTalent = itemView.findViewById(R.id.itemContributionPhoto_chipTalent);
@@ -106,6 +107,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
             else {
                 clCreatorProfileContainer = itemView.findViewById(R.id.itemContributionVideo_clCreatorProfileContainer);
                 tvCreatorName = itemView.findViewById(R.id.itemContributionVideo_tvCreatorName);
+                tvDescription = itemView.findViewById(R.id.itemContributionVideo_tvDescription);
                 ivCreatorProfilePicture = itemView.findViewById(R.id.itemContributionVideo_ivCreatorProfilePicture);
                 ivVideoThumbnail = itemView.findViewById(R.id.itemContributionVideo_ivContributionMedia);
                 chipTalent = itemView.findViewById(R.id.itemContributionVideo_chipTalent);
@@ -124,6 +126,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<ContributionAdapte
             // Bind and initialize similar properties
             contributionUser = contribution.getUser();
             tvCreatorName.setText(contributionUser.getName());
+            tvDescription.setText(contribution.getContentDescription());
             chipTalent.setText(contributionUser.getTalentTag());
             chipSubtalent.setText(contributionUser.getSubTalentTag());
             chipSkill.setText(contributionUser.getSkillTag());

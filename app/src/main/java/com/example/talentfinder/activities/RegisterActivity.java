@@ -171,46 +171,25 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         final String location = binding.activityRegisterEtCity.getText().toString() + ", " +
                 binding.activityRegisterEtState.getText().toString();
         final User newUser = new User();
-
-        Glide.with(context)
-                .asFile()
-                .load(R.drawable.default_pic)
-                .into(new CustomTarget<File>() {
-                    @Override
-                    public void onResourceReady(@NonNull final File resource, @Nullable Transition<? super File> transition) {
-                        final ParseFile photo = new ParseFile(resource);
-                        photo.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                newUser.put(User.KEY_IMAGE, photo);
-                                newUser.setUsername(binding.activityRegisterEtUsername.getText().toString());
-                                newUser.setPassword(binding.activityRegisterEtPassword.getText().toString());
-                                newUser.put(User.KEY_NAME, binding.activityRegisterEtName.getText().toString());
-                                newUser.put(User.KEY_LOCATION, location);
-                                newUser.put(User.KEY_TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
-                                newUser.put(User.KEY_TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
-                                newUser.put(User.KEY_TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
-                                newUser.signUpInBackground(new SignUpCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        if (e != null){
-                                            Log.e(TAG, "Error signing up", e);
-                                            return;
-                                        }
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-                });
+        newUser.setUsername(binding.activityRegisterEtUsername.getText().toString());
+        newUser.setPassword(binding.activityRegisterEtPassword.getText().toString());
+        newUser.put(User.KEY_NAME, binding.activityRegisterEtName.getText().toString());
+        newUser.put(User.KEY_LOCATION, location);
+        newUser.put(User.KEY_TAG_SKILL, binding.activityRegisterSpnSkill.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_TALENT, binding.activityRegisterSpnTalent.getSelectedItem().toString());
+        newUser.put(User.KEY_TAG_SUBTALENT, binding.activityRegisterSpnSubTalent.getSelectedItem().toString());
+        newUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error signing up", e);
+                    return;
+                }
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
